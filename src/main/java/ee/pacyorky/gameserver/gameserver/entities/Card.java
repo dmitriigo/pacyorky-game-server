@@ -22,8 +22,6 @@ public class Card {
 
     private Long cardType;
 
-    private Long countInDeck;
-
     public void setCardType(CardType cardType) {
         this.cardType = cardType.getId();
     }

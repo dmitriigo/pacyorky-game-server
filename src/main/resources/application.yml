@@ -11,12 +11,7 @@ spring:
       enabled: true
   flyway:
       enabled: false
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
-        type: TRACE
+
 
 
 

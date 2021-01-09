@@ -1,9 +1,9 @@
 package ee.pacyorky.gameserver.gameserver.repositories;
 
-import ee.pacyorky.gameserver.gameserver.entities.Room;
+import ee.pacyorky.gameserver.gameserver.entities.EventDay;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoomRepository extends JpaRepository<Room, Long> {
+public interface EventDayRepository extends JpaRepository<EventDay, Long> {
 }

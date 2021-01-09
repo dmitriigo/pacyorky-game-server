@@ -24,6 +24,8 @@ public class EventDay {
 
     private String name;
 
+    private Long deskOrder;
+
     public void setSeason(Season season) {
         this.season = season.getId();
     }

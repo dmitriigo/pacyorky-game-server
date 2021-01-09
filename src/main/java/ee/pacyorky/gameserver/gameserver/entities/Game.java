@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,21 +22,26 @@ public class Game {
     private Long id;
 
     @ManyToMany
-    private List<Card> DishesDeck;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Card> dishesDeck;
 
     @ManyToMany
-    private List<Card> HolidaysDeck;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Card> holidaysDeck;
 
     @ManyToMany
-    private List<Card> RitualsDeck;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Card> ritualsDeck;
 
     @ManyToMany
-    private List<Card> StuffDeck;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Card> stuffDeck;
 
     @OneToMany
     private List<Player> players;
 
     @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<EventDay> calendar;
 
 }

@@ -22,19 +22,19 @@ public class Character {
 
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<EventDay> favoriteEventDays;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Card> favoriteEventCards;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Card> favoriteCards;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Card> unlovedCards;
 

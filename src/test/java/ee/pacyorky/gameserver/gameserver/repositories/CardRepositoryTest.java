@@ -2,6 +2,7 @@ package ee.pacyorky.gameserver.gameserver.repositories;
 
 import ee.pacyorky.gameserver.gameserver.entities.Card;
 import ee.pacyorky.gameserver.gameserver.entities.CardType;
+import ee.pacyorky.gameserver.gameserver.entities.Game;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,16 @@ import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 public class CardRepositoryTest {
 
     @Autowired
     private CardRepository cardRepository;
+
+    @Autowired
+    private GameRepository gameRepository;
 
     @Test
     public void cardsLoadTest() {

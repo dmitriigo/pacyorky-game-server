@@ -62,6 +62,8 @@ public class Game {
 
     private String password;
 
+    private String name;
+
     public void addPlayer(Player player) {
         if (players == null) {
             players = new HashSet<>();

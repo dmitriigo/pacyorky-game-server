@@ -13,4 +13,12 @@ public class GameCreationDto {
 
     private Long capacity;
 
+    private boolean withComputer;
+
+    private boolean privateRoom;
+
+    private String password;
+
+    private String name;
+
 }

@@ -1,5 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.services;
 
+import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.entities.Game;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface GameService {
 
     Game getGame(Long gameId);
 
-    Game createGame(String playerId);
+    Game createGame(String playerId, GameCreationDto gameCreationDto);
 
     Game joinIntoTheGame(String playerId, Long gameId);
 

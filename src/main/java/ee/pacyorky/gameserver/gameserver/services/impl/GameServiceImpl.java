@@ -1,5 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.services.impl;
 
+import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.entities.Game;
 import ee.pacyorky.gameserver.gameserver.entities.Player;
 import ee.pacyorky.gameserver.gameserver.repositories.EventDayRepository;
@@ -42,7 +43,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game createGame(String playerId) {
+    public Game createGame(String playerId, GameCreationDto gameCreationDto) {
 
         if (gameRepository.count() >= maxGames) {
             return null;
@@ -55,6 +56,11 @@ public class GameServiceImpl implements GameService {
                 .ritualsDeck(deckService.getRitualsDeck())
                 .stuffDeck(deckService.getStuffDeck())
                 .startAt(LocalDateTime.now().plusSeconds(secondsBeforeStart))
+                .capacity(gameCreationDto.getCapacity())
+                .password(gameCreationDto.getPassword())
+                .privateRoom(gameCreationDto.isPrivateRoom())
+                .withComputer(gameCreationDto.isWithComputer())
+                .name(gameCreationDto.getName())
                 .build();
         game.addPlayer(playerService.getOrCreatePlayer(playerId));
         return gameRepository.save(game);

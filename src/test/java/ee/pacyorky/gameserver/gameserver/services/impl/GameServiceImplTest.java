@@ -1,5 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.services.impl;
 
+import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.entities.Game;
 import ee.pacyorky.gameserver.gameserver.services.GameService;
 import org.junit.jupiter.api.Assertions;
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class GameServiceImplTest {
@@ -21,7 +20,7 @@ class GameServiceImplTest {
     void createGame() {
         String playerId = UUID.randomUUID().toString();
 
-        Game game = gameService.createGame(playerId);
+        Game game = gameService.createGame(playerId,  new GameCreationDto());
 
         Assertions.assertNotNull(game);
 

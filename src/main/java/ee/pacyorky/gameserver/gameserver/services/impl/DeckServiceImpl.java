@@ -43,7 +43,9 @@ public class DeckServiceImpl implements DeckService {
 
     @Override
     public List<Character> getCharacterDeck() {
-        return characterRepository.findAll();
+        List<Character> characters = characterRepository.findAll();
+        Collections.shuffle(characters);
+        return characters;
     }
 
     private List<Card> initShuffleAndReturn(List<Card> cardsInRepo) {

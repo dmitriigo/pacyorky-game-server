@@ -11,6 +11,7 @@ import ee.pacyorky.gameserver.gameserver.services.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class GameServiceImpl implements GameService {
 
     private static final Long maxGames = 10L;
 
-    private static final Long secondsBeforeStart = 120L;
+    private static final Long secondsBeforeStart = 20L;
 
     private static final Long secondsBeforeNextStep = 60L;
 
@@ -39,7 +40,7 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game getGame(Long gameId) {
-        return gameRepository.getOne(gameId);
+        return gameRepository.findById(gameId).orElseThrow();
     }
 
     @Override
@@ -61,6 +62,7 @@ public class GameServiceImpl implements GameService {
                 .privateRoom(gameCreationDto.isPrivateRoom())
                 .withComputer(gameCreationDto.isWithComputer())
                 .name(gameCreationDto.getName())
+                .characters(deckService.getCharacterDeck())
                 .build();
         game.addPlayer(playerService.getOrCreatePlayer(playerId));
         return gameRepository.save(game);
@@ -80,5 +82,10 @@ public class GameServiceImpl implements GameService {
         Game game = gameRepository.getOne(gameId);
         game.removePlayer(playerId);
         return gameRepository.save(game);
+    }
+
+    @Override
+    public Game saveGame(Game game) {
+        return gameRepository.saveAndFlush(game);
     }
 }

@@ -6,9 +6,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -52,9 +50,16 @@ public class Game {
     @Setter(AccessLevel.NONE)
     private List<EventDay> calendar;
 
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @Setter(AccessLevel.NONE)
+    private List<Character> characters;
+
     private Long capacity;
 
     private LocalDateTime startAt;
+
+    private boolean started;
 
     private boolean withComputer;
 
@@ -73,5 +78,14 @@ public class Game {
 
     public void removePlayer(String playerId) {
         this.players = players.stream().filter(player -> !player.getId().equals(playerId)).collect(Collectors.toSet());
+    }
+
+    public Map<CardType, List<Card>> getAllDecks() {
+        Map<CardType, List<Card>> result = new HashMap<>();
+        result.put(CardType.DISHES, dishesDeck);
+        result.put(CardType.HOLIDAY, holidaysDeck);
+        result.put(CardType.RITUALS, ritualsDeck);
+        result.put(CardType.STUFF, stuffDeck);
+        return result;
     }
 }

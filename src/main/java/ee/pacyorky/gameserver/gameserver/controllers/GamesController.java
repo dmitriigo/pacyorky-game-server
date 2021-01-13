@@ -28,4 +28,9 @@ public class GamesController {
         return ResponseEntity.ok(gameService.createGame(httpSession.getId(), gameCreationDto));
     }
 
+    @GetMapping("/{gameId}")
+    public ResponseEntity<Game> getGame(@PathVariable("gameId") Long gameId){
+        return ResponseEntity.ok(gameService.getGame(gameId));
+    }
+
 }

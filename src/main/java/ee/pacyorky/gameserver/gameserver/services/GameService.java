@@ -16,4 +16,6 @@ public interface GameService {
     Game joinIntoTheGame(String playerId, Long gameId);
 
     Game leftFromTheGame(String playerId, Long gameId);
+
+    Game saveGame(Game game);
 }

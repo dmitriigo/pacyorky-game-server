@@ -17,7 +17,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public Player getOrCreatePlayer(String id) {
-        return playerRepository.findById(id).orElse(playerRepository.save(Player.builder().id(id).build()));
+        Player player = playerRepository.findById(id).orElse(null);
+        if (player == null) player = playerRepository.save(Player.builder().id(id).build());
+        return player;
     }
 
     @Override

@@ -5,7 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +22,8 @@ public class Player {
     @Id
     private String id;
 
-    private Integer happiness;
+    @Builder.Default
+    private Integer happiness = 0;
 
     @ManyToOne
     private Character character;
@@ -27,6 +31,9 @@ public class Player {
     @ManyToMany
     @Builder.Default
     private List<Card> deck = new ArrayList<>();
+
+    @ManyToOne
+    private EventDay currentDay;
 
     public List<Card> getCardsByType(CardType cardType) {
         return deck.stream().filter(card -> card.getCardType() == cardType).collect(Collectors.toList());

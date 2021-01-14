@@ -55,9 +55,14 @@ public class Game {
     @Setter(AccessLevel.NONE)
     private List<Character> characters;
 
+    @OneToOne
+    private Player currentPlayer;
+
     private Long capacity;
 
     private LocalDateTime startAt;
+
+    private LocalDateTime nextStepAt;
 
     private boolean started;
 
@@ -68,6 +73,8 @@ public class Game {
     private String password;
 
     private String name;
+
+    private Integer counter;
 
     public void addPlayer(Player player) {
         if (players == null) {

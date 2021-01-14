@@ -1,5 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.controllers;
 
+import ee.pacyorky.gameserver.gameserver.entities.Game;
 import ee.pacyorky.gameserver.gameserver.entities.Player;
 import ee.pacyorky.gameserver.gameserver.services.GeneralGameService;
 import lombok.AllArgsConstructor;
@@ -21,5 +22,10 @@ public class GameController {
     @GetMapping("/{id}/start")
     public ResponseEntity<Player> startGame(@PathVariable("id") Long gameId, HttpSession httpSession) {
         return ResponseEntity.ok(gameService.startGame(gameId, httpSession.getId()));
+    }
+
+    @GetMapping("/{id}/next")
+    public ResponseEntity<Game> nextStep(@PathVariable("id") Long gameId, HttpSession httpSession) {
+        return ResponseEntity.ok(gameService.nextStep(gameId, httpSession.getId()));
     }
 }

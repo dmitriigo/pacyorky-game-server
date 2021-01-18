@@ -29,9 +29,9 @@ public class EventDayRepositoryTest {
         Assertions.assertEquals(simpleDaysByName, simpleDaysByHoliday);
         Assertions.assertEquals(18, simpleDaysByHoliday.size());
         Assertions.assertEquals(48, eventDays.size());
-        Assertions.assertEquals(15, eventDays.stream().filter(day -> day.getSeason()== Season.WINTER).count());
-        Assertions.assertEquals(12, eventDays.stream().filter(day -> day.getSeason()== Season.SPRING).count());
-        Assertions.assertEquals(10, eventDays.stream().filter(day -> day.getSeason()== Season.SUMMER).count());
-        Assertions.assertEquals(11, eventDays.stream().filter(day -> day.getSeason()== Season.AUTUMN).count());
+        Assertions.assertEquals(15, eventDays.stream().filter(day -> day.getSeason() == Season.WINTER).count());
+        Assertions.assertEquals(12, eventDays.stream().filter(day -> day.getSeason() == Season.SPRING).count());
+        Assertions.assertEquals(10, eventDays.stream().filter(day -> day.getSeason() == Season.SUMMER).count());
+        Assertions.assertEquals(11, eventDays.stream().filter(day -> day.getSeason() == Season.AUTUMN).count());
     }
 }

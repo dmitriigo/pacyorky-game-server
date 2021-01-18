@@ -23,7 +23,7 @@ public class DeckServiceImpl implements DeckService {
 
     @Override
     public List<Card> getDishesDeck() {
-         return initShuffleAndReturn(getDishesFromRepo());
+        return initShuffleAndReturn(getDishesFromRepo());
     }
 
     @Override

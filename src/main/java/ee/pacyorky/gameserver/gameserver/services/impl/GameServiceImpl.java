@@ -11,9 +11,10 @@ import ee.pacyorky.gameserver.gameserver.services.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -73,6 +74,9 @@ public class GameServiceImpl implements GameService {
         Game game = gameRepository.getOne(gameId);
         if (game.getPlayers().size() >= game.getCapacity()) return null;
         Player player = playerService.getOrCreatePlayer(playerId);
+        Set<Player> playersInGame = new HashSet<>();
+        gameRepository.findAll().stream().map(g -> g.getPlayers()).forEach(players -> playersInGame.addAll(players));
+        if (playersInGame.contains(player)) return null;
         game.addPlayer(player);
         return gameRepository.save(game);
     }

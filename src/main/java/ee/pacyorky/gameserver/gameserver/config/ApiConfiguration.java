@@ -9,7 +9,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class ApiConfiguration {
 
     @Bean
-    public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet)     {
+    public ServletRegistrationBean dispatcherRegistration(DispatcherServlet dispatcherServlet) {
         ServletRegistrationBean reg = new ServletRegistrationBean(dispatcherServlet);
         reg.addUrlMappings("/api/*");
         return reg;

@@ -41,9 +41,4 @@ public class GamesController {
     public ResponseEntity<Game> leftFromTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession) {
         return ResponseEntity.ok(gameService.leftFromTheGame(httpSession.getId(), gameId));
     }
-
-    @GetMapping("/getplayerid")
-    public ResponseEntity<String> getPlayerID(HttpSession httpSession) {
-        return ResponseEntity.ok(httpSession.getId());
-    }
 }

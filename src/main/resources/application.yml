@@ -11,12 +11,10 @@ spring:
       enabled: true
   flyway:
     enabled: false
-springfox:
-  documentation:
-    swagger:
-      v2:
-        path=/swagger:
-          json:
+
+
+
+
 
 
 

@@ -1,7 +1,8 @@
 package ee.pacyorky.gameserver.gameserver.controllers;
 
-import ee.pacyorky.gameserver.gameserver.entities.Game;
+import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
 import ee.pacyorky.gameserver.gameserver.entities.Player;
+import ee.pacyorky.gameserver.gameserver.mappers.GameMapper;
 import ee.pacyorky.gameserver.gameserver.services.GeneralGameService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class GameController {
     }
 
     @GetMapping("/{id}/next")
-    public ResponseEntity<Game> nextStep(@PathVariable("id") Long gameId, HttpSession httpSession) {
-        return ResponseEntity.ok(gameService.nextStep(gameId, httpSession.getId()));
+    public ResponseEntity<GameDTO> nextStep(@PathVariable("id") Long gameId, HttpSession httpSession) {
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.nextStep(gameId, httpSession.getId())));
     }
 }

@@ -1,9 +1,6 @@
-package ee.pacyorky.gameserver.gameserver.services.impl;
+package ee.pacyorky.gameserver.gameserver.exceptions;
 
 import ee.pacyorky.gameserver.gameserver.controllers.GamesController;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionHandler;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

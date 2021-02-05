@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ExceptionDto {
 
-    private int code;
+    private String code;
 
     private String message;
 }

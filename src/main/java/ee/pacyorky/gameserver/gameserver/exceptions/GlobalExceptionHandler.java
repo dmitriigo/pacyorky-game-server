@@ -17,7 +17,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(GlobalException.class)
     public @ResponseBody
     ExceptionDto handleGlobalException(GlobalException exception, HttpServletRequest request) {
-        ExceptionDto response = new ExceptionDto(400, exception.getMessage());
+        System.out.println("handleGlobalException");
+        ExceptionDto response = new ExceptionDto(exception.getCode(), exception.getMessage());
         return response;
     }
 
@@ -25,7 +26,8 @@ public class GlobalExceptionHandler {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody
     ExceptionDto handleException(Exception exception, HttpServletRequest request) {
-        ExceptionDto response = new ExceptionDto(500, exception.getMessage());
+        System.out.println("handleException");
+        ExceptionDto response = new ExceptionDto("INTERNAL_SERVER_ERROR", exception.getMessage());
         return response;
     }
 }

@@ -1,8 +1,14 @@
 package ee.pacyorky.gameserver.gameserver.exceptions;
 
+import lombok.Getter;
+
+@Getter
 public class GlobalException extends RuntimeException {
 
-    public GlobalException(String message) {
+    private final String code;
+
+    public GlobalException(String message, String code) {
         super(message);
+        this.code = code;
     }
 }

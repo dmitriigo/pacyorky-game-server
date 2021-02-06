@@ -54,9 +54,12 @@ public class GeneralGameServiceImpl implements GeneralGameService {
     public synchronized Game nextStep(Long gameId, String playerId) {
         Player player = playerService.getOrCreatePlayer(playerId);
         Game game = gameService.getGame(gameId);
-        if (player == null || game == null)
+        if (player == null || game == null) {
             throw new GlobalException("Internal server error", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
-        if (!game.isStarted()) throw new GlobalException("Game not started", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (!game.isStarted()) {
+            throw new GlobalException("Game not started", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
         if (!game.getPlayers().contains(player)) return null;
 
         if (game.getNextStepAt() != null && game.getNextStepAt().isAfter(LocalDateTime.now())) {

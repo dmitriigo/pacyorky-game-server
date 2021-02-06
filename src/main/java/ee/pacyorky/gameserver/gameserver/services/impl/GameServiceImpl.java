@@ -74,12 +74,14 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game joinIntoTheGame(String playerId, Long gameId) {
         Game game = gameRepository.getOne(gameId);
-        if (game.getPlayers().size() >= game.getCapacity())
+        if (game.getPlayers().size() >= game.getCapacity()) {
             throw new GlobalException("Players count more than capacity", GlobalExceptionCode.CAPACITY_LIMIT_REACHED);
+        }
         Player player = playerService.getOrCreatePlayer(playerId);
         Set<Player> playersInGame = gameRepository.findAll().stream().flatMap(repoGame -> repoGame.getPlayers().stream()).collect(Collectors.toSet());
-        if (playersInGame.contains(player))
+        if (playersInGame.contains(player)) {
             throw new GlobalException("Player already in game", GlobalExceptionCode.PLAYER_ALREADY_IN_GAME);
+        }
         game.addPlayer(player);
         return gameRepository.save(game);
     }

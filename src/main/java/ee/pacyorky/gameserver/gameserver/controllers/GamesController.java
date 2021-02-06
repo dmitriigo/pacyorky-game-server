@@ -14,33 +14,34 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/rooms")
 public class GamesController {
 
     private final GameService gameService;
 
-    @GetMapping("/games")
+    @GetMapping("/get")
     public ResponseEntity<List<GameDTO>> getGames() {
         return ResponseEntity.ok(gameService.getGames().stream().map(GameMapper.INSTANCE::toGameDto).collect(Collectors.toList()));
     }
 
-    @PostMapping("/games")
+    @PostMapping("/add")
     public ResponseEntity<GameDTO> addGame(@RequestBody GameCreationDto gameCreationDto, HttpSession httpSession) {
         return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.createGame(httpSession.getId(), gameCreationDto)));
     }
 
-    @GetMapping("/games/{gameId}")
-    public ResponseEntity<GameDTO> getGame(@PathVariable("gameId") Long gameId) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.getGame(gameId)));
-    }
-
-    @PostMapping("/game/{gameId}")
+    @PostMapping("/join/{gameId}")
     public ResponseEntity<GameDTO> joinIntoTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession) {
         gameService.joinIntoTheGame(httpSession.getId(), gameId);
         return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.joinIntoTheGame(httpSession.getId(), gameId)));
     }
 
-    @DeleteMapping("/game/{gameId}")
+    @DeleteMapping("/left/{gameId}")
     public ResponseEntity<GameDTO> leftFromTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession) {
         return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.leftFromTheGame(httpSession.getId(), gameId)));
+    }
+
+    @GetMapping("/get/{gameId}")
+    public ResponseEntity<GameDTO> getGame(@PathVariable("gameId") Long gameId) {
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.getGame(gameId)));
     }
 }

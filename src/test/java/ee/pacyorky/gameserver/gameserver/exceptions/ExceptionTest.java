@@ -44,11 +44,11 @@ public class ExceptionTest {
     public void GlobalExceptionHandlerExceptionTest() throws Exception {
 
         Mockito.when(gamesController.getGame(1l))
-                .thenThrow(new GlobalException("Global Exception", GlobalExceptionCode.AUTHORIZATION_FAILED));
+                .thenThrow(new GlobalException("Global Exception", GlobalExceptionCode.CAPACITY_LIMIT_REACHED));
 
         mockMvc.perform(get("/rooms/get/1"))
                 .andExpect(status().is(400))
-                .andExpect(jsonPath("$.code").value("AUTHORIZATION_FAILED"))
+                .andExpect(jsonPath("$.code").value("CAPACITY_LIMIT_REACHED"))
                 .andExpect(jsonPath("$.message").value("Global Exception"));
     }
 }

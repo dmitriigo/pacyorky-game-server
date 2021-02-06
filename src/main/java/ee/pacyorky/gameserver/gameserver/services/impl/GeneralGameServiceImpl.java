@@ -2,6 +2,8 @@ package ee.pacyorky.gameserver.gameserver.services.impl;
 
 import ee.pacyorky.gameserver.gameserver.entities.Character;
 import ee.pacyorky.gameserver.gameserver.entities.*;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.services.EventDayService;
 import ee.pacyorky.gameserver.gameserver.services.GameService;
 import ee.pacyorky.gameserver.gameserver.services.GeneralGameService;
@@ -24,13 +26,15 @@ public class GeneralGameServiceImpl implements GeneralGameService {
     public synchronized Player startGame(Long gameId, String playerId) {
         Player player = playerService.getOrCreatePlayer(playerId);
         Game game = gameService.getGame(gameId);
-        if (game == null || player == null) throw new RuntimeException();
+        if (game == null || player == null)
+            throw new GlobalException("Internal server error", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         if (!game.getPlayers().contains(player)) return null;
 
         if (game.isStarted()) {
             return player;
         }
-        if (game.getStartAt().isAfter(LocalDateTime.now())) throw new RuntimeException();
+        if (game.getStartAt().isAfter(LocalDateTime.now()))
+            throw new GlobalException("Game already started", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         game.setStarted(true);
         Set<Player> players = game.getPlayers();
         for (Player player1 : players) {
@@ -50,8 +54,9 @@ public class GeneralGameServiceImpl implements GeneralGameService {
     public synchronized Game nextStep(Long gameId, String playerId) {
         Player player = playerService.getOrCreatePlayer(playerId);
         Game game = gameService.getGame(gameId);
-        if (player == null || game == null) throw new RuntimeException();
-        if (!game.isStarted()) return null;
+        if (player == null || game == null)
+            throw new GlobalException("Internal server error", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        if (!game.isStarted()) throw new GlobalException("Game not started", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         if (!game.getPlayers().contains(player)) return null;
 
         if (game.getNextStepAt() != null && game.getNextStepAt().isAfter(LocalDateTime.now())) {

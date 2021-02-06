@@ -34,7 +34,7 @@ public class ExceptionTest {
         Mockito.when(gamesController.getGame(1l))
                 .thenThrow(new RuntimeException("Unexpected Exception"));
 
-        mockMvc.perform(get("/games/1"))
+        mockMvc.perform(get("/rooms/get/1"))
                 .andExpect(status().is(500))
                 .andExpect(jsonPath("$.code").value("INTERNAL_SERVER_ERROR"))
                 .andExpect(jsonPath("$.message").value("Unexpected Exception"));
@@ -46,7 +46,7 @@ public class ExceptionTest {
         Mockito.when(gamesController.getGame(1l))
                 .thenThrow(new GlobalException("Global Exception", GlobalExceptionCode.AUTHORIZATION_FAILED));
 
-        mockMvc.perform(get("/games/1"))
+        mockMvc.perform(get("/rooms/get/1"))
                 .andExpect(status().is(400))
                 .andExpect(jsonPath("$.code").value("AUTHORIZATION_FAILED"))
                 .andExpect(jsonPath("$.message").value("Global Exception"));

@@ -1,6 +1,5 @@
 package ee.pacyorky.gameserver.gameserver.dtos;
 
-import ee.pacyorky.gameserver.gameserver.entities.Character;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ public class PlayerDTO {
 
     private Integer happiness;
 
-    private Character character;
+    private CharacterDTO character;
 
     private List<CardDTO> deck = new ArrayList<>();
 

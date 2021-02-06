@@ -3,6 +3,8 @@ package ee.pacyorky.gameserver.gameserver.services.impl;
 import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.entities.Game;
 import ee.pacyorky.gameserver.gameserver.entities.Player;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.repositories.EventDayRepository;
 import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
 import ee.pacyorky.gameserver.gameserver.services.DeckService;
@@ -12,9 +14,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -72,11 +74,14 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game joinIntoTheGame(String playerId, Long gameId) {
         Game game = gameRepository.getOne(gameId);
-        if (game.getPlayers().size() >= game.getCapacity()) return null;
+        if (game.getPlayers().size() >= game.getCapacity()) {
+            throw new GlobalException("Players count more than capacity", GlobalExceptionCode.CAPACITY_LIMIT_REACHED);
+        }
         Player player = playerService.getOrCreatePlayer(playerId);
-        Set<Player> playersInGame = new HashSet<>();
-        gameRepository.findAll().stream().map(g -> g.getPlayers()).forEach(players -> playersInGame.addAll(players));
-        if (playersInGame.contains(player)) return null;
+        Set<Player> playersInGame = gameRepository.findAll().stream().flatMap(repoGame -> repoGame.getPlayers().stream()).collect(Collectors.toSet());
+        if (playersInGame.contains(player)) {
+            throw new GlobalException("Player already in game", GlobalExceptionCode.PLAYER_ALREADY_IN_GAME);
+        }
         game.addPlayer(player);
         return gameRepository.save(game);
     }

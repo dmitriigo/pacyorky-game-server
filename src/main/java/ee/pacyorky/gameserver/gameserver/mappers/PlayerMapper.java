@@ -5,9 +5,12 @@ import ee.pacyorky.gameserver.gameserver.entities.CardType;
 import ee.pacyorky.gameserver.gameserver.entities.Player;
 import ee.pacyorky.gameserver.gameserver.entities.Season;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface PlayerMapper {
+
+    PlayerMapper INSTANCE = Mappers.getMapper(PlayerMapper.class);
 
     PlayerDTO toDto(Player player);
 

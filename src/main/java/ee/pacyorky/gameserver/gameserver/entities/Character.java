@@ -30,7 +30,11 @@ public class Character {
 
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<Card> favoriteEventCards;
+    private List<HolidayCard> favoriteHolidaysCards;
+
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<HolidayCard> unlovedHolidaysCards;
 
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)

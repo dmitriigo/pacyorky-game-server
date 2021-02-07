@@ -3,8 +3,10 @@ package ee.pacyorky.gameserver.gameserver.services.impl;
 import ee.pacyorky.gameserver.gameserver.entities.Card;
 import ee.pacyorky.gameserver.gameserver.entities.CardType;
 import ee.pacyorky.gameserver.gameserver.entities.Character;
+import ee.pacyorky.gameserver.gameserver.entities.HolidayCard;
 import ee.pacyorky.gameserver.gameserver.repositories.CardRepository;
 import ee.pacyorky.gameserver.gameserver.repositories.CharacterRepository;
+import ee.pacyorky.gameserver.gameserver.repositories.HolidayCardRepository;
 import ee.pacyorky.gameserver.gameserver.services.DeckService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,14 +23,16 @@ public class DeckServiceImpl implements DeckService {
 
     private final CharacterRepository characterRepository;
 
+    private final HolidayCardRepository holidayCardRepository;
+
     @Override
     public List<Card> getDishesDeck() {
         return initShuffleAndReturn(getDishesFromRepo());
     }
 
     @Override
-    public List<Card> getHolidaysDeck() {
-        return initShuffleAndReturn(getHolidaysFromRepo());
+    public List<HolidayCard> getHolidaysDeck() {
+        return initShuffleAndReturnHolidayCard(getHolidaysFromRepo());
     }
 
     @Override
@@ -60,12 +64,24 @@ public class DeckServiceImpl implements DeckService {
         return targetList;
     }
 
+    private List<HolidayCard> initShuffleAndReturnHolidayCard(List<HolidayCard> cardsInRepo) {
+        List<HolidayCard> targetList = new ArrayList<>();
+
+        for (HolidayCard card : cardsInRepo) {
+            for (int i = 0; i < card.getCardsInDeck(); i++) {
+                targetList.add(card);
+            }
+        }
+        Collections.shuffle(targetList);
+        return targetList;
+    }
+
     private List<Card> getDishesFromRepo() {
         return cardRepository.getAllByCardType(CardType.DISHES.getId());
     }
 
-    private List<Card> getHolidaysFromRepo() {
-        return cardRepository.getAllByCardType(CardType.HOLIDAY.getId());
+    private List<HolidayCard> getHolidaysFromRepo() {
+        return holidayCardRepository.findAll();
     }
 
     private List<Card> getRitualsFromRepo() {

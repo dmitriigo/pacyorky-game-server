@@ -41,10 +41,10 @@ public class CharacterRepositoryTest {
 
         for (Character character : characters) {
             if (character.getId().equals(4L) || character.getId().equals(5L)) {
-                Assertions.assertTrue(character.getFavoriteEventCards().isEmpty());
+                Assertions.assertTrue(character.getFavoriteHolidaysCards().isEmpty());
                 continue;
             }
-            Assert.notEmpty(character.getFavoriteEventCards(), "Favorite events cards is empty");
+            Assert.notEmpty(character.getFavoriteHolidaysCards(), "Favorite events cards is empty");
         }
     }
 

@@ -4,9 +4,8 @@ import java.util.Objects;
 
 public enum CardType {
     DISHES("Dishes", 1L),
-    HOLIDAY("Holiday", 2L),
-    RITUALS("Rituals", 3L),
-    STUFF("Stuff", 4L);
+    RITUALS("Rituals", 2L),
+    STUFF("Stuff", 3L);
 
     String name;
     Long id;

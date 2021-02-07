@@ -100,7 +100,6 @@ public class GeneralGameServiceImpl implements GeneralGameService {
         Map<CardType, List<Card>> cardTypeListMap = game.getAllDecks();
 
         for (Map.Entry<CardType, List<Card>> cardTypeListEntry : cardTypeListMap.entrySet()) {
-            if (cardTypeListEntry.getKey() == CardType.HOLIDAY) continue;
             List<Card> playersCards = player.getCardsByType(cardTypeListEntry.getKey());
             for (int i = playersCards.size(); i < 2; i++) {
                 Card card = cardTypeListEntry.getValue().stream().findFirst().orElseThrow();

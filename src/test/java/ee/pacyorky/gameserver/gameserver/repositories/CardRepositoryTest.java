@@ -24,7 +24,6 @@ public class CardRepositoryTest {
     public void cardsLoadTest() {
         List<Card> cards = cardRepository.findAll();
         List<Card> dishes = new ArrayList<>();
-        List<Card> holidays = new ArrayList<>();
         List<Card> rituals = new ArrayList<>();
         List<Card> stuff = new ArrayList<>();
 
@@ -36,9 +35,6 @@ public class CardRepositoryTest {
             if (card.getCardType() == CardType.DISHES) {
                 dishes.addAll(tempList);
             }
-            if (card.getCardType() == CardType.HOLIDAY) {
-                holidays.addAll(tempList);
-            }
             if (card.getCardType() == CardType.RITUALS) {
                 rituals.addAll(tempList);
             }
@@ -47,13 +43,11 @@ public class CardRepositoryTest {
             }
         }
         Assert.notEmpty(dishes, "Dishes is empty!");
-        Assert.notEmpty(holidays, "Holidays is empty!");
         Assert.notEmpty(rituals, "Rituals is empty!");
         Assert.notEmpty(stuff, "Stuff is empty!");
         Assertions.assertEquals(dishes.size(), 60);
-        Assertions.assertEquals(holidays.size(), 60);
         Assertions.assertEquals(rituals.size(), 60);
         Assertions.assertEquals(stuff.size(), 60);
-        Assertions.assertEquals(dishes.size() + holidays.size() + rituals.size() + stuff.size(), 240);
+        Assertions.assertEquals(dishes.size() + rituals.size() + stuff.size(), 180);
     }
 }

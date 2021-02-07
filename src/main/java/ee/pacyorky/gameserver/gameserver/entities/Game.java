@@ -29,7 +29,7 @@ public class Game {
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
     @Setter(AccessLevel.NONE)
-    private List<Card> holidaysDeck;
+    private List<HolidayCard> holidaysDeck;
 
     @ManyToMany
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -90,7 +90,6 @@ public class Game {
     public Map<CardType, List<Card>> getAllDecks() {
         Map<CardType, List<Card>> result = new HashMap<>();
         result.put(CardType.DISHES, dishesDeck);
-        result.put(CardType.HOLIDAY, holidaysDeck);
         result.put(CardType.RITUALS, ritualsDeck);
         result.put(CardType.STUFF, stuffDeck);
         return result;

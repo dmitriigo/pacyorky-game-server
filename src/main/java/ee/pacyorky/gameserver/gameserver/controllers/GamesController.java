@@ -44,4 +44,10 @@ public class GamesController {
     public ResponseEntity<GameDTO> getGame(@PathVariable("gameId") Long gameId) {
         return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.getGame(gameId)));
     }
+
+    @DeleteMapping("/clear/{id}")
+    public ResponseEntity<List<GameDTO>> clearGames(@PathVariable("id") Long id) {
+        gameService.clearGames(id);
+        return getGames();
+    }
 }

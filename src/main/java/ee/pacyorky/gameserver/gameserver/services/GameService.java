@@ -18,4 +18,6 @@ public interface GameService {
     Game leftFromTheGame(String playerId, Long gameId);
 
     Game saveGame(Game game);
+
+    void clearGames(Long id);
 }

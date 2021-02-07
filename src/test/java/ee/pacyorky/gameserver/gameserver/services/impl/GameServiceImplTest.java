@@ -2,6 +2,7 @@ package ee.pacyorky.gameserver.gameserver.services.impl;
 
 import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.entities.Game;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
 import ee.pacyorky.gameserver.gameserver.services.GameService;
 import ee.pacyorky.gameserver.gameserver.services.PlayerService;
@@ -46,10 +47,10 @@ class GameServiceImplTest {
         Game game = gameService.createGame(playerId, new GameCreationDto());
         game.setCapacity(2L);
         Assertions.assertNotNull(gameService.joinIntoTheGame(playerId2, game.getId()));
-        Assertions.assertNull(gameService.joinIntoTheGame(playerId3, game.getId()));
+        Assertions.assertThrows(GlobalException.class, () -> gameService.joinIntoTheGame(playerId3, game.getId()));
         Game anotherGame = gameService.createGame(UUID.randomUUID().toString(), new GameCreationDto());
         anotherGame.setCapacity(2L);
-        Assertions.assertNull(gameService.joinIntoTheGame(playerId2, anotherGame.getId()));
+        Assertions.assertThrows(GlobalException.class, () -> gameService.joinIntoTheGame(playerId2, anotherGame.getId()));
     }
 
     @Test

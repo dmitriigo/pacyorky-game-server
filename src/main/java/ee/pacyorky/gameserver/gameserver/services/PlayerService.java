@@ -7,4 +7,6 @@ public interface PlayerService {
     Player getOrCreatePlayer(String id);
 
     Player savePlayer(Player player);
+
+    void clearPlayers();
 }

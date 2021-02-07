@@ -97,4 +97,15 @@ public class GameServiceImpl implements GameService {
     public Game saveGame(Game game) {
         return gameRepository.saveAndFlush(game);
     }
+
+    @Override
+    public void clearGames(Long id) {
+        if (id == null || id.equals(0L)) {
+            gameRepository.deleteAll();
+        } else {
+            Game one = gameRepository.getOne(id);
+            gameRepository.delete(one);
+        }
+
+    }
 }

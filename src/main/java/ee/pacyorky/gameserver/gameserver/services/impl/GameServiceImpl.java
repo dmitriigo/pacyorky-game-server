@@ -50,7 +50,7 @@ public class GameServiceImpl implements GameService {
     public Game createGame(String playerId, GameCreationDto gameCreationDto) {
 
         if (gameRepository.count() >= maxGames) {
-            return null;
+            throw new GlobalException("Games count more than capacity", GlobalExceptionCode.GAMES_LIMIT_REACHED);
         }
 
         Game game = Game.builder()
@@ -67,7 +67,9 @@ public class GameServiceImpl implements GameService {
                 .name(gameCreationDto.getName())
                 .characters(deckService.getCharacterDeck())
                 .build();
-        game.addPlayer(playerService.getOrCreatePlayer(playerId));
+        Player player = playerService.getOrCreatePlayer(playerId);
+        checkPlayerInGame(player);
+        game.addPlayer(player);
         return gameRepository.save(game);
     }
 
@@ -78,10 +80,7 @@ public class GameServiceImpl implements GameService {
             throw new GlobalException("Players count more than capacity", GlobalExceptionCode.CAPACITY_LIMIT_REACHED);
         }
         Player player = playerService.getOrCreatePlayer(playerId);
-        Set<Player> playersInGame = gameRepository.findAll().stream().flatMap(repoGame -> repoGame.getPlayers().stream()).collect(Collectors.toSet());
-        if (playersInGame.contains(player)) {
-            throw new GlobalException("Player already in game", GlobalExceptionCode.PLAYER_ALREADY_IN_GAME);
-        }
+        checkPlayerInGame(player);
         game.addPlayer(player);
         return gameRepository.save(game);
     }
@@ -106,6 +105,12 @@ public class GameServiceImpl implements GameService {
             Game one = gameRepository.getOne(id);
             gameRepository.delete(one);
         }
+    }
 
+    private void checkPlayerInGame(Player player) {
+        Set<Player> playersInGame = gameRepository.findAll().stream().flatMap(repoGame -> repoGame.getPlayers().stream()).collect(Collectors.toSet());
+        if (playersInGame.contains(player)) {
+            throw new GlobalException("Player already in game", GlobalExceptionCode.PLAYER_ALREADY_IN_GAME);
+        }
     }
 }

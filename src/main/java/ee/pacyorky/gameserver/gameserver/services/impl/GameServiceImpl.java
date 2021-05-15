@@ -86,8 +86,10 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game leftFromTheGame(String playerId, Long gameId) {
-        Game game = gameRepository.getOne(gameId);
+    public Game leftFromTheGame(String playerId) {
+        Game game = gameRepository.findAll().stream()
+                .filter(gameAtRepo -> gameAtRepo.getPlayers().stream().map(Player::getId).anyMatch(id -> id.equals(playerId)))
+                .findFirst().orElseThrow(() -> new GlobalException("Game not found", GlobalExceptionCode.INTERNAL_SERVER_ERROR));
         game.removePlayer(playerId);
         return gameRepository.save(game);
     }

@@ -58,7 +58,7 @@ class GameServiceImplTest {
         String playerId = UUID.randomUUID().toString();
         Game game = gameService.createGame(playerId, new GameCreationDto());
         Assertions.assertEquals(game.getPlayers().size(), 1);
-        gameService.leftFromTheGame(playerId, game.getId());
+        gameService.leftFromTheGame(playerId);
         Assertions.assertEquals(game.getPlayers().size(), 0);
     }
 }

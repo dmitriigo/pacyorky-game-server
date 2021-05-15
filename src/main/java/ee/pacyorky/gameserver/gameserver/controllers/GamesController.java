@@ -31,13 +31,12 @@ public class GamesController {
 
     @PostMapping("/join/{gameId}")
     public ResponseEntity<GameDTO> joinIntoTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession) {
-        gameService.joinIntoTheGame(httpSession.getId(), gameId);
         return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.joinIntoTheGame(httpSession.getId(), gameId)));
     }
 
-    @DeleteMapping("/left/{gameId}")
-    public ResponseEntity<GameDTO> leftFromTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.leftFromTheGame(httpSession.getId(), gameId)));
+    @DeleteMapping("/left")
+    public ResponseEntity<GameDTO> leftFromTheGame(HttpSession httpSession) {
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.leftFromTheGame(httpSession.getId())));
     }
 
     @GetMapping("/get/{gameId}")

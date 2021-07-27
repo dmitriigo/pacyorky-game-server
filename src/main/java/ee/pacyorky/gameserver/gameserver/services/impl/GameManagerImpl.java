@@ -8,7 +8,7 @@ import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.repositories.EventDayRepository;
 import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
 import ee.pacyorky.gameserver.gameserver.services.DeckService;
-import ee.pacyorky.gameserver.gameserver.services.GameService;
+import ee.pacyorky.gameserver.gameserver.services.GameManager;
 import ee.pacyorky.gameserver.gameserver.services.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class GameServiceImpl implements GameService {
+public class GameManagerImpl implements GameManager {
 
     private final GameRepository gameRepository;
 

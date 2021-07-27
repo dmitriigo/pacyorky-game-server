@@ -4,7 +4,7 @@ import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.entities.Game;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
-import ee.pacyorky.gameserver.gameserver.services.GameService;
+import ee.pacyorky.gameserver.gameserver.services.GameManager;
 import ee.pacyorky.gameserver.gameserver.services.PlayerService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,10 +16,10 @@ import java.util.UUID;
 
 @Transactional
 @SpringBootTest
-class GameServiceImplTest {
+class GameManagerImplTest {
 
     @Autowired
-    private GameService gameService;
+    private GameManager gameManager;
 
     @Autowired
     private GameRepository gameRepository;
@@ -32,7 +32,7 @@ class GameServiceImplTest {
     void createGame() {
         String playerId = UUID.randomUUID().toString();
 
-        Game game = gameService.createGame(playerId, new GameCreationDto());
+        Game game = gameManager.createGame(playerId, new GameCreationDto());
 
         Assertions.assertNotNull(game);
 
@@ -44,21 +44,21 @@ class GameServiceImplTest {
         String playerId = UUID.randomUUID().toString();
         String playerId2 = UUID.randomUUID().toString();
         String playerId3 = UUID.randomUUID().toString();
-        Game game = gameService.createGame(playerId, new GameCreationDto());
+        Game game = gameManager.createGame(playerId, new GameCreationDto());
         game.setCapacity(2L);
-        Assertions.assertNotNull(gameService.joinIntoTheGame(playerId2, game.getId()));
-        Assertions.assertThrows(GlobalException.class, () -> gameService.joinIntoTheGame(playerId3, game.getId()));
-        Game anotherGame = gameService.createGame(UUID.randomUUID().toString(), new GameCreationDto());
+        Assertions.assertNotNull(gameManager.joinIntoTheGame(playerId2, game.getId()));
+        Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId3, game.getId()));
+        Game anotherGame = gameManager.createGame(UUID.randomUUID().toString(), new GameCreationDto());
         anotherGame.setCapacity(2L);
-        Assertions.assertThrows(GlobalException.class, () -> gameService.joinIntoTheGame(playerId2, anotherGame.getId()));
+        Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId2, anotherGame.getId()));
     }
 
     @Test
     void leftFromTheGame() {
         String playerId = UUID.randomUUID().toString();
-        Game game = gameService.createGame(playerId, new GameCreationDto());
+        Game game = gameManager.createGame(playerId, new GameCreationDto());
         Assertions.assertEquals(game.getPlayers().size(), 1);
-        gameService.leftFromTheGame(playerId);
+        gameManager.leftFromTheGame(playerId);
         Assertions.assertEquals(game.getPlayers().size(), 0);
     }
 }

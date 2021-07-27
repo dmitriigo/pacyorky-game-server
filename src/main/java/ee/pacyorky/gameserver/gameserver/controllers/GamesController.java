@@ -3,7 +3,7 @@ package ee.pacyorky.gameserver.gameserver.controllers;
 import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
 import ee.pacyorky.gameserver.gameserver.mappers.GameMapper;
-import ee.pacyorky.gameserver.gameserver.services.GameService;
+import ee.pacyorky.gameserver.gameserver.services.GameManager;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,36 +17,36 @@ import java.util.stream.Collectors;
 @RequestMapping("/rooms")
 public class GamesController {
 
-    private final GameService gameService;
+    private final GameManager gameManager;
 
     @GetMapping("/get")
     public ResponseEntity<List<GameDTO>> getGames() {
-        return ResponseEntity.ok(gameService.getGames().stream().map(GameMapper.INSTANCE::toGameDto).collect(Collectors.toList()));
+        return ResponseEntity.ok(gameManager.getGames().stream().map(GameMapper.INSTANCE::toGameDto).collect(Collectors.toList()));
     }
 
     @PostMapping("/add")
     public ResponseEntity<GameDTO> addGame(@RequestBody GameCreationDto gameCreationDto, HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.createGame(httpSession.getId(), gameCreationDto)));
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.createGame(httpSession.getId(), gameCreationDto)));
     }
 
     @PostMapping("/join/{gameId}")
     public ResponseEntity<GameDTO> joinIntoTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.joinIntoTheGame(httpSession.getId(), gameId)));
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.joinIntoTheGame(httpSession.getId(), gameId)));
     }
 
     @DeleteMapping("/left")
     public ResponseEntity<GameDTO> leftFromTheGame(HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.leftFromTheGame(httpSession.getId())));
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.leftFromTheGame(httpSession.getId())));
     }
 
     @GetMapping("/get/{gameId}")
     public ResponseEntity<GameDTO> getGame(@PathVariable("gameId") Long gameId) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.getGame(gameId)));
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.getGame(gameId)));
     }
 
     @DeleteMapping("/clear/{id}")
     public ResponseEntity<List<GameDTO>> clearGames(@PathVariable("id") Long id) {
-        gameService.clearGames(id);
+        gameManager.clearGames(id);
         return getGames();
     }
 }

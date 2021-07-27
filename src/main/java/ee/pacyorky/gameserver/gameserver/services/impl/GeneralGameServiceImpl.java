@@ -5,7 +5,7 @@ import ee.pacyorky.gameserver.gameserver.entities.*;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.services.EventDayService;
-import ee.pacyorky.gameserver.gameserver.services.GameService;
+import ee.pacyorky.gameserver.gameserver.services.GameManager;
 import ee.pacyorky.gameserver.gameserver.services.GeneralGameService;
 import ee.pacyorky.gameserver.gameserver.services.PlayerService;
 import lombok.AllArgsConstructor;
@@ -18,14 +18,14 @@ import java.util.*;
 @AllArgsConstructor
 public class GeneralGameServiceImpl implements GeneralGameService {
 
-    private final GameService gameService;
+    private final GameManager gameManager;
     private final PlayerService playerService;
     private final EventDayService eventDayService;
 
     @Override
     public synchronized Player startGame(Long gameId, String playerId) {
         Player player = playerService.getOrCreatePlayer(playerId);
-        Game game = gameService.getGame(gameId);
+        Game game = gameManager.getGame(gameId);
         if (game == null || player == null)
             throw new GlobalException("Internal server error", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         if (!game.getPlayers().contains(player)) return null;
@@ -46,14 +46,14 @@ public class GeneralGameServiceImpl implements GeneralGameService {
             playerService.savePlayer(player1);
         }
         nextStep(gameId, playerId);
-        gameService.saveGame(game);
+        gameManager.saveGame(game);
         return playerService.getOrCreatePlayer(playerId);
     }
 
     @Override
     public synchronized Game nextStep(Long gameId, String playerId) {
         Player player = playerService.getOrCreatePlayer(playerId);
-        Game game = gameService.getGame(gameId);
+        Game game = gameManager.getGame(gameId);
         if (player == null || game == null) {
             throw new GlobalException("Internal server error", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
@@ -93,7 +93,7 @@ public class GeneralGameServiceImpl implements GeneralGameService {
         currentPlayer.setCurrentDay(eventDayService.getNextDay(player, game.getCounter()));
         playerService.savePlayer(currentPlayer);
 
-        return gameService.saveGame(game);
+        return gameManager.saveGame(game);
     }
 
     private void initPlayersCards(Player player, Game game) {

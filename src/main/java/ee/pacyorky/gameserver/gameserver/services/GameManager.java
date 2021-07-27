@@ -5,7 +5,7 @@ import ee.pacyorky.gameserver.gameserver.entities.Game;
 
 import java.util.List;
 
-public interface GameService {
+public interface GameManager {
 
     List<Game> getGames();
 

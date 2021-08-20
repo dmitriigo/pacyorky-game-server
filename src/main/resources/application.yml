@@ -17,6 +17,9 @@ game:
   maxAttemptsForStep: 10
   maxAttemptsForStart: 10
   maxGames: 10
+telegram:
+  token: ${TELEGRAM_TOKEN}
+  chat: ${TELEGRAM_CHAT}
 
 
 

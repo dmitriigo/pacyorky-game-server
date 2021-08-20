@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOGS" value="./logs"/>
+    <springProperty name="TELEGRAM_TOKEN" source="telegram.token"/>
+    <springProperty name="TELEGRAM_CHAT" source="telegram.chat"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{15}) - %msg %n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="TELEGRAM"
+              class="com.github.paolodenti.telegram.logback.TelegramAppender">
+        <botToken>${TELEGRAM_TOKEN}</botToken>
+        <chatId>${TELEGRAM_CHAT}</chatId>
+        <Layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</Pattern>
+        </Layout>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="TELEGRAM"/>
+    </root>
+</configuration>

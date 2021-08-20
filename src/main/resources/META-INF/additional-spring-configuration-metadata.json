@@ -24,6 +24,16 @@
       "name": "game.maxGames",
       "type": "java.lang.String",
       "description": "Description for game.maxGames."
+    },
+    {
+      "name": "telegram.token",
+      "type": "java.lang.String",
+      "description": "Description for telegram.token."
+    },
+    {
+      "name": "telegram.chat",
+      "type": "java.lang.String",
+      "description": "Description for telegram.chat."
     }
   ]
 }

@@ -21,4 +21,8 @@ public class GameCreationDto {
 
     private String name;
 
+    private Long secondsBeforeStart;
+
+    private Long secondsForStep;
+
 }

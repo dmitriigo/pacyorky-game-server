@@ -1,20 +1,25 @@
 package ee.pacyorky.gameserver.gameserver.services.impl;
 
+import ee.pacyorky.gameserver.gameserver.config.AppProperties;
 import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
+import ee.pacyorky.gameserver.gameserver.entities.Card;
 import ee.pacyorky.gameserver.gameserver.entities.Game;
 import ee.pacyorky.gameserver.gameserver.entities.Player;
+import ee.pacyorky.gameserver.gameserver.entities.Status;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.repositories.EventDayRepository;
 import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
 import ee.pacyorky.gameserver.gameserver.services.DeckService;
 import ee.pacyorky.gameserver.gameserver.services.GameManager;
+import ee.pacyorky.gameserver.gameserver.services.GeneralGameService;
 import ee.pacyorky.gameserver.gameserver.services.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,11 +35,9 @@ public class GameManagerImpl implements GameManager {
 
     private final PlayerService playerService;
 
-    private static final Long maxGames = 10L;
+    private final GeneralGameService generalGameService;
 
-    private static final Long secondsBeforeStart = 20L;
-
-    private static final Long secondsBeforeNextStep = 60L;
+    private final AppProperties properties;
 
     @Override
     public List<Game> getGames() {
@@ -47,9 +50,14 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
+    public Game getGame(String playerId) {
+        return getGames().stream().filter(game -> game.getPlayers().stream().map(Player::getId).anyMatch(id -> id.equals(playerId))).findFirst().orElse(null);
+    }
+
+    @Override
     public Game createGame(String playerId, GameCreationDto gameCreationDto) {
 
-        if (gameRepository.count() >= maxGames) {
+        if (gameRepository.count() >= properties.getMaxGames()) {
             throw new GlobalException("Games count more than capacity", GlobalExceptionCode.GAMES_LIMIT_REACHED);
         }
 
@@ -59,18 +67,46 @@ public class GameManagerImpl implements GameManager {
                 .holidaysDeck(deckService.getHolidaysDeck())
                 .ritualsDeck(deckService.getRitualsDeck())
                 .stuffDeck(deckService.getStuffDeck())
-                .startAt(LocalDateTime.now().plusSeconds(secondsBeforeStart))
+                .startAt(LocalDateTime.now().plusSeconds(properties.getSecondsBeforeStart()))
                 .capacity(gameCreationDto.getCapacity())
                 .password(gameCreationDto.getPassword())
                 .privateRoom(gameCreationDto.isPrivateRoom())
                 .withComputer(gameCreationDto.isWithComputer())
                 .name(gameCreationDto.getName())
                 .characters(deckService.getCharacterDeck())
+                .status(Status.WAITING)
+                .secondsBeforeStart(Optional.ofNullable(gameCreationDto.getSecondsBeforeStart()).orElse(properties.getSecondsBeforeStart()))
+                .secondsForStep(Optional.ofNullable(gameCreationDto.getSecondsForStep()).orElse(properties.getSecondsBeforeStep()))
                 .build();
         Player player = playerService.getOrCreatePlayer(playerId);
         checkPlayerInGame(player);
         game.addPlayer(player);
-        return gameRepository.save(game);
+        var savedGame = gameRepository.saveAndFlush(game);
+        generalGameService.setUpStart(savedGame, this);
+        return savedGame;
+    }
+
+    @Override
+    public Game makeStep(String playerId, List<Long> cards) {
+        var game = getGame(playerId);
+        var player = playerService.getOrCreatePlayer(playerId);
+        if (game.getStep().getStatus() != Status.WAITING) {
+            throw new GlobalException("Step not waiting", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (!player.equals(game.getStep().getCurrentPlayer())) {
+            throw new GlobalException("Step not waiting", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (!player.getDeck().stream().map(Card::getId).collect(Collectors.toList()).containsAll(cards)) {
+            throw new GlobalException("Player dont have cards from collection", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        player.setHappiness(cards.size());
+        player.removeCards(cards);
+        player.setStepFinished(true);
+        game.getStep().setStatus(Status.FINISHED);
+        playerService.savePlayer(player);
+        saveGame(game);
+        generalGameService.nextStep(game.getId(), this);
+        return getGame(playerId);
     }
 
     @Override
@@ -87,9 +123,10 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public Game leftFromTheGame(String playerId) {
-        Game game = gameRepository.findAll().stream()
-                .filter(gameAtRepo -> gameAtRepo.getPlayers().stream().map(Player::getId).anyMatch(id -> id.equals(playerId)))
-                .findFirst().orElseThrow(() -> new GlobalException("Game not found", GlobalExceptionCode.INTERNAL_SERVER_ERROR));
+        var game = getGame(playerId);
+        if (game == null) {
+            throw new GlobalException("Game not found", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
         game.removePlayer(playerId);
         return gameRepository.save(game);
     }

@@ -1,33 +1,31 @@
 package ee.pacyorky.gameserver.gameserver.controllers;
 
 import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
-import ee.pacyorky.gameserver.gameserver.dtos.PlayerDTO;
 import ee.pacyorky.gameserver.gameserver.mappers.GameMapper;
-import ee.pacyorky.gameserver.gameserver.mappers.PlayerMapper;
-import ee.pacyorky.gameserver.gameserver.services.GeneralGameService;
+import ee.pacyorky.gameserver.gameserver.services.GameManager;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/game")
 public class GameController {
 
-    private final GeneralGameService gameService;
+    private final GameManager gameManager;
 
-    @GetMapping("/{id}/start")
-    public ResponseEntity<PlayerDTO> startGame(@PathVariable("id") Long gameId, HttpSession httpSession) {
-        return ResponseEntity.ok(PlayerMapper.INSTANCE.toDto(gameService.startGame(gameId, httpSession.getId())));
+    @GetMapping("")
+    public ResponseEntity<GameDTO> game(HttpSession httpSession) {
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.getGame(httpSession.getId())));
     }
 
-    @GetMapping("/{id}/next")
-    public ResponseEntity<GameDTO> nextStep(@PathVariable("id") Long gameId, HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameService.nextStep(gameId, httpSession.getId())));
+    @PostMapping("/step")
+    public ResponseEntity<GameDTO> step(HttpSession httpSession, @RequestBody List<Long> cards) {
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.makeStep(httpSession.getId(), cards)));
     }
+
+
 }

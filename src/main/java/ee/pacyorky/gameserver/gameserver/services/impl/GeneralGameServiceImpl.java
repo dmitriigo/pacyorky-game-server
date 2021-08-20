@@ -1,102 +1,44 @@
 package ee.pacyorky.gameserver.gameserver.services.impl;
 
-import ee.pacyorky.gameserver.gameserver.entities.Character;
-import ee.pacyorky.gameserver.gameserver.entities.*;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
+import ee.pacyorky.gameserver.gameserver.config.AppProperties;
+import ee.pacyorky.gameserver.gameserver.entities.Card;
+import ee.pacyorky.gameserver.gameserver.entities.CardType;
+import ee.pacyorky.gameserver.gameserver.entities.Game;
+import ee.pacyorky.gameserver.gameserver.entities.Player;
 import ee.pacyorky.gameserver.gameserver.services.EventDayService;
 import ee.pacyorky.gameserver.gameserver.services.GameManager;
 import ee.pacyorky.gameserver.gameserver.services.GeneralGameService;
 import ee.pacyorky.gameserver.gameserver.services.PlayerService;
-import lombok.AllArgsConstructor;
+import ee.pacyorky.gameserver.gameserver.services.impl.GameExecutors.GameStartExecutor;
+import ee.pacyorky.gameserver.gameserver.services.impl.GameExecutors.GameStepExecutor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.function.BiConsumer;
 
 @Service
-@AllArgsConstructor
 public class GeneralGameServiceImpl implements GeneralGameService {
 
-    private final GameManager gameManager;
     private final PlayerService playerService;
     private final EventDayService eventDayService;
+    private final ExecutorService executorService;
+    private final Map<Long, Future<?>> steps = new HashMap<>();
+    private final Map<Long, Future<?>> games = new HashMap<>();
 
-    @Override
-    public synchronized Player startGame(Long gameId, String playerId) {
-        Player player = playerService.getOrCreatePlayer(playerId);
-        Game game = gameManager.getGame(gameId);
-        if (game == null || player == null)
-            throw new GlobalException("Internal server error", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
-        if (!game.getPlayers().contains(player)) return null;
-
-        if (game.isStarted()) {
-            return player;
-        }
-        if (game.getStartAt().isAfter(LocalDateTime.now()))
-            throw new GlobalException("Game already started", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
-        game.setStarted(true);
-        Set<Player> players = game.getPlayers();
-        for (Player player1 : players) {
-            initPlayersCards(player1, game);
-            Character character = game.getCharacters().stream().findAny().orElseThrow();
-            player1.setCharacter(character);
-            game.getCharacters().remove(character);
-            player1.setCurrentDay(eventDayService.getStartPosition());
-            playerService.savePlayer(player1);
-        }
-        nextStep(gameId, playerId);
-        gameManager.saveGame(game);
-        return playerService.getOrCreatePlayer(playerId);
+    @Autowired
+    public GeneralGameServiceImpl(PlayerService playerService, EventDayService eventDayService, AppProperties properties) {
+        this.playerService = playerService;
+        this.eventDayService = eventDayService;
+        this.executorService = Executors.newFixedThreadPool(properties.getMaxGames());
     }
 
-    @Override
-    public synchronized Game nextStep(Long gameId, String playerId) {
-        Player player = playerService.getOrCreatePlayer(playerId);
-        Game game = gameManager.getGame(gameId);
-        if (player == null || game == null) {
-            throw new GlobalException("Internal server error", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
-        }
-        if (!game.isStarted()) {
-            throw new GlobalException("Game not started", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
-        }
-        if (!game.getPlayers().contains(player)) return null;
-
-        if (game.getNextStepAt() != null && game.getNextStepAt().isAfter(LocalDateTime.now())) {
-            return game;
-        }
-
-        game.setNextStepAt(LocalDateTime.now().plusSeconds(20));
-
-        List<Player> players = new ArrayList<>(game.getPlayers());
-        players.sort(Comparator.comparing(Player::getId));
-        game.setCounter(new Random().nextInt(6) + 1);
-
-        if (game.getCurrentPlayer() == null) {
-            game.setCurrentPlayer(players.get(0));
-        } else {
-            initPlayersCards(game.getCurrentPlayer(), game);
-            playerService.savePlayer(game.getCurrentPlayer());
-
-            //TODO така фигня. Надо переписать это все нахрен
-            for (int i = 0; i < players.size(); i++) {
-                Player player1 = players.get(i);
-                if (player1.equals(game.getCurrentPlayer())) {
-                    int order = i > players.size() ? 0 : i;
-                    game.setCurrentPlayer(players.get(order));
-                    break;
-                }
-            }
-        }
-
-        Player currentPlayer = game.getCurrentPlayer();
-        currentPlayer.setCurrentDay(eventDayService.getNextDay(player, game.getCounter()));
-        playerService.savePlayer(currentPlayer);
-
-        return gameManager.saveGame(game);
-    }
-
-    private void initPlayersCards(Player player, Game game) {
+    public static void initPlayersCards(Player player, Game game) {
         Map<CardType, List<Card>> cardTypeListMap = game.getAllDecks();
 
         for (Map.Entry<CardType, List<Card>> cardTypeListEntry : cardTypeListMap.entrySet()) {
@@ -107,7 +49,21 @@ public class GeneralGameServiceImpl implements GeneralGameService {
                 cardTypeListEntry.getValue().remove(card);
             }
         }
-
     }
 
+    private BiConsumer<Long, GameManager> afterStartCallback() {
+        return this::nextStep;
+    }
+
+    @Override
+    public void nextStep(Long gameId, GameManager gameManager) {
+        var feature = executorService.submit(new GameStepExecutor(gameManager, playerService, eventDayService, gameId));
+        steps.put(gameId, feature);
+    }
+
+    @Override
+    public void setUpStart(Game savedGame, GameManager gameManager) {
+        var feature = executorService.submit(new GameStartExecutor(gameManager, playerService, eventDayService, savedGame.getId(), afterStartCallback()));
+        games.put(savedGame.getId(), feature);
+    }
 }

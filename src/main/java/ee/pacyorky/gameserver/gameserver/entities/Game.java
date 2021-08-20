@@ -55,16 +55,11 @@ public class Game {
     @Setter(AccessLevel.NONE)
     private List<Character> characters;
 
-    @OneToOne
-    private Player currentPlayer;
-
     private Long capacity;
 
     private LocalDateTime startAt;
 
     private LocalDateTime nextStepAt;
-
-    private boolean started;
 
     private boolean withComputer;
 
@@ -74,7 +69,14 @@ public class Game {
 
     private String name;
 
-    private Integer counter;
+    private Status status;
+
+    private Long secondsBeforeStart;
+
+    private Long secondsForStep;
+
+    @OneToOne
+    private Step step;
 
     public void addPlayer(Player player) {
         if (players == null) {

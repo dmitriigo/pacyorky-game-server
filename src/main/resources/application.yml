@@ -11,6 +11,13 @@ spring:
       enabled: true
   flyway:
     enabled: false
+game:
+  secondsBeforeStart: 120
+  secondsBeforeStep: 120
+  maxAttemptsForStep: 10
+  maxAttemptsForStart: 10
+  maxGames: 10
+
 
 
 

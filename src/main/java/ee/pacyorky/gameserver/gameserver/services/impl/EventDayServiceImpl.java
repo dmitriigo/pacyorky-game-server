@@ -15,6 +15,8 @@ public class EventDayServiceImpl implements EventDayService {
 
     private static final Long startId = 0L;
 
+    private static final Long lastId = 48L;
+
     @Override
     public EventDay getStartPosition() {
         return eventDayRepository.findById(startId).orElseThrow();
@@ -23,5 +25,10 @@ public class EventDayServiceImpl implements EventDayService {
     @Override
     public EventDay getNextDay(Player player, int count) {
         return eventDayRepository.findById(player.getCurrentDay().getId() + count).orElse(null);
+    }
+
+    @Override
+    public EventDay getLastStepDay(Player player, int count) {
+        return eventDayRepository.findById(lastId - player.getCurrentDay().getId() + count).orElseThrow();
     }
 }

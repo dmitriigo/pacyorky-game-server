@@ -11,7 +11,11 @@ public interface GameManager {
 
     Game getGame(Long gameId);
 
+    Game getGame(String playerId);
+
     Game createGame(String playerId, GameCreationDto gameCreationDto);
+
+    Game makeStep(String playerId, List<Long> cards);
 
     Game joinIntoTheGame(String playerId, Long gameId);
 

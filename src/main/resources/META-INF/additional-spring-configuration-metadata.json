@@ -1,0 +1,29 @@
+{
+  "properties": [
+    {
+      "name": "game.secondsBeforeStart",
+      "type": "java.lang.String",
+      "description": "Description for game.secondsBeforeStart."
+    },
+    {
+      "name": "game.secondsBeforeStep",
+      "type": "java.lang.String",
+      "description": "Description for game.secondsBeforeStep."
+    },
+    {
+      "name": "game.maxAttemptsForStep",
+      "type": "java.lang.String",
+      "description": "Description for game.maxAttemptsForStep."
+    },
+    {
+      "name": "game.maxAttemptsForStart",
+      "type": "java.lang.String",
+      "description": "Description for game.maxAttemptsForStart."
+    },
+    {
+      "name": "game.maxGames",
+      "type": "java.lang.String",
+      "description": "Description for game.maxGames."
+    }
+  ]
+}

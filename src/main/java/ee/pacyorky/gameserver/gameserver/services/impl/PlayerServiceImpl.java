@@ -35,7 +35,7 @@ public class PlayerServiceImpl implements PlayerService {
     public void clearPlayers() {
         List<Game> all = gameRepository.findAll();
         for (Game game : all) {
-            game.setCurrentPlayer(null);
+            game.setStep(null);
             Set<Player> players = game.getPlayers();
             for (Player player : players) {
                 game.removePlayer(player.getId());

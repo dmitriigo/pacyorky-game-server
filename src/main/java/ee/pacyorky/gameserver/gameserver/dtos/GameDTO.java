@@ -16,15 +16,11 @@ public class GameDTO {
 
     private Set<PlayerDTO> players;
 
-    private PlayerDTO currentPlayer;
-
     private Long capacity;
 
     private LocalDateTime startAt;
 
     private LocalDateTime nextStepAt;
-
-    private boolean started;
 
     private boolean withComputer;
 
@@ -34,6 +30,8 @@ public class GameDTO {
 
     private String name;
 
-    private Integer counter;
+    private StepDto step;
+
+    private String status;
 
 }

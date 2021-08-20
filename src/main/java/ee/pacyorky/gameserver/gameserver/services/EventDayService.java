@@ -8,4 +8,6 @@ public interface EventDayService {
     EventDay getStartPosition();
 
     EventDay getNextDay(Player player, int count);
+
+    EventDay getLastStepDay(Player player, int count);
 }

@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +22,7 @@ public class Player {
     private String id;
 
     @Builder.Default
-    private Integer happiness = 0;
+    private Long happiness = 0L;
 
     @ManyToOne
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -36,7 +33,7 @@ public class Player {
     @Builder.Default
     private List<Card> deck = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)
     private EventDay currentDay;
 

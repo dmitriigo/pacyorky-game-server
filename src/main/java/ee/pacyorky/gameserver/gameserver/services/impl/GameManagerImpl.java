@@ -99,7 +99,8 @@ public class GameManagerImpl implements GameManager {
         if (!player.getDeck().stream().map(Card::getId).collect(Collectors.toList()).containsAll(cards)) {
             throw new GlobalException("Player dont have cards from collection", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
-        player.setHappiness(cards.size());
+
+        player.setHappiness(calculateHappiness(player, cards));
         player.removeCards(cards);
         player.setStepFinished(true);
         game.getStep().setStatus(Status.FINISHED);
@@ -107,6 +108,17 @@ public class GameManagerImpl implements GameManager {
         saveGame(game);
         generalGameService.nextStep(game.getId(), this);
         return getGame(playerId);
+    }
+
+    private long calculateHappiness(Player player, List<Long> cards) {
+        var favoriteAdditional = player.getCharacter().getFavoriteCards().stream().filter(card -> cards.contains(card.getId())).count();
+        var favoriteDayAdditional = player.getCharacter().getFavoriteEventDays().stream().filter(day -> day.getId().equals(player.getCurrentDay().getId())).count();
+        var holiday = 0L;
+        if (player.getCurrentDay().isHoliday() && player.getCurrentDay().getHolidayCard() != null) {
+            holiday = player.getCharacter().getFavoriteHolidaysCards().stream().filter(card -> card.getId().equals(player.getCurrentDay().getHolidayCard().getId())).count();
+            player.getCurrentDay().setHolidayCard(null);
+        }
+        return player.getHappiness() + cards.size() + favoriteAdditional + favoriteDayAdditional + holiday;
     }
 
     @Override

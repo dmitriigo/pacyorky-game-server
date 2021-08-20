@@ -103,6 +103,9 @@ public class GameStepExecutor implements Runnable {
             player.setLastStep(true);
             newDay = eventDayService.getLastStepDay(player, counter);
         }
+        if (newDay.isHoliday()) {
+            newDay.setHolidayCard(game.getHolidayCard());
+        }
         player.setCurrentDay(newDay);
         playerService.savePlayer(player);
         var step = Step.builder().status(Status.WAITING).counter(counter).currentPlayer(player).build();

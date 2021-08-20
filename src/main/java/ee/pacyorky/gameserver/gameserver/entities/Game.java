@@ -103,4 +103,11 @@ public class Game {
         result.put(CardType.STUFF, stuffDeck);
         return result;
     }
+
+    public HolidayCard getHolidayCard() {
+        Collections.shuffle(holidaysDeck);
+        var holiday = holidaysDeck.stream().findAny().orElseThrow();
+        holidaysDeck.remove(holiday);
+        return holiday;
+    }
 }

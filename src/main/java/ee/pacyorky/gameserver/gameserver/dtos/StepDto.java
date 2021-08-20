@@ -1,6 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.dtos;
 
-import ee.pacyorky.gameserver.gameserver.entities.Status;
+import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

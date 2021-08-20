@@ -1,10 +1,10 @@
 package ee.pacyorky.gameserver.gameserver.mappers;
 
 import ee.pacyorky.gameserver.gameserver.dtos.StepDto;
-import ee.pacyorky.gameserver.gameserver.entities.CardType;
-import ee.pacyorky.gameserver.gameserver.entities.Season;
-import ee.pacyorky.gameserver.gameserver.entities.Status;
-import ee.pacyorky.gameserver.gameserver.entities.Step;
+import ee.pacyorky.gameserver.gameserver.entities.game.CardType;
+import ee.pacyorky.gameserver.gameserver.entities.game.Season;
+import ee.pacyorky.gameserver.gameserver.entities.game.Status;
+import ee.pacyorky.gameserver.gameserver.entities.game.Step;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

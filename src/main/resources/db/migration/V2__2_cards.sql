@@ -1,244 +1,246 @@
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (1, 1, 'pirizhki', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (3, 1, 'kalita', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (5, 1, 'myasko', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (7, 1, 'holodec', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (9, 1, 'polunica', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (11, 1, 'kulish', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (13, 1, 'kartoplya', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (15, 1, 'med', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (17, 1, 'moloko', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (19, 1, 'mykolaychiki', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (21, 1, 'ribka', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (23, 1, 'jajca', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (25, 1, 'vishni', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (27, 1, 'ptashki', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (29, 1, 'grechaniki', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (31, 1, 'cukerki', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (33, 1, 'mak', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (35, 1, 'yabluka', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (37, 1, 'golubci', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (39, 1, 'korovai', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (41, 1, 'vareniki', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (43, 1, 'uzvar', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (45, 1, 'hlib', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (47, 1, 'borsh', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (49, 1, 'gribi', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (51, 1, 'gorohi', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (53, 1, 'salo', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (55, 1, 'paska', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (56, 1, 'kovbasa', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (57, 1, 'smetana', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (58, 1, 'vesilnii_korovai', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (59, 1, 'nalisniki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (60, 1, 'kutja', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (121, 2, 'hoditi_do_cerkvi', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (123, 2, 'chitannja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (125, 2, 'pasti_hudobu', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (127, 2, 'hoditi_do_lesu', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (129, 2, 'paruvannja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (131, 2, 'prikrashati_ljalju', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (133, 2, 'horovodi', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (135, 2, 'zasivannja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (137, 2, 'torguvannja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (139, 2, 'tereveniti', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (141, 2, 'oblivanki', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (142, 2, 'vmivannja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (143, 2, 'vorozhennja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (144, 2, 'pisankarstvo', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (145, 2, 'obdaruvati', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (146, 2, 'kuhovarennja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (147, 2, 'poluvannja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (148, 2, 'pracja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (149, 2, 'kolyaduvannja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (150, 2, 'tanci', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (151, 2, 'muzikuvannja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (152, 2, 'prikrashati_hati', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (153, 2, 'molitva', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (154, 2, 'kupil', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (155, 2, 'spivi', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (156, 2, 'stribki_cherez_vogon', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (157, 2, 'kidannja_vinkiv', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (158, 2, 'pribirati', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (159, 2, 'vishivannja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (160, 2, 'shedruvannja', 2);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (181, 3, 'farbi', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (182, 3, 'igrashki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (183, 3, 'zirka', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (184, 3, 'priladdya', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (185, 3, 'koromislo', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (186, 3, 'verba', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (187, 3, 'ptashki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (188, 3, 'vivci', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (189, 3, 'bajan', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (190, 3, 'krashanki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (191, 3, 'strichki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (192, 3, 'zerno', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (193, 3, 'proskuri', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (194, 3, 'kobza', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (195, 3, 'glechik', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (196, 3, 'pisachok', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (197, 3, 'sopilka', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (198, 3, 'vulik', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (199, 3, 'pisanki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (200, 3, 'gillya', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (201, 3, 'kviti', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (202, 3, 'vertep', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (203, 3, 'sanchata', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (204, 3, 'vinki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (205, 3, 'knizhki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (206, 3, 'snip', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (207, 3, 'motanka', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (208, 3, 'choboti', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (209, 3, 'yalinka', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (210, 3, 'sonyashniki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (211, 3, 'vishivanka', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (212, 3, 'yangol', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (213, 3, 'paperovi_kviti', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (214, 3, 'opudalo', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (215, 3, 'dzvoni', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (216, 3, 'velikodnij_koshik', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (217, 3, 'kit', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (218, 3, 'hustina', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (219, 3, 'buket', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (220, 3, 'travi', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (221, 3, 'obzhinkovij_vinok', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (222, 3, 'servetka', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (223, 3, 'koshik', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (224, 3, 'kolodka', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (225, 3, 'gilka_vishni', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (226, 3, 'diduh', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (227, 3, 'maki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (228, 3, 'bandura', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (229, 3, 'kalina', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (230, 3, 'skripnja', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (231, 3, 'namisto', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (232, 3, 'nitki', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (233, 3, 'icona', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (234, 3, 'piven', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (235, 3, 'vognishe', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (236, 3, 'mishok', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (237, 3, 'svichka', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (238, 3, 'voda', 1);
-INSERT INTO CARD (ID, CARD_TYPE, NAME, CARDS_IN_DECK)
-VALUES (239, 3, 'rushnik', 2);
+# noinspection SqlResolveForFile
+
+insert into card (id, card_type, name, cards_in_deck)
+values (1, 1, 'pirizhki', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (3, 1, 'kalita', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (5, 1, 'myasko', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (7, 1, 'holodec', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (9, 1, 'polunica', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (11, 1, 'kulish', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (13, 1, 'kartoplya', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (15, 1, 'med', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (17, 1, 'moloko', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (19, 1, 'mykolaychiki', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (21, 1, 'ribka', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (23, 1, 'jajca', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (25, 1, 'vishni', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (27, 1, 'ptashki', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (29, 1, 'grechaniki', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (31, 1, 'cukerki', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (33, 1, 'mak', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (35, 1, 'yabluka', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (37, 1, 'golubci', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (39, 1, 'korovai', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (41, 1, 'vareniki', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (43, 1, 'uzvar', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (45, 1, 'hlib', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (47, 1, 'borsh', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (49, 1, 'gribi', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (51, 1, 'gorohi', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (53, 1, 'salo', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (55, 1, 'paska', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (56, 1, 'kovbasa', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (57, 1, 'smetana', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (58, 1, 'vesilnii_korovai', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (59, 1, 'nalisniki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (60, 1, 'kutja', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (121, 2, 'hoditi_do_cerkvi', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (123, 2, 'chitannja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (125, 2, 'pasti_hudobu', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (127, 2, 'hoditi_do_lesu', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (129, 2, 'paruvannja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (131, 2, 'prikrashati_ljalju', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (133, 2, 'horovodi', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (135, 2, 'zasivannja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (137, 2, 'torguvannja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (139, 2, 'tereveniti', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (141, 2, 'oblivanki', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (142, 2, 'vmivannja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (143, 2, 'vorozhennja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (144, 2, 'pisankarstvo', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (145, 2, 'obdaruvati', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (146, 2, 'kuhovarennja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (147, 2, 'poluvannja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (148, 2, 'pracja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (149, 2, 'kolyaduvannja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (150, 2, 'tanci', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (151, 2, 'muzikuvannja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (152, 2, 'prikrashati_hati', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (153, 2, 'molitva', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (154, 2, 'kupil', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (155, 2, 'spivi', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (156, 2, 'stribki_cherez_vogon', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (157, 2, 'kidannja_vinkiv', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (158, 2, 'pribirati', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (159, 2, 'vishivannja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (160, 2, 'shedruvannja', 2);
+insert into card (id, card_type, name, cards_in_deck)
+values (181, 3, 'farbi', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (182, 3, 'igrashki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (183, 3, 'zirka', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (184, 3, 'priladdya', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (185, 3, 'koromislo', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (186, 3, 'verba', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (187, 3, 'ptashki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (188, 3, 'vivci', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (189, 3, 'bajan', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (190, 3, 'krashanki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (191, 3, 'strichki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (192, 3, 'zerno', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (193, 3, 'proskuri', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (194, 3, 'kobza', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (195, 3, 'glechik', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (196, 3, 'pisachok', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (197, 3, 'sopilka', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (198, 3, 'vulik', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (199, 3, 'pisanki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (200, 3, 'gillya', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (201, 3, 'kviti', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (202, 3, 'vertep', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (203, 3, 'sanchata', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (204, 3, 'vinki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (205, 3, 'knizhki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (206, 3, 'snip', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (207, 3, 'motanka', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (208, 3, 'choboti', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (209, 3, 'yalinka', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (210, 3, 'sonyashniki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (211, 3, 'vishivanka', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (212, 3, 'yangol', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (213, 3, 'paperovi_kviti', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (214, 3, 'opudalo', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (215, 3, 'dzvoni', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (216, 3, 'velikodnij_koshik', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (217, 3, 'kit', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (218, 3, 'hustina', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (219, 3, 'buket', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (220, 3, 'travi', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (221, 3, 'obzhinkovij_vinok', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (222, 3, 'servetka', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (223, 3, 'koshik', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (224, 3, 'kolodka', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (225, 3, 'gilka_vishni', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (226, 3, 'diduh', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (227, 3, 'maki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (228, 3, 'bandura', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (229, 3, 'kalina', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (230, 3, 'skripnja', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (231, 3, 'namisto', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (232, 3, 'nitki', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (233, 3, 'icona', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (234, 3, 'piven', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (235, 3, 'vognishe', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (236, 3, 'mishok', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (237, 3, 'svichka', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (238, 3, 'voda', 1);
+insert into card (id, card_type, name, cards_in_deck)
+values (239, 3, 'rushnik', 2);

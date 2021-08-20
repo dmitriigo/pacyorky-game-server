@@ -1,74 +1,76 @@
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (1, 43);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (1, 150);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (1, 133);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (1, 231);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (1, 191);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (2, 123);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (2, 205);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (2, 149);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (2, 31);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (2, 19);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (3, 159);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (3, 146);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (3, 144);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (4, 121);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (4, 153);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (4, 1);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (4, 193);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (4, 145);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (4, 233);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (5, 151);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (5, 194);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (5, 47);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (5, 148);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (6, 189);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (6, 151);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (6, 7);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (6, 182);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (6, 145);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (7, 181);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (7, 135);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (7, 145);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (7, 144);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (8, 129);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (8, 211);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (8, 208);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (8, 56);
-INSERT INTO CHARACTER_FAVORITE_CARDS (CHARACTER_ID, FAVORITE_CARDS_ID)
-VALUES (8, 5);
+-- noinspection SqlResolveForFile
+
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (1, 43);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (1, 150);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (1, 133);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (1, 231);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (1, 191);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (2, 123);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (2, 205);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (2, 149);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (2, 31);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (2, 19);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (3, 159);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (3, 146);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (3, 144);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (4, 121);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (4, 153);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (4, 1);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (4, 193);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (4, 145);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (4, 233);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (5, 151);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (5, 194);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (5, 47);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (5, 148);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (6, 189);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (6, 151);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (6, 7);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (6, 182);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (6, 145);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (7, 181);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (7, 135);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (7, 145);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (7, 144);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (8, 129);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (8, 211);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (8, 208);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (8, 56);
+insert into character_table_favorite_cards (character_id, favorite_cards_id)
+values (8, 5);

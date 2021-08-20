@@ -2,7 +2,7 @@ package ee.pacyorky.gameserver.gameserver.controllers;
 
 import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
 import ee.pacyorky.gameserver.gameserver.mappers.GameMapper;
-import ee.pacyorky.gameserver.gameserver.services.GameManager;
+import ee.pacyorky.gameserver.gameserver.services.game.GameManager;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

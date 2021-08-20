@@ -1,16 +1,16 @@
-INSERT INTO CHARACTER (ID, NAME)
-VALUES (1, 'dochka_solomia');
-INSERT INTO CHARACTER (ID, NAME)
-VALUES (2, 'dochka_orisja');
-INSERT INTO CHARACTER (ID, NAME)
-VALUES (3, 'gospodinja_ivga');
-INSERT INTO CHARACTER (ID, NAME)
-VALUES (4, 'baba_docka');
-INSERT INTO CHARACTER (ID, NAME)
-VALUES (5, 'gospodar_vukol');
-INSERT INTO CHARACTER (ID, NAME)
-VALUES (6, 'did_bojan');
-INSERT INTO CHARACTER (ID, NAME)
-VALUES (7, 'sin_gnat');
-INSERT INTO CHARACTER (ID, NAME)
-VALUES (8, 'legin_ustim');
+insert into character_table (id, name)
+values (1, 'dochka_solomia');
+insert into character_table (id, name)
+values (2, 'dochka_orisja');
+insert into character_table (id, name)
+values (3, 'gospodinja_ivga');
+insert into character_table (id, name)
+values (4, 'baba_docka');
+insert into character_table (id, name)
+values (5, 'gospodar_vukol');
+insert into character_table (id, name)
+values (6, 'did_bojan');
+insert into character_table (id, name)
+values (7, 'sin_gnat');
+insert into character_table (id, name)
+values (8, 'legin_ustim');

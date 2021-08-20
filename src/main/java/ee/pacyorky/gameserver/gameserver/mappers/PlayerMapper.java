@@ -1,9 +1,9 @@
 package ee.pacyorky.gameserver.gameserver.mappers;
 
 import ee.pacyorky.gameserver.gameserver.dtos.PlayerDTO;
-import ee.pacyorky.gameserver.gameserver.entities.CardType;
-import ee.pacyorky.gameserver.gameserver.entities.Player;
-import ee.pacyorky.gameserver.gameserver.entities.Season;
+import ee.pacyorky.gameserver.gameserver.entities.game.CardType;
+import ee.pacyorky.gameserver.gameserver.entities.game.Player;
+import ee.pacyorky.gameserver.gameserver.entities.game.Season;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

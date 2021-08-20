@@ -1,14 +1,14 @@
-INSERT INTO HOLIDAY_CARD (ID, NAME, CARDS_IN_DECK)
-VALUES (81, 'vechornici', 10);
-INSERT INTO HOLIDAY_CARD (ID, NAME, CARDS_IN_DECK)
-VALUES (91, 'yarmarok', 10);
-INSERT INTO HOLIDAY_CARD (ID, NAME, CARDS_IN_DECK)
-VALUES (101, 'yangel', 10);
-INSERT INTO HOLIDAY_CARD (ID, NAME, CARDS_IN_DECK)
-VALUES (61, 'vesillja', 1);
-INSERT INTO HOLIDAY_CARD (ID, NAME, CARDS_IN_DECK)
-VALUES (111, 'urodini', 10);
-INSERT INTO HOLIDAY_CARD (ID, NAME, CARDS_IN_DECK)
-VALUES (62, 'vhodini', 1);
-INSERT INTO HOLIDAY_CARD (ID, NAME, CARDS_IN_DECK)
-VALUES (63, 'buden', 18);
+insert into holiday_card (id, name, cards_in_deck)
+values (81, 'vechornici', 10);
+insert into holiday_card (id, name, cards_in_deck)
+values (91, 'yarmarok', 10);
+insert into holiday_card (id, name, cards_in_deck)
+values (101, 'yangel', 10);
+insert into holiday_card (id, name, cards_in_deck)
+values (61, 'vesillja', 1);
+insert into holiday_card (id, name, cards_in_deck)
+values (111, 'urodini', 10);
+insert into holiday_card (id, name, cards_in_deck)
+values (62, 'vhodini', 1);
+insert into holiday_card (id, name, cards_in_deck)
+values (63, 'buden', 18);

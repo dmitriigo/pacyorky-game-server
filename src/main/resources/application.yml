@@ -2,13 +2,14 @@ server:
   port: 3000
 spring:
   datasource:
-    url: jdbc:h2:mem:pacyorky
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${GAME_USER:toor}
+    password: ${GAME_PASS:tooor}
+    url: ${DB_GAME_HOST:jdbc:mysql://localhost:3306/pacyorky-game?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC}
   jpa:
     hibernate:
-      ddl-auto: create
-  h2:
-    console:
-      enabled: true
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
   flyway:
     enabled: false
 game:
@@ -20,7 +21,8 @@ game:
 telegram:
   token: ${TELEGRAM_TOKEN}
   chat: ${TELEGRAM_CHAT}
-
+logging:
+  config: classpath:logback-spring.xml
 
 
 

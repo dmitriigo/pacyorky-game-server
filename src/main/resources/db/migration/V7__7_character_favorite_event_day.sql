@@ -1,36 +1,36 @@
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (1, 29);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (1, 46);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (2, 2);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (2, 3);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (3, 1);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (3, 33);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (4, 17);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (4, 32);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (4, 45);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (5, 18);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (5, 37);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (5, 6);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (6, 23);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (6, 4);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (7, 48);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (7, 4);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (8, 47);
-INSERT INTO CHARACTER_FAVORITE_EVENT_DAYS (CHARACTER_ID, FAVORITE_EVENT_DAYS_ID)
-VALUES (8, 9);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (1, 29);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (1, 46);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (2, 2);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (2, 3);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (3, 1);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (3, 33);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (4, 17);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (4, 32);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (4, 45);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (5, 18);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (5, 37);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (5, 6);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (6, 23);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (6, 4);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (7, 48);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (7, 4);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (8, 47);
+insert into character_table_favorite_event_days (character_id, favorite_event_days_id)
+values (8, 9);

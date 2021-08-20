@@ -1,52 +1,54 @@
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (1, 123);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (1, 148);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (1, 149);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (1, 155);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (1, 160);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (1, 123);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (1, 205);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (2, 204);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (2, 131);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (2, 41);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (3, 158);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (3, 151);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (3, 53);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (4, 151);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (5, 146);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (6, 37);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (6, 149);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (6, 135);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (6, 160);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (7, 155);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (7, 37);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (7, 201);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (7, 204);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (7, 219);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (8, 150);
-INSERT INTO CHARACTER_UNLOVED_CARDS (CHARACTER_ID, UNLOVED_CARDS_ID)
-VALUES (8, 133);
+# noinspection SqlResolveForFile
+
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (1, 123);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (1, 148);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (1, 149);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (1, 155);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (1, 160);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (1, 123);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (1, 205);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (2, 204);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (2, 131);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (2, 41);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (3, 158);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (3, 151);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (3, 53);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (4, 151);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (5, 146);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (6, 37);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (6, 149);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (6, 135);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (6, 160);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (7, 155);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (7, 37);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (7, 201);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (7, 204);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (7, 219);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (8, 150);
+insert into character_table_unloved_cards (character_id, unloved_cards_id)
+values (8, 133);

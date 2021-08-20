@@ -1,6 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.controllers;
 
-import ee.pacyorky.gameserver.gameserver.services.PlayerService;
+import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

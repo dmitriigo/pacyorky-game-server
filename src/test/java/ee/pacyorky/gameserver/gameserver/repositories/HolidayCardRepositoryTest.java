@@ -1,16 +1,18 @@
 package ee.pacyorky.gameserver.gameserver.repositories;
 
-import ee.pacyorky.gameserver.gameserver.entities.HolidayCard;
+import ee.pacyorky.gameserver.gameserver.entities.game.HolidayCard;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class HolidayCardRepositoryTest {
 
     @Autowired

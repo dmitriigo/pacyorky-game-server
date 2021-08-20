@@ -1,6 +1,6 @@
-INSERT INTO CHARACTER_UNLOVED_HOLIDAYS_CARDS (CHARACTER_ID, UNLOVED_HOLIDAYS_CARDS_ID)
-VALUES (4, 81);
-INSERT INTO CHARACTER_UNLOVED_HOLIDAYS_CARDS (CHARACTER_ID, UNLOVED_HOLIDAYS_CARDS_ID)
-VALUES (5, 81);
-INSERT INTO CHARACTER_UNLOVED_HOLIDAYS_CARDS (CHARACTER_ID, UNLOVED_HOLIDAYS_CARDS_ID)
-VALUES (8, 91);
+insert into character_table_unloved_holidays_cards (character_id, unloved_holidays_cards_id)
+values (4, 81);
+insert into character_table_unloved_holidays_cards (character_id, unloved_holidays_cards_id)
+values (5, 81);
+insert into character_table_unloved_holidays_cards (character_id, unloved_holidays_cards_id)
+values (8, 91);

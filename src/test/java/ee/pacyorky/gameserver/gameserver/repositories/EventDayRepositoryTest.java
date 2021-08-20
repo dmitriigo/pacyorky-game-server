@@ -1,11 +1,12 @@
 package ee.pacyorky.gameserver.gameserver.repositories;
 
-import ee.pacyorky.gameserver.gameserver.entities.EventDay;
-import ee.pacyorky.gameserver.gameserver.entities.Season;
+import ee.pacyorky.gameserver.gameserver.entities.game.EventDay;
+import ee.pacyorky.gameserver.gameserver.entities.game.Season;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.Assert;
 
 import java.util.Comparator;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class EventDayRepositoryTest {
 
     @Autowired

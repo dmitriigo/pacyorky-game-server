@@ -1,8 +1,8 @@
 package ee.pacyorky.gameserver.gameserver.mappers;
 
 import ee.pacyorky.gameserver.gameserver.dtos.CardDTO;
-import ee.pacyorky.gameserver.gameserver.entities.Card;
-import ee.pacyorky.gameserver.gameserver.entities.CardType;
+import ee.pacyorky.gameserver.gameserver.entities.game.Card;
+import ee.pacyorky.gameserver.gameserver.entities.game.CardType;
 import org.mapstruct.Mapper;
 
 @Mapper

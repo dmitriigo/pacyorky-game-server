@@ -75,7 +75,10 @@ public class Game {
 
     private Long secondsForStep;
 
-    @OneToOne
+    @Setter(AccessLevel.NONE)
+    private long stepCounter;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Step step;
 
     public void addPlayer(Player player) {
@@ -83,6 +86,10 @@ public class Game {
             players = new HashSet<>();
         }
         players.add(player);
+    }
+
+    public void plusStep() {
+        this.stepCounter++;
     }
 
     public void removePlayer(String playerId) {

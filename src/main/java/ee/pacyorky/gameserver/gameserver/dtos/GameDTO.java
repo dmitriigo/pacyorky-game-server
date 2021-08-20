@@ -34,4 +34,6 @@ public class GameDTO {
 
     private String status;
 
+    private long stepCounter;
+
 }

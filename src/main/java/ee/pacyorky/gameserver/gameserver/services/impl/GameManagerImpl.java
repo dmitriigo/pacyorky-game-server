@@ -67,7 +67,7 @@ public class GameManagerImpl implements GameManager {
                 .holidaysDeck(deckService.getHolidaysDeck())
                 .ritualsDeck(deckService.getRitualsDeck())
                 .stuffDeck(deckService.getStuffDeck())
-                .startAt(LocalDateTime.now().plusSeconds(properties.getSecondsBeforeStart()))
+                .startAt(LocalDateTime.now().plusSeconds(Optional.ofNullable(gameCreationDto.getSecondsBeforeStart()).orElse(properties.getSecondsBeforeStart())))
                 .capacity(gameCreationDto.getCapacity())
                 .password(gameCreationDto.getPassword())
                 .privateRoom(gameCreationDto.isPrivateRoom())

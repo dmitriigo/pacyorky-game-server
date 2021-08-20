@@ -42,7 +42,6 @@ public class GameStepExecutor implements Runnable {
     }
 
     private void gameStep() throws InterruptedException {
-        System.out.println("first step");
         var game = gameManager.getGame(gameId);
 
         if (game.getStatus() != Status.STARTED) {
@@ -73,7 +72,7 @@ public class GameStepExecutor implements Runnable {
             return;
         }
 
-        while (gameManager.getGame(gameId).getPlayers().size() > 2) {
+        while (gameManager.getGame(gameId).getPlayers().size() >= 2) {
             for (int i = 0; i < maxAttempt; i++) {
                 if (LocalDateTime.now().isAfter(gameManager.getGame(gameId).getNextStepAt())) {
                     game.setNextStepAt(LocalDateTime.now().plusSeconds(game.getSecondsForStep()));
@@ -109,6 +108,7 @@ public class GameStepExecutor implements Runnable {
         var step = Step.builder().status(Status.WAITING).counter(counter).currentPlayer(player).build();
         game.setStep(step);
         game.setNextStepAt(LocalDateTime.now().plusSeconds(game.getSecondsForStep()));
+        game.plusStep();
         gameManager.saveGame(game);
     }
 

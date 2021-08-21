@@ -5,7 +5,8 @@
     <springProperty name="TELEGRAM_CHAT" source="telegram.chat"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{15}) - %msg %n</pattern>
+            <pattern>[pacyorky-game-server] %d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) [%logger] - %msg %n
+            </pattern>
         </encoder>
     </appender>
 
@@ -14,7 +15,7 @@
         <botToken>${TELEGRAM_TOKEN}</botToken>
         <chatId>${TELEGRAM_CHAT}</chatId>
         <Layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</Pattern>
+            <Pattern>[pacyorky-game-server] %d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</Pattern>
         </Layout>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>

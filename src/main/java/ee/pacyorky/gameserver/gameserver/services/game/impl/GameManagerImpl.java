@@ -46,7 +46,7 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public Game getGame(Long gameId) {
-        return gameRepository.findById(gameId).orElseThrow();
+        return gameRepository.findById(gameId).orElseThrow(() -> new GlobalException("Game not found " + gameId, GlobalExceptionCode.INTERNAL_SERVER_ERROR));
     }
 
     @Override

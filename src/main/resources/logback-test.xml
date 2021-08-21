@@ -1,13 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="/org/springframework/boot/logging/logback/base.xml"/>
+    <property name="LOGS" value="./logs"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-            </pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{15}) - %msg %n</pattern>
         </encoder>
     </appender>
-    <root level="error">
+
+    <root level="info">
         <appender-ref ref="STDOUT"/>
     </root>
-    <logger name="com.baeldung.testloglevel" level="debug"/>
 </configuration>

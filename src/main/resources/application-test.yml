@@ -2,14 +2,15 @@ logging:
   config: classpath:logback-test.xml
 spring:
   datasource:
-    url: jdbc:h2:mem:pacyorky
-    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${GAME_USER:toor}
+    password: ${GAME_PASS:tooor}
+    url: ${DB_GAME_HOST:jdbc:mysql://localhost:3306/pacyorky-game-test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC}
   jpa:
     hibernate:
       ddl-auto: update
-  h2:
-    console:
-      enabled: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
   flyway:
     enabled: false
 game:

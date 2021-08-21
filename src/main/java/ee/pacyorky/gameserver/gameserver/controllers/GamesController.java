@@ -2,6 +2,7 @@ package ee.pacyorky.gameserver.gameserver.controllers;
 
 import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
+import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.mappers.GameMapper;
 import ee.pacyorky.gameserver.gameserver.services.game.GameManager;
 import lombok.AllArgsConstructor;
@@ -19,9 +20,14 @@ public class GamesController {
 
     private final GameManager gameManager;
 
+    @GetMapping("/all")
+    public ResponseEntity<List<GameDTO>> getGamesAll() {
+        return ResponseEntity.ok(gameManager.getGames().stream().map(GameMapper.INSTANCE::toGameDto).collect(Collectors.toList()));
+    }
+
     @GetMapping("/get")
     public ResponseEntity<List<GameDTO>> getGames() {
-        return ResponseEntity.ok(gameManager.getGames().stream().map(GameMapper.INSTANCE::toGameDto).collect(Collectors.toList()));
+        return ResponseEntity.ok(gameManager.getGames().stream().filter(Game::isNotFinished).map(GameMapper.INSTANCE::toGameDto).collect(Collectors.toList()));
     }
 
     @PostMapping("/add")

@@ -34,6 +34,8 @@ public class GameStepExecutor implements Runnable {
     public void run() {
         try {
             gameStep();
+        } catch (InterruptedException ie) {
+            //ignored
         } catch (Exception e) {
             log.error("Error when step in game {}", gameId, e);
         } finally {
@@ -44,8 +46,8 @@ public class GameStepExecutor implements Runnable {
     private void gameStep() throws InterruptedException {
         var game = gameManager.getGame(gameId);
 
-        if (game.getStatus() != Status.STARTED) {
-            game.setStatus(Status.CANCELLED);
+        if (game.isNotStarted()) {
+            game.finish(Status.CANCELLED);
             gameManager.saveGame(game);
             log.error("game {} not started", gameId);
             return;
@@ -53,7 +55,7 @@ public class GameStepExecutor implements Runnable {
 
         if (game.getPlayers().size() < 2) {
             log.warn("players under then 2");
-            game.setStatus(Status.CANCELLED);
+            game.finish(Status.CANCELLED);
             gameManager.saveGame(game);
             return;
         }
@@ -67,7 +69,7 @@ public class GameStepExecutor implements Runnable {
         }
 
         if (game.getPlayers().stream().allMatch(Player::isLastStep)) {
-            game.setStatus(Status.FINISHED);
+            game.finish(Status.FINISHED);
             gameManager.saveGame(game);
             return;
         }
@@ -85,6 +87,9 @@ public class GameStepExecutor implements Runnable {
             gameManager.saveGame(game);
             initNewStep();
         }
+
+        game.finish(Status.CANCELLED);
+        log.warn("Game {} was cancelled because players below then 2", gameId);
 
     }
 

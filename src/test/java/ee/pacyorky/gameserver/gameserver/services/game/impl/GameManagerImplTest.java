@@ -33,11 +33,8 @@ class GameManagerImplTest {
     @Test
     void createGame() {
         String playerId = UUID.randomUUID().toString();
-
         Game game = gameManager.createGame(playerId, new GameCreationDto());
-
         Assertions.assertNotNull(game);
-
         Assertions.assertEquals(game.getPlayers().stream().findFirst().orElseThrow().getId(), playerId);
     }
 

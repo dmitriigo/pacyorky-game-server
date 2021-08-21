@@ -15,6 +15,7 @@ import ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors.GameSt
 import ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors.GameStepExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -76,5 +77,12 @@ public class GeneralGameServiceImpl implements GeneralGameService {
         }
         var feature = executorService.submit(new GameStartExecutor(gameManager, playerService, eventDayService, savedGame.getId(), afterStartCallback()));
         games.put(savedGame.getId(), feature);
+    }
+
+    @Override
+    @Scheduled(fixedDelay = 1000 * 60 * 60, initialDelay = 1000 * 60 * 60)
+    public void clearUnused() {
+        games.entrySet().removeIf(entry -> entry.getValue() == null || entry.getValue().isCancelled() || entry.getValue().isDone());
+        steps.entrySet().removeIf(entry -> entry.getValue() == null || entry.getValue().isCancelled() || entry.getValue().isDone());
     }
 }

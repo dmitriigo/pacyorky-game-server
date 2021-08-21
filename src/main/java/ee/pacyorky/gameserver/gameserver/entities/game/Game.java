@@ -69,6 +69,8 @@ public class Game {
 
     private String name;
 
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private Status status;
 
     private Long secondsBeforeStart;
@@ -86,6 +88,18 @@ public class Game {
             players = new HashSet<>();
         }
         players.add(player);
+    }
+
+    public boolean isNotStarted() {
+        return this.status != Status.STARTED;
+    }
+
+    public boolean isNotWaiting() {
+        return this.status != Status.WAITING;
+    }
+
+    public boolean isNotFinished() {
+        return this.status == Status.WAITING || this.status == Status.STARTED;
     }
 
     public void plusStep() {
@@ -109,5 +123,14 @@ public class Game {
         var holiday = holidaysDeck.stream().findAny().orElseThrow();
         holidaysDeck.remove(holiday);
         return holiday;
+    }
+
+    public void start() {
+        this.status = Status.STARTED;
+    }
+
+    public void finish(Status reason) {
+        this.status = reason;
+        this.players = new HashSet<>();
     }
 }

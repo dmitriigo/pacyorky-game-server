@@ -37,6 +37,8 @@ public class GameStartExecutor implements Runnable {
     public void run() {
         try {
             checkAndStartGame();
+        } catch (InterruptedException ie) {
+            log.warn("Exception then start game {} interrupted", gameId, ie);
         } catch (Exception e) {
             log.error("Exception then start game {}", gameId, e);
         } finally {
@@ -53,8 +55,8 @@ public class GameStartExecutor implements Runnable {
             }
         }
         var game = gameManager.getGame(gameId);
-        if (game.getStatus() != Status.STARTED) {
-            game.setStatus(Status.CANCELLED);
+        if (game.isNotStarted()) {
+            game.finish(Status.CANCELLED);
             gameManager.saveGame(game);
         }
     }
@@ -71,7 +73,7 @@ public class GameStartExecutor implements Runnable {
 
     private boolean startGame() {
         var game = gameManager.getGame(gameId);
-        if (game.getStatus() != Status.WAITING) {
+        if (game.isNotWaiting()) {
             throw new RuntimeException("Game status not waiting");
         }
         if (game.getPlayers().size() < 2) {
@@ -79,7 +81,7 @@ public class GameStartExecutor implements Runnable {
             gameManager.saveGame(game);
             return false;
         }
-        game.setStatus(Status.STARTED);
+        game.start();
         Set<Player> players = game.getPlayers();
         for (Player player1 : players) {
             initPlayersCards(player1, game);

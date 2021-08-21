@@ -124,6 +124,9 @@ public class GameManagerImpl implements GameManager {
     @Override
     public Game joinIntoTheGame(String playerId, Long gameId) {
         Game game = gameRepository.getOne(gameId);
+        if (game.isNotWaiting()) {
+            throw new GlobalException("Game not waiting.", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
         if (game.getPlayers().size() >= game.getCapacity()) {
             throw new GlobalException("Players count more than capacity", GlobalExceptionCode.CAPACITY_LIMIT_REACHED);
         }

@@ -66,9 +66,11 @@ public class GameStepExecutor implements Runnable {
                 GeneralGameServiceImpl.initPlayersCards(player, game);
             }
             game = gameManager.getGame(gameId);
+        } else if (game.getStep().getStatus() == Status.STARTED) {
+            throwDice();
         }
 
-        if (game.getPlayers().stream().allMatch(Player::isLastStep)) {
+        if (game.getPlayers().stream().allMatch(Player::isLastStep) && game.getStep().getStatus() == Status.FINISHED) {
             game.finish(Status.FINISHED);
             gameManager.saveGame(game);
             return;
@@ -83,12 +85,14 @@ public class GameStepExecutor implements Runnable {
                     sleep();
                 }
             }
+            log.warn("Player {} war removed because inactive", game.getStep().getCurrentPlayer().getId());
             game.removePlayer(game.getStep().getCurrentPlayer().getId());
             gameManager.saveGame(game);
             initNewStep();
         }
 
         game.finish(Status.CANCELLED);
+        gameManager.saveGame(game);
         log.warn("Game {} was cancelled because players below then 2", gameId);
 
     }
@@ -99,10 +103,10 @@ public class GameStepExecutor implements Runnable {
         Thread.sleep(Math.abs(time));
     }
 
-    private void initNewStep() {
+    private void throwDice() {
         var game = gameManager.getGame(gameId);
         var counter = getCounter();
-        var player = calculatePlayer();
+        var player = game.getStep().getCurrentPlayer();
         var newDay = eventDayService.getNextDay(player, counter);
         if (newDay == null) {
             player.setLastStep(true);
@@ -113,7 +117,21 @@ public class GameStepExecutor implements Runnable {
         }
         player.setCurrentDay(newDay);
         playerService.savePlayer(player);
-        var step = Step.builder().status(Status.WAITING).counter(counter).currentPlayer(player).build();
+        var step = game.getStep();
+        step.setCounter(counter);
+        step.setCurrentPlayer(player);
+        step.setStatus(Status.WAITING);
+        game.setStep(step);
+        game.setNextStepAt(LocalDateTime.now().plusSeconds(game.getSecondsForStep()));
+        game.plusStep();
+        gameManager.saveGame(game);
+    }
+
+    private void initNewStep() {
+        var game = gameManager.getGame(gameId);
+        var player = calculatePlayer();
+        playerService.savePlayer(player);
+        var step = Step.builder().status(Status.STARTED.getId()).currentPlayer(player).build();
         game.setStep(step);
         game.setNextStepAt(LocalDateTime.now().plusSeconds(game.getSecondsForStep()));
         game.plusStep();

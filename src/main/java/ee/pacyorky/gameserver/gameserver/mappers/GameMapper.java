@@ -4,7 +4,6 @@ import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
 import ee.pacyorky.gameserver.gameserver.entities.game.CardType;
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.entities.game.Season;
-import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -21,9 +20,5 @@ public interface GameMapper {
 
     default Long map(Season season) {
         return season.getId();
-    }
-
-    default String map(Status status) {
-        return status.name();
     }
 }

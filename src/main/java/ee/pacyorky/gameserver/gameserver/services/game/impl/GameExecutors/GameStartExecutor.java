@@ -82,6 +82,7 @@ public class GameStartExecutor implements Runnable {
             return false;
         }
         game.start();
+        gameManager.saveGame(game);
         Set<Player> players = game.getPlayers();
         for (Player player1 : players) {
             initPlayersCards(player1, game);

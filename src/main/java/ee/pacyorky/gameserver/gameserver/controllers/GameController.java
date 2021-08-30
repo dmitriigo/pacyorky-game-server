@@ -27,5 +27,10 @@ public class GameController {
         return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.makeStep(httpSession.getId(), cards)));
     }
 
+    @PostMapping("/throw")
+    public ResponseEntity<GameDTO> throwDice(HttpSession httpSession) {
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.throwDice(httpSession.getId())));
+    }
+
 
 }

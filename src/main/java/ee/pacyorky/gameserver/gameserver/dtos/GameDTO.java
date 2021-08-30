@@ -1,5 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.dtos;
 
+import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,8 +33,8 @@ public class GameDTO {
 
     private StepDto step;
 
-    private String status;
-
     private long stepCounter;
+
+    private Status status;
 
 }

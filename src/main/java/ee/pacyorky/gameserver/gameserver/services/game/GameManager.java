@@ -24,4 +24,6 @@ public interface GameManager {
     Game saveGame(Game game);
 
     void clearGames(Long id);
+
+    Game throwDice(String id);
 }

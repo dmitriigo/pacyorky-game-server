@@ -20,5 +20,14 @@ public class Step {
 
     private Integer counter;
 
-    private Status status;
+    @Getter(AccessLevel.NONE)
+    private Long status;
+
+    public Status getStatus() {
+        return Status.getById(status);
+    }
+
+    public void setStatus(Status status) {
+        this.status = status.getId();
+    }
 }

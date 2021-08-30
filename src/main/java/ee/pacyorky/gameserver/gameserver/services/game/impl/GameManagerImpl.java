@@ -16,6 +16,7 @@ import ee.pacyorky.gameserver.gameserver.services.game.GeneralGameService;
 import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,10 +58,6 @@ public class GameManagerImpl implements GameManager {
     @Override
     public Game createGame(String playerId, GameCreationDto gameCreationDto) {
 
-        if (gameRepository.count() >= properties.getMaxGames()) {
-            throw new GlobalException("Games count more than capacity", GlobalExceptionCode.GAMES_LIMIT_REACHED);
-        }
-
         Game game = Game.builder()
                 .calendar(eventDayRepository.findAll())
                 .dishesDeck(deckService.getDishesDeck())
@@ -74,14 +71,14 @@ public class GameManagerImpl implements GameManager {
                 .withComputer(gameCreationDto.isWithComputer())
                 .name(gameCreationDto.getName())
                 .characters(deckService.getCharacterDeck())
-                .status(Status.WAITING)
+                .status(Status.WAITING.getId())
                 .secondsBeforeStart(Optional.ofNullable(gameCreationDto.getSecondsBeforeStart()).orElse(properties.getSecondsBeforeStart()))
                 .secondsForStep(Optional.ofNullable(gameCreationDto.getSecondsForStep()).orElse(properties.getSecondsBeforeStep()))
                 .build();
         Player player = playerService.getOrCreatePlayer(playerId);
         checkPlayerInGame(player);
         game.addPlayer(player);
-        var savedGame = gameRepository.saveAndFlush(game);
+        var savedGame = saveGame(game);
         generalGameService.setUpStart(savedGame, this);
         return savedGame;
     }
@@ -90,11 +87,9 @@ public class GameManagerImpl implements GameManager {
     public Game makeStep(String playerId, List<Long> cards) {
         var game = getGame(playerId);
         var player = playerService.getOrCreatePlayer(playerId);
-        if (game.getStep().getStatus() != Status.WAITING) {
-            throw new GlobalException("Step not waiting", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
-        }
-        if (!player.equals(game.getStep().getCurrentPlayer())) {
-            throw new GlobalException("Step not waiting", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        checkGameAndPlayer(game, player);
+        if (game.getStep().getStatus() != Status.STARTED) {
+            throw new GlobalException("Step not started", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
         if (!player.getDeck().stream().map(Card::getId).collect(Collectors.toList()).containsAll(cards)) {
             throw new GlobalException("Player dont have cards from collection", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
@@ -108,6 +103,30 @@ public class GameManagerImpl implements GameManager {
         saveGame(game);
         generalGameService.nextStep(game.getId(), this);
         return getGame(playerId);
+    }
+
+    @Override
+    public Game throwDice(String playerId) {
+        var game = getGame(playerId);
+        var player = playerService.getOrCreatePlayer(playerId);
+        checkGameAndPlayer(game, player);
+        generalGameService.nextStep(game.getId(), this);
+        return getGame(playerId);
+    }
+
+    private void checkGameAndPlayer(Game game, Player player) {
+        if (game == null) {
+            throw new GlobalException("Game is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (player == null) {
+            throw new GlobalException("Player is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (game.getStep() == null) {
+            throw new GlobalException("Step is not created. Null.", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (!player.equals(game.getStep().getCurrentPlayer())) {
+            throw new GlobalException("Current player != player", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
     }
 
     private long calculateHappiness(Player player, List<Long> cards) {
@@ -147,6 +166,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
+    @Transactional
     public Game saveGame(Game game) {
         return gameRepository.saveAndFlush(game);
     }

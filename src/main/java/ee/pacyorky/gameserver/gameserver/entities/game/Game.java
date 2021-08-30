@@ -71,7 +71,7 @@ public class Game {
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private Status status;
+    private Long status;
 
     private Long secondsBeforeStart;
 
@@ -81,7 +81,14 @@ public class Game {
     private long stepCounter;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @Setter(AccessLevel.NONE)
     private Step step;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @Setter(AccessLevel.NONE)
+    @Builder.Default
+    private Set<Step> history = new HashSet<>();
 
     public void addPlayer(Player player) {
         if (players == null) {
@@ -90,16 +97,28 @@ public class Game {
         players.add(player);
     }
 
+    public Status getStatus() {
+        return Status.getById(this.status);
+    }
+
+    public void setStep(Step step) {
+        this.step = step;
+        if (this.history == null) {
+            this.history = new HashSet<>();
+        }
+        this.history.add(step);
+    }
+
     public boolean isNotStarted() {
-        return this.status != Status.STARTED;
+        return !Objects.equals(this.status, Status.STARTED.getId());
     }
 
     public boolean isNotWaiting() {
-        return this.status != Status.WAITING;
+        return !Objects.equals(this.status, Status.WAITING.getId());
     }
 
     public boolean isNotFinished() {
-        return this.status == Status.WAITING || this.status == Status.STARTED;
+        return Objects.equals(this.status, Status.WAITING.getId()) || Objects.equals(this.status, Status.STARTED.getId());
     }
 
     public void plusStep() {
@@ -126,11 +145,12 @@ public class Game {
     }
 
     public void start() {
-        this.status = Status.STARTED;
+        this.status = Status.STARTED.getId();
     }
 
     public void finish(Status reason) {
-        this.status = reason;
+        this.status = reason.getId();
+        this.step = null;
         this.players = new HashSet<>();
     }
 }

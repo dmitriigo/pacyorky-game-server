@@ -88,8 +88,8 @@ public class GameManagerImpl implements GameManager {
         var game = getGame(playerId);
         var player = playerService.getOrCreatePlayer(playerId);
         checkGameAndPlayer(game, player);
-        if (game.getStep().getStatus() != Status.STARTED) {
-            throw new GlobalException("Step not started", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        if (game.getStep().getStatus() != Status.WAITING) {
+            throw new GlobalException("Step not waiting", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
         if (!player.getDeck().stream().map(Card::getId).collect(Collectors.toList()).containsAll(cards)) {
             throw new GlobalException("Player dont have cards from collection", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
@@ -110,6 +110,9 @@ public class GameManagerImpl implements GameManager {
         var game = getGame(playerId);
         var player = playerService.getOrCreatePlayer(playerId);
         checkGameAndPlayer(game, player);
+        if (game.getStep().getStatus() != Status.STARTED) {
+            throw new GlobalException("Step not started", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
         generalGameService.nextStep(game.getId(), this);
         return getGame(playerId);
     }

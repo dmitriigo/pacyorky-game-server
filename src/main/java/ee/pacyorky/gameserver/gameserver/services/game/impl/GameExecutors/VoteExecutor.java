@@ -34,7 +34,8 @@ public class VoteExecutor extends AbstractExecutor {
             game = getGame(gameId);
             var step = game.getStep();
             var biggestPartVoted = game.getPlayers().stream().filter(Player::isVoted).count() > (game.getPlayers().size() / 2);
-            if (step.getCardThrownAt().until(LocalDateTime.now(), ChronoUnit.MINUTES) > 2 && biggestPartVoted) {
+            var allVoted = game.getPlayers().stream().filter(Player::isVoted).count() == (game.getPlayers().size() - 1);
+            if ((step.getCardThrownAt().until(LocalDateTime.now(), ChronoUnit.MINUTES) > 2 && biggestPartVoted) || allVoted) {
                 break;
             }
             Thread.sleep(5000L);

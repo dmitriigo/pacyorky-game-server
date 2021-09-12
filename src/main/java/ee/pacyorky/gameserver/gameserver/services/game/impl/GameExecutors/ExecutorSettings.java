@@ -1,0 +1,19 @@
+package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
+
+import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
+import ee.pacyorky.gameserver.gameserver.services.game.EventDayService;
+import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Builder
+@Getter
+public class ExecutorSettings {
+    private final GameRepository gameRepository;
+    private final PlayerService playerService;
+    private final EventDayService eventDayService;
+    private final Long gameId;
+    private final ExecutorCallback executorCallback;
+}

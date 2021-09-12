@@ -41,6 +41,8 @@ public class Player {
 
     private boolean isLastStep;
 
+    private boolean voted;
+
     public List<Card> getCardsByType(CardType cardType) {
         return deck.stream().filter(card -> card.getCardType() == cardType).collect(Collectors.toList());
     }

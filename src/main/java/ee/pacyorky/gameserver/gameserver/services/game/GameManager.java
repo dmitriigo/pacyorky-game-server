@@ -4,6 +4,7 @@ import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 
 import java.util.List;
+import java.util.Set;
 
 public interface GameManager {
 
@@ -24,6 +25,8 @@ public interface GameManager {
     Game saveGame(Game game);
 
     void clearGames(Long id);
+
+    Game voteCards(String playerId, Set<Long> cards);
 
     Game throwDice(String id);
 }

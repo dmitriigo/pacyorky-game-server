@@ -1,11 +1,13 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.*;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class FinishStepExecutor extends AbstractExecutor {
     public FinishStepExecutor(ExecutorSettings executorSettings) {
         super(executorSettings, false);
@@ -60,6 +62,6 @@ public class FinishStepExecutor extends AbstractExecutor {
 
     @Override
     protected Logger getLogger() {
-        return null;
+        return log;
     }
 }

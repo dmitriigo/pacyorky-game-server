@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.UUID;
 
 public abstract class AbstractExecutor implements Runnable {
 
@@ -64,9 +63,8 @@ public abstract class AbstractExecutor implements Runnable {
         getLogger().warn("Player {} war removed because inactive", game.getStep().getCurrentPlayer().getId());
         var player = game.getStep().getCurrentPlayer();
         game.removePlayer(player.getId());
-        player.setId(UUID.randomUUID().toString());
+        game.getStep().setStatus(StepStatus.FINISHED);
         saveGame(game);
-        playerService.savePlayer(player);
         callback.fail(gameId);
     }
 

@@ -1,7 +1,7 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl;
 
 import ee.pacyorky.gameserver.gameserver.config.AppProperties;
-import ee.pacyorky.gameserver.gameserver.entities.game.Player;
+import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
@@ -15,7 +15,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -92,15 +91,15 @@ public class GeneralGameService {
 
     private Consumer<Long> finishStepConsumer() {
         return (gameId) -> {
-            var future = executorService.submit(new FinishStepExecutor(buildSettings(gameId, startStepConsumer(), id -> {
-                var game = gameRepository.getOne(id);
-                for (Player player : game.getPlayers()) {
-                    player.setId(UUID.randomUUID().toString());
-                    playerService.savePlayer(player);
-                }
-            })));
+            var future = executorService.submit(new FinishStepExecutor(buildSettings(gameId, startStepConsumer(), this::finishGame)));
             games.put(gameId, future);
         };
+    }
+
+    private void finishGame(Long gameId) {
+        var game = gameRepository.findById(gameId).orElseThrow();
+        game.finish(Status.CANCELLED);
+        gameRepository.saveAndFlush(game);
     }
 
     private ExecutorSettings buildSettings(Long gameId, Consumer<Long> success, Consumer<Long> fail) {

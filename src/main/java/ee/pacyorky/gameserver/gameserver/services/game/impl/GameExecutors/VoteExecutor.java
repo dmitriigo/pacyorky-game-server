@@ -2,11 +2,13 @@ package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+@Slf4j
 public class VoteExecutor extends AbstractExecutor {
     // two minutes by 5 seconds
     private static final int retryValue = 120 / 5;
@@ -48,6 +50,6 @@ public class VoteExecutor extends AbstractExecutor {
 
     @Override
     protected Logger getLogger() {
-        return null;
+        return log;
     }
 }

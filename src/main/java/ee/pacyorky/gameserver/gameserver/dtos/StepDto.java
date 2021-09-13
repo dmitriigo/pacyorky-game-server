@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -15,4 +17,6 @@ public class StepDto {
     private Integer counter;
 
     private StepStatus status;
+
+    private List<StepCardDto> stepCards;
 }

@@ -41,12 +41,24 @@ public class Player {
 
     private boolean isLastStep;
 
+    private boolean voted;
+
     public List<Card> getCardsByType(CardType cardType) {
         return deck.stream().filter(card -> card.getCardType() == cardType).collect(Collectors.toList());
     }
 
     public void removeCards(List<Long> cardIds) {
         this.deck = this.deck.stream().filter(card -> !cardIds.contains(card.getId())).collect(Collectors.toList());
+    }
+
+    public void resetPlayer() {
+        setHappiness(0L);
+        setStepFinished(false);
+        setVoted(false);
+        setCharacter(null);
+        setCurrentDay(null);
+        setDeck(new ArrayList<>());
+        setLastStep(false);
     }
 
 }

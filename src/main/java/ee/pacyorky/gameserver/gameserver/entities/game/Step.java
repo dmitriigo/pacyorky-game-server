@@ -1,8 +1,13 @@
 package ee.pacyorky.gameserver.gameserver.entities.game;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,11 +28,18 @@ public class Step {
     @Getter(AccessLevel.NONE)
     private Long status;
 
-    public Status getStatus() {
-        return Status.getById(status);
+    private LocalDateTime cardThrownAt;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @Builder.Default
+    private List<StepCard> stepCards = new ArrayList<>();
+
+    public StepStatus getStatus() {
+        return StepStatus.getById(status);
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StepStatus status) {
         this.status = status.getId();
     }
 }

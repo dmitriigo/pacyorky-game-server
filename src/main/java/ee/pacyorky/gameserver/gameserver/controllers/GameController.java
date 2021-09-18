@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -30,6 +31,11 @@ public class GameController {
     @PostMapping("/throw")
     public ResponseEntity<GameDTO> throwDice(HttpSession httpSession) {
         return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.throwDice(httpSession.getId())));
+    }
+
+    @PostMapping("/vote")
+    public ResponseEntity<GameDTO> throwDice(HttpSession httpSession, @RequestBody Set<Long> cards) {
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.voteCards(httpSession.getId(), cards)));
     }
 
 

@@ -9,15 +9,16 @@ import org.slf4j.Logger;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Set;
+import java.util.UUID;
 
-import static ee.pacyorky.gameserver.gameserver.services.game.impl.GameManagerImpl.initPlayersCards;
+import static ee.pacyorky.gameserver.gameserver.util.CardUtils.initPlayersCards;
 
 @Slf4j
 public class GameStartExecutor extends AbstractExecutor {
 
 
     public GameStartExecutor(ExecutorSettings executorSettings) {
-        super(executorSettings, false);
+        super(executorSettings, false, true);
     }
 
     @Override
@@ -35,7 +36,7 @@ public class GameStartExecutor extends AbstractExecutor {
             if (isNeedStartGame() && startGame()) {
                 break;
             } else {
-                sleep();
+                sleepStart();
             }
         }
         var game = getGame(gameId);
@@ -46,7 +47,7 @@ public class GameStartExecutor extends AbstractExecutor {
         }
     }
 
-    private void sleep() throws InterruptedException {
+    private void sleepStart() throws InterruptedException {
         var game = getGame(gameId);
         var time = LocalDateTime.now().until(game.getStartAt(), ChronoUnit.MILLIS);
         Thread.sleep(Math.abs(time));
@@ -56,16 +57,26 @@ public class GameStartExecutor extends AbstractExecutor {
         return LocalDateTime.now().isAfter(getGame(gameId).getStartAt());
     }
 
-    private boolean startGame() {
+    private boolean startGame() throws InterruptedException {
         var game = getGame(gameId);
         if (game.isNotWaiting()) {
             throw new RuntimeException("Game status not waiting");
         }
-        if (game.getPlayers().size() < 2) {
+        if (!game.isWithComputer() && game.getPlayers().size() < 2) {
             game.setStartAt(game.getStartAt().plusSeconds(game.getSecondsBeforeStart()));
             saveGame(game);
             return false;
+        } else if (game.isWithComputer()) {
+            sleepStart();
+            game = getGame(gameId);
+            for (int i = game.getPlayers().size(); i < game.getCapacity(); i++) {
+                var player = Player.builder().id(UUID.randomUUID().toString()).isComputer(true).build();
+                playerService.savePlayer(player);
+                game.addPlayer(player);
+            }
+            saveGame(game);
         }
+        game = getGame(gameId);
         game.start();
         saveGame(game);
         Set<Player> players = game.getPlayers();

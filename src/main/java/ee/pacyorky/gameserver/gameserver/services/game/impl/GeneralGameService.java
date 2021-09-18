@@ -70,7 +70,14 @@ public class GeneralGameService {
 
     private Consumer<Long> throwDiceConsumer() {
         return (gameId) -> {
-            var future = executorService.submit(new DiceThrowExecutor(buildSettings(gameId, throwCardConsumer(), finishStepConsumer())));
+            var future = executorService.submit(new DiceThrowExecutor(buildSettings(gameId, throwCardAIConsumer(), finishStepConsumer())));
+            games.put(gameId, future);
+        };
+    }
+
+    private Consumer<Long> throwCardAIConsumer() {
+        return (gameId) -> {
+            var future = executorService.submit(new AICardThrowExecutor(buildSettings(gameId, throwCardConsumer(), finishStepConsumer())));
             games.put(gameId, future);
         };
     }

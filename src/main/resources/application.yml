@@ -10,7 +10,6 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL8Dialect
-    show-sql: true
   flyway:
     enabled: false
   mvc:
@@ -27,7 +26,7 @@ telegram:
   token: ${TELEGRAM_TOKEN}
   chat: ${TELEGRAM_CHAT}
 logging:
-  config: classpath:logback-test.xml
+  config: classpath:logback-spring.xml
 
 
 

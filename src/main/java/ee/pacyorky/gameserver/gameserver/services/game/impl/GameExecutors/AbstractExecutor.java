@@ -1,7 +1,7 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
-import ee.pacyorky.gameserver.gameserver.entities.game.Status;
+import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.function.Predicate;
 
 public abstract class AbstractExecutor implements Runnable {
 
@@ -21,20 +22,29 @@ public abstract class AbstractExecutor implements Runnable {
     protected final EventDayService eventDayService;
     protected final Long gameId;
     protected final ExecutorCallback callback;
-    protected final boolean silently;
+    private final boolean silently;
+    private final boolean skipGameContinueCheck;
 
-    public AbstractExecutor(ExecutorSettings executorSettings, boolean silently) {
+    public AbstractExecutor(ExecutorSettings executorSettings, boolean silently, boolean skipGameContinueCheck) {
         this.gameDao = executorSettings.getGameDao();
         this.playerService = executorSettings.getPlayerService();
         this.eventDayService = executorSettings.getEventDayService();
         this.gameId = executorSettings.getGameId();
         this.callback = executorSettings.getExecutorCallback();
         this.silently = silently;
+        this.skipGameContinueCheck = skipGameContinueCheck;
+    }
+
+    public AbstractExecutor(ExecutorSettings executorSettings, boolean silently) {
+        this(executorSettings, silently, false);
     }
 
     @Override
     public void run() {
         try {
+            if (!skipGameContinueCheck && gameCanNotContinue()) {
+                return;
+            }
             doStepPart();
         } catch (InterruptedException ie) {
             if (!silently) {
@@ -66,7 +76,7 @@ public abstract class AbstractExecutor implements Runnable {
         callback.fail(gameId);
     }
 
-    private void sleep() throws InterruptedException {
+    protected void sleep() throws InterruptedException {
         var game = getGame(gameId);
         var time = LocalDateTime.now().until(game.getNextStepAt(), ChronoUnit.MILLIS);
         Thread.sleep(Math.abs(time));
@@ -79,16 +89,19 @@ public abstract class AbstractExecutor implements Runnable {
     protected boolean gameCanNotContinue() {
         var game = getGame(gameId);
         if (game.isNotStarted()) {
-            game.finish(Status.CANCELLED);
-            saveGame(game);
             getLogger().error("game {} not started", gameId);
+            callback.forceFinish(gameId);
             return true;
         }
 
-        if (game.getPlayers().size() < 2) {
-            getLogger().warn("players under then 2");
-            game.finish(Status.CANCELLED);
-            saveGame(game);
+        if (!game.isWithComputer() && game.getPlayers().size() < 2) {
+            getLogger().warn("players under then 2 and computer not");
+            callback.forceFinish(gameId);
+            return true;
+        }
+        if (game.isWithComputer() && game.getPlayers().stream().filter(Predicate.not(Player::isComputer)).count() < 1L) {
+            getLogger().warn("players under then 1 and computers");
+            callback.forceFinish(gameId);
             return true;
         }
         return false;

@@ -33,7 +33,7 @@ class GameManagerImplTest {
     @Test
     void createGame() {
         String playerId = UUID.randomUUID().toString();
-        Game game = gameManager.createGame(playerId, new GameCreationDto());
+        Game game = gameManager.createGame(playerId, getCreationDto());
         Assertions.assertNotNull(game);
         Assertions.assertEquals(game.getPlayers().stream().findFirst().orElseThrow().getId(), playerId);
     }
@@ -43,11 +43,11 @@ class GameManagerImplTest {
         String playerId = UUID.randomUUID().toString();
         String playerId2 = UUID.randomUUID().toString();
         String playerId3 = UUID.randomUUID().toString();
-        Game game = gameManager.createGame(playerId, new GameCreationDto());
+        Game game = gameManager.createGame(playerId, getCreationDto());
         game.setCapacity(2L);
         Assertions.assertNotNull(gameManager.joinIntoTheGame(playerId2, game.getId()));
         Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId3, game.getId()));
-        Game anotherGame = gameManager.createGame(UUID.randomUUID().toString(), new GameCreationDto());
+        Game anotherGame = gameManager.createGame(UUID.randomUUID().toString(), getCreationDto());
         anotherGame.setCapacity(2L);
         Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId2, anotherGame.getId()));
     }
@@ -55,9 +55,15 @@ class GameManagerImplTest {
     @Test
     void leftFromTheGame() {
         String playerId = UUID.randomUUID().toString();
-        Game game = gameManager.createGame(playerId, new GameCreationDto());
+        Game game = gameManager.createGame(playerId, getCreationDto());
         Assertions.assertEquals(game.getPlayers().size(), 1);
         gameManager.leftFromTheGame(playerId);
         Assertions.assertEquals(game.getPlayers().size(), 0);
+    }
+
+    private GameCreationDto getCreationDto() {
+        var result = new GameCreationDto();
+        result.setCapacity(5L);
+        return result;
     }
 }

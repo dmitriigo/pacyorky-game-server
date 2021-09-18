@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,21 +35,6 @@ public class GameManagerImpl implements GameManager {
     private final GeneralGameService generalGameService;
 
     private final AppProperties properties;
-
-
-
-    public static void initPlayersCards(Player player, Game game) {
-        Map<CardType, List<Card>> cardTypeListMap = game.getAllDecks();
-
-        for (Map.Entry<CardType, List<Card>> cardTypeListEntry : cardTypeListMap.entrySet()) {
-            List<Card> playersCards = player.getCardsByType(cardTypeListEntry.getKey());
-            for (int i = playersCards.size(); i < 2; i++) {
-                Card card = cardTypeListEntry.getValue().stream().findFirst().orElseThrow();
-                player.getDeck().add(card);
-                cardTypeListEntry.getValue().remove(card);
-            }
-        }
-    }
 
     @Override
     public Game createGame(String playerId, GameCreationDto gameCreationDto) {
@@ -87,6 +71,12 @@ public class GameManagerImpl implements GameManager {
         }
         if (gameCreationDto.getCapacity() == null || gameCreationDto.getCapacity() > 8 || gameCreationDto.getCapacity() < 2) {
             throw new GlobalException("Game capacity incorrect " + gameCreationDto.getCapacity(), GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (gameCreationDto.getSecondsBeforeStart() != null && gameCreationDto.getSecondsBeforeStart() < 1L) {
+            throw new GlobalException("Game before start incorrect " + gameCreationDto.getSecondsBeforeStart(), GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (gameCreationDto.getSecondsForStep() != null && gameCreationDto.getSecondsForStep() < 1L) {
+            throw new GlobalException("Game before step incorrect " + gameCreationDto.getSecondsForStep(), GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
     }
 

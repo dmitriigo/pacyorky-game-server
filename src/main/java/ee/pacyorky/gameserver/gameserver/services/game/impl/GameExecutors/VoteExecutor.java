@@ -22,7 +22,7 @@ public class VoteExecutor extends AbstractExecutor {
     protected void doStepPart() throws InterruptedException {
         var game = getGame(gameId);
 
-        if (!checkGameCanContinue()) {
+        if (gameCanNotContinue()) {
             return;
         }
         checkGameStepStatus(StepStatus.WAITING_VOTE);

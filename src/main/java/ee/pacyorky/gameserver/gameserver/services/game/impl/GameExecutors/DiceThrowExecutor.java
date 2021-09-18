@@ -16,7 +16,7 @@ public class DiceThrowExecutor extends AbstractExecutor {
     @Override
     protected void doStepPart() throws InterruptedException {
         var game = getGame(gameId);
-        if (!checkGameCanContinue()) {
+        if (gameCanNotContinue()) {
             return;
         }
         checkGameStepStatus(StepStatus.WAITING_DICE);

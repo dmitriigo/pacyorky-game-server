@@ -76,22 +76,22 @@ public abstract class AbstractExecutor implements Runnable {
 
     protected abstract Logger getLogger();
 
-    protected boolean checkGameCanContinue() {
+    protected boolean gameCanNotContinue() {
         var game = getGame(gameId);
         if (game.isNotStarted()) {
             game.finish(Status.CANCELLED);
             saveGame(game);
             getLogger().error("game {} not started", gameId);
-            return false;
+            return true;
         }
 
         if (game.getPlayers().size() < 2) {
             getLogger().warn("players under then 2");
             game.finish(Status.CANCELLED);
             saveGame(game);
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     protected void checkGameStepStatus(StepStatus status) {

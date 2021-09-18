@@ -55,6 +55,7 @@ public class GameManagerImpl implements GameManager {
     @Override
     public Game createGame(String playerId, GameCreationDto gameCreationDto) {
 
+        checkGameCreation(gameCreationDto);
         Game game = Game.builder()
                 .calendar(eventDayRepository.findAll())
                 .dishesDeck(deckService.getDishesDeck())
@@ -78,6 +79,15 @@ public class GameManagerImpl implements GameManager {
         var savedGame = gameDao.saveGame(game);
         generalGameService.startGame(savedGame.getId());
         return savedGame;
+    }
+
+    private void checkGameCreation(GameCreationDto gameCreationDto) {
+        if (gameCreationDto == null) {
+            throw new GlobalException("Creation dto is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (gameCreationDto.getCapacity() == null || gameCreationDto.getCapacity() > 8 || gameCreationDto.getCapacity() < 2) {
+            throw new GlobalException("Game capacity incorrect " + gameCreationDto.getCapacity(), GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override

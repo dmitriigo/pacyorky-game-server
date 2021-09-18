@@ -41,7 +41,7 @@ public class FinishStepExecutor extends AbstractExecutor {
             callback.fail(gameId);
             return;
         }
-        if (!checkGameCanContinue()) {
+        if (gameCanNotContinue()) {
             callback.fail(gameId);
             return;
         }

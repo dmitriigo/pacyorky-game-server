@@ -5,6 +5,7 @@ import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
+import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.Set;
 public class GameDao {
 
     private final GameRepository gameRepository;
+    private final PlayerService playerService;
 
 
     public List<Game> getGames() {
@@ -37,7 +39,8 @@ public class GameDao {
     }
 
     public Game getGame(String playerId) {
-        return gameRepository.getGamesByPlayerId(playerId).orElseThrow(() -> new GlobalException("Player not in game " + playerId, GlobalExceptionCode.INTERNAL_SERVER_ERROR));
+        return gameRepository.getGameByPlayersContains(playerService.getOrCreatePlayer(playerId))
+                .orElseThrow(() -> new GlobalException("Player not in game " + playerId, GlobalExceptionCode.INTERNAL_SERVER_ERROR));
     }
 
 }

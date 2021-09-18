@@ -6,14 +6,14 @@ import ee.pacyorky.gameserver.gameserver.entities.game.*;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.repositories.EventDayRepository;
-import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
+import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
 import ee.pacyorky.gameserver.gameserver.services.game.DeckService;
 import ee.pacyorky.gameserver.gameserver.services.game.GameManager;
 import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class GameManagerImpl implements GameManager {
 
-    private final GameRepository gameRepository;
+    private final GameDao gameDao;
 
     private final DeckService deckService;
 
@@ -37,20 +37,7 @@ public class GameManagerImpl implements GameManager {
 
     private final AppProperties properties;
 
-    @Override
-    public List<Game> getGames() {
-        return gameRepository.findAll();
-    }
 
-    @Override
-    public Game getGame(Long gameId) {
-        return gameRepository.findById(gameId).orElseThrow(() -> new GlobalException("Game not found " + gameId, GlobalExceptionCode.INTERNAL_SERVER_ERROR));
-    }
-
-    @Override
-    public Game getGame(String playerId) {
-        return getGames().stream().filter(game -> game.getPlayers().stream().map(Player::getId).anyMatch(id -> id.equals(playerId))).findFirst().orElse(null);
-    }
 
     public static void initPlayersCards(Player player, Game game) {
         Map<CardType, List<Card>> cardTypeListMap = game.getAllDecks();
@@ -88,14 +75,14 @@ public class GameManagerImpl implements GameManager {
         Player player = playerService.getOrCreatePlayer(playerId);
         checkPlayerInGame(player);
         game.addPlayer(player);
-        var savedGame = saveGame(game);
+        var savedGame = gameDao.saveGame(game);
         generalGameService.startGame(savedGame.getId());
         return savedGame;
     }
 
     @Override
     public Game makeStep(String playerId, List<Long> cards) {
-        var game = getGame(playerId);
+        var game = gameDao.getGame(playerId);
         var player = playerService.getOrCreatePlayer(playerId);
         checkGameAndPlayer(game, player);
         if (!player.getDeck().stream().map(Card::getId).collect(Collectors.toList()).containsAll(cards)) {
@@ -105,14 +92,14 @@ public class GameManagerImpl implements GameManager {
                 .filter(card -> cards.contains(card.getId()))
                 .map(card -> StepCard.builder().card(card).build()).collect(Collectors.toList());
         game.getStep().setStepCards(stepCards);
-        saveGame(game);
+        gameDao.saveGame(game);
         generalGameService.doStepPart(game.getId(), StepStatus.WAITING_CARD);
-        return getGame(playerId);
+        return gameDao.getGame(playerId);
     }
 
     @Override
     public Game voteCards(String playerId, Set<Long> cards) {
-        var game = getGame(playerId);
+        var game = gameDao.getGame(playerId);
         var player = playerService.getOrCreatePlayer(playerId);
         if (game == null) {
             throw new GlobalException("Game not found for player", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
@@ -142,8 +129,8 @@ public class GameManagerImpl implements GameManager {
         }
         player.setVoted(true);
         playerService.savePlayer(player);
-        saveGame(game);
-        return getGame(playerId);
+        gameDao.saveGame(game);
+        return gameDao.getGame(playerId);
     }
 
     private void checkGameAndPlayer(Game game, Player player) {
@@ -163,7 +150,7 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public Game joinIntoTheGame(String playerId, Long gameId) {
-        Game game = gameRepository.getOne(gameId);
+        Game game = gameDao.getGame(gameId);
         if (game.isNotWaiting()) {
             throw new GlobalException("Game not waiting.", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
@@ -175,37 +162,40 @@ public class GameManagerImpl implements GameManager {
         player.resetPlayer();
         playerService.savePlayer(player);
         game.addPlayer(player);
-        return gameRepository.save(game);
+        return gameDao.saveGame(game);
     }
 
     @Override
     public Game leftFromTheGame(String playerId) {
-        var game = getGame(playerId);
+        var game = gameDao.getGame(playerId);
         if (game == null) {
             throw new GlobalException("Game not found", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
         game.removePlayer(playerId);
-        return gameRepository.save(game);
+        return gameDao.saveGame(game);
     }
 
-    @Override
-    @Transactional
-    public Game saveGame(Game game) {
-        return gameRepository.saveAndFlush(game);
+    @PostConstruct
+    public void clearGames() {
+        clearGames(null);
     }
 
     @Override
     public void clearGames(Long id) {
         if (id == null || id.equals(0L)) {
-            gameRepository.deleteAll();
+            gameDao.getActiveGames().forEach(game -> {
+                game.finish(Status.CANCELLED);
+                gameDao.saveGame(game);
+            });
         } else {
-            Game one = gameRepository.getOne(id);
-            gameRepository.delete(one);
+            var game = gameDao.getGame(id);
+            game.finish(Status.CANCELLED);
+            gameDao.saveGame(game);
         }
     }
 
     private void checkPlayerInGame(Player player) {
-        Set<Player> playersInGame = gameRepository.findAll().stream().flatMap(repoGame -> repoGame.getPlayers().stream()).collect(Collectors.toSet());
+        Set<Player> playersInGame = gameDao.getGames().stream().flatMap(repoGame -> repoGame.getPlayers().stream()).collect(Collectors.toSet());
         if (playersInGame.contains(player)) {
             throw new GlobalException("Player already in game", GlobalExceptionCode.PLAYER_ALREADY_IN_GAME);
         }
@@ -213,10 +203,10 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public Game throwDice(String playerId) {
-        var game = getGame(playerId);
+        var game = gameDao.getGame(playerId);
         var player = playerService.getOrCreatePlayer(playerId);
         checkGameAndPlayer(game, player);
         generalGameService.doStepPart(game.getId(), StepStatus.WAITING_DICE);
-        return getGame(playerId);
+        return gameDao.getGame(playerId);
     }
 }

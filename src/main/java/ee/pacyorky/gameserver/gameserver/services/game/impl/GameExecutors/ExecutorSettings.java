@@ -1,6 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
-import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
+import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
 import ee.pacyorky.gameserver.gameserver.services.game.EventDayService;
 import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class ExecutorSettings {
-    private final GameRepository gameRepository;
+    private final GameDao gameDao;
     private final PlayerService playerService;
     private final EventDayService eventDayService;
     private final Long gameId;

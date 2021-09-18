@@ -1,25 +1,22 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
-import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
-import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
+import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
 import ee.pacyorky.gameserver.gameserver.services.game.EventDayService;
 import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import org.slf4j.Logger;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 public abstract class AbstractExecutor implements Runnable {
 
     protected static final int maxAttempt = 10;
-    protected final GameRepository gameRepository;
+    protected final GameDao gameDao;
     protected final PlayerService playerService;
     protected final EventDayService eventDayService;
     protected final Long gameId;
@@ -27,7 +24,7 @@ public abstract class AbstractExecutor implements Runnable {
     protected final boolean silently;
 
     public AbstractExecutor(ExecutorSettings executorSettings, boolean silently) {
-        this.gameRepository = executorSettings.getGameRepository();
+        this.gameDao = executorSettings.getGameDao();
         this.playerService = executorSettings.getPlayerService();
         this.eventDayService = executorSettings.getEventDayService();
         this.gameId = executorSettings.getGameId();
@@ -110,21 +107,13 @@ public abstract class AbstractExecutor implements Runnable {
         }
     }
 
-    public List<Game> getGames() {
-        return gameRepository.findAll();
+
+    protected Game saveGame(Game game) {
+        return gameDao.saveGame(game);
     }
 
-    public Game getGame(Long gameId) {
-        return gameRepository.findById(gameId).orElseThrow(() -> new GlobalException("Game not found " + gameId, GlobalExceptionCode.INTERNAL_SERVER_ERROR));
-    }
-
-    public Game getGame(String playerId) {
-        return getGames().stream().filter(game -> game.getPlayers().stream().map(Player::getId).anyMatch(id -> id.equals(playerId))).findFirst().orElse(null);
-    }
-
-    @Transactional
-    public Game saveGame(Game game) {
-        return gameRepository.saveAndFlush(game);
+    protected Game getGame(Long gameId) {
+        return gameDao.getGame(gameId);
     }
 
 }

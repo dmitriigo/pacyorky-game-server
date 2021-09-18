@@ -5,7 +5,7 @@ import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
-import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
+import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
 import ee.pacyorky.gameserver.gameserver.services.game.EventDayService;
 import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors.*;
@@ -29,14 +29,14 @@ public class GeneralGameService {
     private final EventDayService eventDayService;
     private final ExecutorService executorService;
     private final Map<Long, Future<?>> games = new ConcurrentHashMap<>();
-    private final GameRepository gameRepository;
+    private final GameDao gameDao;
 
     @Autowired
-    public GeneralGameService(PlayerService playerService, EventDayService eventDayService, AppProperties properties, GameRepository gameRepository) {
+    public GeneralGameService(PlayerService playerService, EventDayService eventDayService, AppProperties properties, GameDao gameDao) {
         this.playerService = playerService;
         this.eventDayService = eventDayService;
         this.executorService = Executors.newFixedThreadPool(properties.getMaxGames());
-        this.gameRepository = gameRepository;
+        this.gameDao = gameDao;
     }
 
     public void startGame(Long gameId) {
@@ -97,9 +97,9 @@ public class GeneralGameService {
     }
 
     private void finishGame(Long gameId) {
-        var game = gameRepository.findById(gameId).orElseThrow();
+        var game = gameDao.getGame(gameId);
         game.finish(Status.CANCELLED);
-        gameRepository.saveAndFlush(game);
+        gameDao.saveGame(game);
     }
 
     private ExecutorSettings buildSettings(Long gameId, Consumer<Long> success, Consumer<Long> fail) {
@@ -112,7 +112,7 @@ public class GeneralGameService {
                 .gameId(gameId)
                 .eventDayService(eventDayService)
                 .playerService(playerService)
-                .gameRepository(gameRepository)
+                .gameDao(gameDao)
                 .executorCallback(callback)
                 .build();
     }

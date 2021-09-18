@@ -13,6 +13,7 @@ public class ExecutorCallback {
     };
     private final Consumer<Long> success;
     private final Consumer<Long> fail;
+    private final Consumer<Long> forceFinish;
 
     public static Consumer<Long> empty() {
         return empty;
@@ -20,6 +21,10 @@ public class ExecutorCallback {
 
     public void success(Long gameId) {
         success.accept(gameId);
+    }
+
+    public void forceFinish(Long gameId) {
+        forceFinish.accept(gameId);
     }
 
     public void fail(Long gameId) {

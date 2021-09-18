@@ -23,6 +23,7 @@ public class PrepareStepExecutor extends AbstractExecutor {
         for (Player player : game.getPlayers()) {
             GameManagerImpl.initPlayersCards(player, game);
             player.setVoted(false);
+            playerService.savePlayer(player);
         }
         var player = calculatePlayer();
         playerService.savePlayer(player);

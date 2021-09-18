@@ -172,6 +172,8 @@ public class GameManagerImpl implements GameManager {
         }
         Player player = playerService.getOrCreatePlayer(playerId);
         checkPlayerInGame(player);
+        player.resetPlayer();
+        playerService.savePlayer(player);
         game.addPlayer(player);
         return gameRepository.save(game);
     }

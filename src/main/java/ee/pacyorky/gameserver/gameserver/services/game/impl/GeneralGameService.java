@@ -106,6 +106,7 @@ public class GeneralGameService {
         var callback = ExecutorCallback.builder()
                 .success(success)
                 .fail(fail)
+                .forceFinish(this::finishGame)
                 .build();
         return ExecutorSettings.builder()
                 .gameId(gameId)

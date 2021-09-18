@@ -45,6 +45,7 @@ public abstract class AbstractExecutor implements Runnable {
             }
         } catch (Exception e) {
             getLogger().error("Error when step in game {}", gameId, e);
+            callback.forceFinish(gameId);
         } finally {
             Thread.currentThread().interrupt();
         }

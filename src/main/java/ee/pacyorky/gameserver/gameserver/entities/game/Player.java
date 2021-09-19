@@ -43,6 +43,8 @@ public class Player {
 
     private boolean voted;
 
+    private boolean isComputer;
+
     public List<Card> getCardsByType(CardType cardType) {
         return deck.stream().filter(card -> card.getCardType() == cardType).collect(Collectors.toList());
     }

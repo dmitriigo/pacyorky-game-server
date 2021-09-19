@@ -8,11 +8,6 @@ import java.util.Set;
 
 public interface GameManager {
 
-    List<Game> getGames();
-
-    Game getGame(Long gameId);
-
-    Game getGame(String playerId);
 
     Game createGame(String playerId, GameCreationDto gameCreationDto);
 
@@ -21,8 +16,6 @@ public interface GameManager {
     Game joinIntoTheGame(String playerId, Long gameId);
 
     Game leftFromTheGame(String playerId);
-
-    Game saveGame(Game game);
 
     void clearGames(Long id);
 

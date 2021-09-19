@@ -2,6 +2,7 @@ package ee.pacyorky.gameserver.gameserver.controllers;
 
 import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
 import ee.pacyorky.gameserver.gameserver.mappers.GameMapper;
+import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
 import ee.pacyorky.gameserver.gameserver.services.game.GameManager;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +18,11 @@ import java.util.Set;
 public class GameController {
 
     private final GameManager gameManager;
+    private final GameDao gameDao;
 
     @GetMapping("")
     public ResponseEntity<GameDTO> game(HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.getGame(httpSession.getId())));
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameDao.getGame(httpSession.getId())));
     }
 
     @PostMapping("/step")

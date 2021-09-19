@@ -27,9 +27,6 @@ public class CardThrowExecutor extends AbstractExecutor {
     private void gameStep() throws InterruptedException {
         var game = getGame(gameId);
 
-        if (!checkGameCanContinue()) {
-            return;
-        }
         checkGameStepStatus(StepStatus.WAITING_CARD);
         game.getStep().setStatus(StepStatus.WAITING_VOTE);
         game.getStep().setCardThrownAt(LocalDateTime.now());

@@ -16,9 +16,6 @@ public class DiceThrowExecutor extends AbstractExecutor {
     @Override
     protected void doStepPart() throws InterruptedException {
         var game = getGame(gameId);
-        if (!checkGameCanContinue()) {
-            return;
-        }
         checkGameStepStatus(StepStatus.WAITING_DICE);
 
         var counter = getCounter();
@@ -41,7 +38,12 @@ public class DiceThrowExecutor extends AbstractExecutor {
         game.setNextStepAt(LocalDateTime.now().plusSeconds(game.getSecondsForStep()));
         game.plusStep();
         saveGame(game);
-        sleepGame();
+        if (player.isComputer()) {
+            sleep();
+            callback.success(gameId);
+        } else {
+            sleepGame();
+        }
     }
 
     private Integer getCounter() {

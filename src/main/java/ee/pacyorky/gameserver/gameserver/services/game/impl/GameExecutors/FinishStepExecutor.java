@@ -32,17 +32,6 @@ public class FinishStepExecutor extends AbstractExecutor {
         if (game.getPlayers().stream().allMatch(Player::isLastStep)) {
             game.finish(Status.FINISHED);
             saveGame(game);
-            callback.fail(gameId);
-            return;
-        }
-        if (game.getPlayers().size() < 2) {
-            game.finish(Status.CANCELLED);
-            saveGame(game);
-            callback.fail(gameId);
-            return;
-        }
-        if (!checkGameCanContinue()) {
-            callback.fail(gameId);
             return;
         }
 

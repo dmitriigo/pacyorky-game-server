@@ -2,42 +2,49 @@ package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
-import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
-import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
+import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
 import ee.pacyorky.gameserver.gameserver.services.game.EventDayService;
 import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import org.slf4j.Logger;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
+import java.util.function.Predicate;
 
 public abstract class AbstractExecutor implements Runnable {
 
     protected static final int maxAttempt = 10;
-    protected final GameRepository gameRepository;
+    protected final GameDao gameDao;
     protected final PlayerService playerService;
     protected final EventDayService eventDayService;
     protected final Long gameId;
     protected final ExecutorCallback callback;
-    protected final boolean silently;
+    private final boolean silently;
+    private final boolean skipGameContinueCheck;
 
-    public AbstractExecutor(ExecutorSettings executorSettings, boolean silently) {
-        this.gameRepository = executorSettings.getGameRepository();
+    public AbstractExecutor(ExecutorSettings executorSettings, boolean silently, boolean skipGameContinueCheck) {
+        this.gameDao = executorSettings.getGameDao();
         this.playerService = executorSettings.getPlayerService();
         this.eventDayService = executorSettings.getEventDayService();
         this.gameId = executorSettings.getGameId();
         this.callback = executorSettings.getExecutorCallback();
         this.silently = silently;
+        this.skipGameContinueCheck = skipGameContinueCheck;
+    }
+
+    public AbstractExecutor(ExecutorSettings executorSettings, boolean silently) {
+        this(executorSettings, silently, false);
     }
 
     @Override
     public void run() {
         try {
+            if (!skipGameContinueCheck && gameCanNotContinue()) {
+                return;
+            }
             doStepPart();
         } catch (InterruptedException ie) {
             if (!silently) {
@@ -69,7 +76,7 @@ public abstract class AbstractExecutor implements Runnable {
         callback.fail(gameId);
     }
 
-    private void sleep() throws InterruptedException {
+    protected void sleep() throws InterruptedException {
         var game = getGame(gameId);
         var time = LocalDateTime.now().until(game.getNextStepAt(), ChronoUnit.MILLIS);
         Thread.sleep(Math.abs(time));
@@ -79,22 +86,25 @@ public abstract class AbstractExecutor implements Runnable {
 
     protected abstract Logger getLogger();
 
-    protected boolean checkGameCanContinue() {
+    protected boolean gameCanNotContinue() {
         var game = getGame(gameId);
         if (game.isNotStarted()) {
-            game.finish(Status.CANCELLED);
-            saveGame(game);
             getLogger().error("game {} not started", gameId);
-            return false;
+            callback.forceFinish(gameId);
+            return true;
         }
 
-        if (game.getPlayers().size() < 2) {
-            getLogger().warn("players under then 2");
-            game.finish(Status.CANCELLED);
-            saveGame(game);
-            return false;
+        if (!game.isWithComputer() && game.getPlayers().size() < 2) {
+            getLogger().warn("players under then 2 and computer not");
+            callback.forceFinish(gameId);
+            return true;
         }
-        return true;
+        if (game.isWithComputer() && game.getPlayers().stream().filter(Predicate.not(Player::isComputer)).count() < 1L) {
+            getLogger().warn("players under then 1 and computers");
+            callback.forceFinish(gameId);
+            return true;
+        }
+        return false;
     }
 
     protected void checkGameStepStatus(StepStatus status) {
@@ -110,21 +120,13 @@ public abstract class AbstractExecutor implements Runnable {
         }
     }
 
-    public List<Game> getGames() {
-        return gameRepository.findAll();
+
+    protected Game saveGame(Game game) {
+        return gameDao.saveGame(game);
     }
 
-    public Game getGame(Long gameId) {
-        return gameRepository.findById(gameId).orElseThrow(() -> new GlobalException("Game not found " + gameId, GlobalExceptionCode.INTERNAL_SERVER_ERROR));
-    }
-
-    public Game getGame(String playerId) {
-        return getGames().stream().filter(game -> game.getPlayers().stream().map(Player::getId).anyMatch(id -> id.equals(playerId))).findFirst().orElse(null);
-    }
-
-    @Transactional
-    public Game saveGame(Game game) {
-        return gameRepository.saveAndFlush(game);
+    protected Game getGame(Long gameId) {
+        return gameDao.getGame(gameId);
     }
 
 }

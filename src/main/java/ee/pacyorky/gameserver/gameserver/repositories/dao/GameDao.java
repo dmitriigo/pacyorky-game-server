@@ -39,7 +39,10 @@ public class GameDao {
     }
 
     public Game getGame(String playerId) {
-        return gameRepository.getGameByPlayersContains(playerService.getOrCreatePlayer(playerId))
+        if (playerId == null) {
+            throw new GlobalException("Player id is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        return gameRepository.getGameByPlayerId(playerId)
                 .orElseThrow(() -> new GlobalException("Player not in game " + playerId, GlobalExceptionCode.INTERNAL_SERVER_ERROR));
     }
 

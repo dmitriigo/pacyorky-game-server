@@ -83,7 +83,7 @@ public class CardRepositoryTest {
         entityManager.persist(firstGame);
 
         //when
-        var foundGame = gameRepository.getGameByPlayersContains(player1);
+        var foundGame = gameRepository.getGameByPlayerId(player1.getId());
 
         //then
         assertThat(foundGame)

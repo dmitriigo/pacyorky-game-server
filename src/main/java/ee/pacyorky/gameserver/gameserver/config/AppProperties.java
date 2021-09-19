@@ -13,4 +13,5 @@ public class AppProperties {
     private Integer maxAttemptsForStep;
     private Integer maxAttemptsForStart;
     private Integer maxGames;
+    private String secretKey;
 }

@@ -34,6 +34,11 @@
       "name": "telegram.chat",
       "type": "java.lang.String",
       "description": "Description for telegram.chat."
+    },
+    {
+      "name": "game.secretKey",
+      "type": "java.lang.String",
+      "description": "Description for game.secretKey."
     }
   ]
 }

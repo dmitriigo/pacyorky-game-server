@@ -19,3 +19,4 @@ game:
   maxAttemptsForStep: 10
   maxAttemptsForStart: 10
   maxGames: 10
+  secretKey: ${GAME_SECRET:secret}

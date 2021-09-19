@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -38,12 +39,11 @@ public class GameDao {
         return gameRepository.saveAndFlush(game);
     }
 
-    public Game getGame(String playerId) {
+    public Optional<Game> getGame(String playerId) {
         if (playerId == null) {
             throw new GlobalException("Player id is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
-        return gameRepository.getGameByPlayerId(playerId)
-                .orElseThrow(() -> new GlobalException("Player not in game " + playerId, GlobalExceptionCode.INTERNAL_SERVER_ERROR));
+        return gameRepository.getGameByPlayerId(playerId);
     }
 
 }

@@ -22,7 +22,7 @@ public class GameController {
 
     @GetMapping("")
     public ResponseEntity<GameDTO> game(HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameDao.getGame(httpSession.getId())));
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameDao.getGame(httpSession.getId()).orElse(null)));
     }
 
     @PostMapping("/step")

@@ -82,7 +82,7 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public Game makeStep(String playerId, List<Long> cards) {
-        var game = gameDao.getGame(playerId);
+        var game = getGame(playerId);
         var player = playerService.getOrCreatePlayer(playerId);
         checkGameAndPlayer(game, player);
         if (!player.getDeck().stream().map(Card::getId).collect(Collectors.toList()).containsAll(cards)) {
@@ -94,12 +94,12 @@ public class GameManagerImpl implements GameManager {
         game.getStep().setStepCards(stepCards);
         gameDao.saveGame(game);
         generalGameService.doStepPart(game.getId(), StepStatus.WAITING_CARD);
-        return gameDao.getGame(playerId);
+        return getGame(playerId);
     }
 
     @Override
     public Game voteCards(String playerId, Set<Long> cards) {
-        var game = gameDao.getGame(playerId);
+        var game = getGame(playerId);
         var player = playerService.getOrCreatePlayer(playerId);
         if (game == null) {
             throw new GlobalException("Game not found for player", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
@@ -130,7 +130,7 @@ public class GameManagerImpl implements GameManager {
         player.setVoted(true);
         playerService.savePlayer(player);
         gameDao.saveGame(game);
-        return gameDao.getGame(playerId);
+        return getGame(playerId);
     }
 
     private void checkGameAndPlayer(Game game, Player player) {
@@ -167,7 +167,7 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public Game leftFromTheGame(String playerId) {
-        var game = gameDao.getGame(playerId);
+        var game = getGame(playerId);
         if (game == null) {
             throw new GlobalException("Game not found", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
@@ -203,10 +203,14 @@ public class GameManagerImpl implements GameManager {
 
     @Override
     public Game throwDice(String playerId) {
-        var game = gameDao.getGame(playerId);
+        var game = getGame(playerId);
         var player = playerService.getOrCreatePlayer(playerId);
         checkGameAndPlayer(game, player);
         generalGameService.doStepPart(game.getId(), StepStatus.WAITING_DICE);
-        return gameDao.getGame(playerId);
+        return getGame(playerId);
+    }
+
+    private Game getGame(String playerId) {
+        return gameDao.getGame(playerId).orElseThrow(() -> new GlobalException("Player not in game", GlobalExceptionCode.INTERNAL_SERVER_ERROR));
     }
 }

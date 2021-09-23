@@ -22,4 +22,13 @@ public class PlayerDTO {
 
     private EventDayDTO currentDay;
 
+    //TODO REMOVE IT ON RELEASE
+    private boolean stepFinished;
+
+    private boolean isLastStep;
+
+    private boolean voted;
+
+    private boolean isComputer;
+
 }

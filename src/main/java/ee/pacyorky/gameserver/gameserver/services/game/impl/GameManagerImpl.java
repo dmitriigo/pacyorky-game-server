@@ -59,6 +59,8 @@ public class GameManagerImpl implements GameManager {
                 .build();
         Player player = playerService.getOrCreatePlayer(playerId);
         checkPlayerInGame(player);
+        player.resetPlayer();
+        playerService.savePlayer(player);
         game.addPlayer(player);
         var savedGame = gameDao.saveGame(game);
         generalGameService.startGame(savedGame.getId());
@@ -116,16 +118,15 @@ public class GameManagerImpl implements GameManager {
         if (player.getId().equals(game.getStep().getCurrentPlayer().getId())) {
             throw new GlobalException("Player can not vote for himself", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
-        int votedCards = 0;
+
+        if (!game.getStep().getStepCards().stream().map(stepCard -> stepCard.getCard().getId()).collect(Collectors.toList()).containsAll(cards)) {
+            throw new GlobalException("Voted cards is wrong. Voted cards: " + cards + " step cards: " + game.getStep().getStepCards(), GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
 
         for (StepCard stepCard : game.getStep().getStepCards()) {
             if (cards.contains(stepCard.getCard().getId())) {
                 stepCard.addVote();
-                votedCards++;
             }
-        }
-        if (votedCards != cards.size()) {
-            throw new GlobalException("Voted cards is wrong", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
         player.setVoted(true);
         playerService.savePlayer(player);

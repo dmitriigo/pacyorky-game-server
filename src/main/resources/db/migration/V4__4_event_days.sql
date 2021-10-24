@@ -1,31 +1,31 @@
 -- noinspection SqlResolveForFile
 
 insert into event_day (id, holiday, name, season, desk_order)
-values (0, 0, 'day', 1, 101);
+values (1, 0, 'day', 1, 101);
 insert into event_day (id, holiday, name, season, desk_order)
-values (1, 1, 'svjatvechir', 1, 106);
+values (2, 1, 'svjatvechir', 1, 106);
 insert into event_day (id, holiday, name, season, desk_order)
-values (2, 1, 'rizdvo', 1, 107);
+values (3, 1, 'rizdvo', 1, 107);
 insert into event_day (id, holiday, name, season, desk_order)
-values (3, 1, 'malanki', 1, 113);
+values (4, 1, 'malanki', 1, 113);
 insert into event_day (id, holiday, name, season, desk_order)
-values (4, 1, 'vasilja', 1, 114);
+values (5, 1, 'vasilja', 1, 114);
 insert into event_day (id, holiday, name, season, desk_order)
-values (5, 1, 'golodna_kutja', 1, 118);
+values (6, 1, 'golodna_kutja', 1, 118);
 insert into event_day (id, holiday, name, season, desk_order)
-values (6, 1, 'vodohresha', 1, 119);
+values (7, 1, 'vodohresha', 1, 119);
 insert into event_day (id, holiday, name, season, desk_order)
-values (7, 0, 'day', 1, 201);
+values (8, 0, 'day', 1, 201);
 insert into event_day (id, holiday, name, season, desk_order)
-values (8, 1, 'stritennja', 1, 215);
+values (9, 1, 'stritennja', 1, 215);
 insert into event_day (id, holiday, name, season, desk_order)
-values (9, 1, 'maslenica', 1, 216);
+values (10, 1, 'maslenica', 1, 216);
 insert into event_day (id, holiday, name, season, desk_order)
-values (10, 0, 'day', 1, 217);
+values (11, 0, 'day', 1, 217);
 insert into event_day (id, holiday, name, season, desk_order)
-values (11, 0, 'day', 2, 301);
+values (12, 0, 'day', 2, 301);
 insert into event_day (id, holiday, name, season, desk_order)
-values (12, 1, 'javdohi', 2, 314);
+values (13, 1, 'javdohi', 2, 314);
 insert into event_day (id, holiday, name, season, desk_order)
 values (14, 1, 'sorok_svjatih', 2, 322);
 insert into event_day (id, holiday, name, season, desk_order)

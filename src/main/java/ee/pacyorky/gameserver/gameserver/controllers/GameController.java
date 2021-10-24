@@ -36,7 +36,7 @@ public class GameController {
     }
 
     @PostMapping("/vote")
-    public ResponseEntity<GameDTO> throwDice(HttpSession httpSession, @RequestBody Set<Long> cards) {
+    public ResponseEntity<GameDTO> voteCards(HttpSession httpSession, @RequestBody Set<Long> cards) {
         return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.voteCards(httpSession.getId(), cards)));
     }
 

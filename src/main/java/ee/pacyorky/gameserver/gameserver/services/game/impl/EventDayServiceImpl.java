@@ -13,7 +13,7 @@ public class EventDayServiceImpl implements EventDayService {
 
     private final EventDayRepository eventDayRepository;
 
-    private static final Long startId = 0L;
+    private static final Long startId = 1L;
 
     private static final Long lastId = 48L;
 
@@ -29,6 +29,10 @@ public class EventDayServiceImpl implements EventDayService {
 
     @Override
     public EventDay getLastStepDay(Player player, int count) {
-        return eventDayRepository.findById(lastId - player.getCurrentDay().getId() + count).orElseThrow();
+        var newId = lastId - player.getCurrentDay().getId() + count;
+        if (newId == 0) {
+            newId = 1;
+        }
+        return eventDayRepository.findById(newId).orElseThrow(() -> new RuntimeException("Id not found"));
     }
 }

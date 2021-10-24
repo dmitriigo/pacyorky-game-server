@@ -17,6 +17,7 @@ import java.util.function.Predicate;
 public abstract class AbstractExecutor implements Runnable {
 
     protected static final int maxAttempt = 10;
+    protected static final long computerTimeout = 5L;
     protected final GameDao gameDao;
     protected final PlayerService playerService;
     protected final EventDayService eventDayService;

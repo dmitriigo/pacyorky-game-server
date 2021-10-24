@@ -151,6 +151,5 @@ public class Game {
     public void finish(Status reason) {
         this.status = reason.getId();
         this.step = null;
-        this.players = new HashSet<>();
     }
 }

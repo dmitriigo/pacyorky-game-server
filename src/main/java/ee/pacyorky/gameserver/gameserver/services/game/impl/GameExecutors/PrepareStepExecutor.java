@@ -32,6 +32,8 @@ public class PrepareStepExecutor extends AbstractExecutor {
         var playerOptional = calculatePlayer();
         if (playerOptional.isEmpty()) {
             log.error(game.getPlayers().toString());
+            callback.forceFinish(gameId);
+            return;
         }
         var player = playerOptional.get();
         playerService.savePlayer(player);
@@ -56,9 +58,6 @@ public class PrepareStepExecutor extends AbstractExecutor {
         var game = getGame(gameId);
         if (game.getPlayers().stream().allMatch(player -> player.isStepFinished() || player.isLastStep())) {
             for (Player player : game.getPlayers()) {
-                if (player.isLastStep()) {
-                    continue;
-                }
                 player.setStepFinished(false);
                 playerService.savePlayer(player);
             }

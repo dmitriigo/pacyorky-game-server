@@ -6,9 +6,7 @@ import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import org.apache.commons.lang3.RandomUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public final class CardUtils {
     public static void initPlayersCards(Player player, Game game) {
@@ -16,9 +14,10 @@ public final class CardUtils {
         for (Map.Entry<CardType, List<Card>> cardTypeListEntry : cardTypeListMap.entrySet()) {
             List<Card> playersCards = player.getCardsByType(cardTypeListEntry.getKey());
             for (int i = playersCards.size(); i < 2; i++) {
-                Card card = cardTypeListEntry.getValue().stream().findFirst().orElseThrow();
+                var list = new ArrayList<>(cardTypeListEntry.getValue());
+                Collections.shuffle(list);
+                Card card = list.stream().findFirst().orElseThrow();
                 player.getDeck().add(card);
-                cardTypeListEntry.getValue().remove(card);
             }
         }
     }

@@ -139,9 +139,7 @@ public class Game {
 
     public HolidayCard getHolidayCard() {
         Collections.shuffle(holidaysDeck);
-        var holiday = holidaysDeck.stream().findAny().orElseThrow();
-        holidaysDeck.remove(holiday);
-        return holiday;
+        return holidaysDeck.stream().findAny().orElseThrow();
     }
 
     public void start() {

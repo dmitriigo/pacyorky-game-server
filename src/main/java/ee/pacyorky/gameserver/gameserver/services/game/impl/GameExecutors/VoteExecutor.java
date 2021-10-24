@@ -28,6 +28,8 @@ public class VoteExecutor extends AbstractExecutor {
         checkGameStepStatus(StepStatus.WAITING_VOTE);
 
         if (game.getStep().getStepCards().isEmpty()) {
+            game.getStep().setStatus(StepStatus.FINISHED);
+            saveGame(game);
             callback.success(gameId);
             return;
         }

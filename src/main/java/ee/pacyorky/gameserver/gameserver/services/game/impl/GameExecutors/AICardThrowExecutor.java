@@ -33,7 +33,7 @@ public class AICardThrowExecutor extends AbstractExecutor {
             cards.add(StepCard.builder().card(player.getDeck().get(card)).build());
         }
         game.getStep().setStepCards(cards);
-        game.setNextStepAt(LocalDateTime.now().plusSeconds(game.getSecondsForStep()));
+        game.setNextStepAt(LocalDateTime.now().plusSeconds(computerTimeout));
         gameDao.saveGame(game);
         sleep();
         callback.success(gameId);

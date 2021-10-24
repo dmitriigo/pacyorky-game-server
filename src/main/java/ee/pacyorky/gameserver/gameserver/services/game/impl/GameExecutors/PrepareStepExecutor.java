@@ -33,7 +33,7 @@ public class PrepareStepExecutor extends AbstractExecutor {
                 .currentPlayer(player)
                 .build();
         game.setStep(step);
-        game.setNextStepAt(LocalDateTime.now().plusSeconds(game.getSecondsForStep()));
+        game.setNextStepAt(LocalDateTime.now().plusSeconds(player.isComputer() ? computerTimeout : game.getSecondsForStep()));
         game.plusStep();
         saveGame(game);
         if (player.isComputer()) {

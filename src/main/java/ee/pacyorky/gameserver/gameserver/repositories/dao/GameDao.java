@@ -43,7 +43,7 @@ public class GameDao {
             throw new GlobalException("Player id is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
         return gameRepository.getGameByPlayerId(playerId)
-                .orElseThrow(() -> new GlobalException("Player not in game " + playerId, GlobalExceptionCode.INTERNAL_SERVER_ERROR));
+                .orElseThrow(() -> new GlobalException("Player not in game " + playerId, GlobalExceptionCode.PLAYER_NOT_IN_GAME));
     }
 
 }

@@ -59,6 +59,8 @@ public class GameManagerImpl implements GameManager {
                 .build();
         Player player = playerService.getOrCreatePlayer(playerId);
         checkPlayerInGame(player);
+        player.resetPlayer();
+        playerService.savePlayer(player);
         game.addPlayer(player);
         var savedGame = gameDao.saveGame(game);
         generalGameService.startGame(savedGame.getId());

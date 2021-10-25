@@ -144,7 +144,7 @@ public class GameManagerImpl implements GameManager {
         if (game.getStep() == null) {
             throw new GlobalException("Step is not created. Null.", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
-        if (!player.equals(game.getStep().getCurrentPlayer())) {
+        if (!player.getId().equals(game.getStep().getCurrentPlayer().getId())) {
             throw new GlobalException("Current player != player", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
     }

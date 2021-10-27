@@ -14,7 +14,7 @@ import java.util.Set;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/game")
+@RequestMapping("/v1/game")
 public class GameController {
 
     private final GameManager gameManager;

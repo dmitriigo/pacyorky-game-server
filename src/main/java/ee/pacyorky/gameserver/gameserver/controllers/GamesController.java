@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/rooms")
+@RequestMapping("/v1/rooms")
 public class GamesController {
 
     private final GameManager gameManager;

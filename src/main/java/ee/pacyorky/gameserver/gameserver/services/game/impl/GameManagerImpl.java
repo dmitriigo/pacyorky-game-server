@@ -196,9 +196,9 @@ public class GameManagerImpl implements GameManager {
     }
 
     private void checkPlayerInGame(Player player) {
-        Set<Player> playersInGame = gameDao.getGames().stream().flatMap(repoGame -> repoGame.getPlayers().stream()).collect(Collectors.toSet());
-        if (playersInGame.contains(player)) {
-            throw new GlobalException("Player already in game", GlobalExceptionCode.PLAYER_ALREADY_IN_GAME);
+        var game = gameDao.getGame(player.getId());
+        if (game.isPresent()) {
+            throw new GlobalException("Player already in game. GameId: " + game.get().getId() + " game status: " + game.get().getStatus().name(), GlobalExceptionCode.PLAYER_ALREADY_IN_GAME);
         }
     }
 

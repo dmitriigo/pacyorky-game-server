@@ -77,8 +77,6 @@ public class GameStartExecutor extends AbstractExecutor {
             saveGame(game);
         }
         game = getGame(gameId);
-        game.start();
-        saveGame(game);
         Set<Player> players = game.getPlayers();
         for (Player player1 : players) {
             initPlayersCards(player1, game);
@@ -88,6 +86,7 @@ public class GameStartExecutor extends AbstractExecutor {
             player1.setCurrentDay(eventDayService.getStartPosition());
             playerService.savePlayer(player1);
         }
+        game.start();
         saveGame(game);
         callback.success(gameId);
         return true;

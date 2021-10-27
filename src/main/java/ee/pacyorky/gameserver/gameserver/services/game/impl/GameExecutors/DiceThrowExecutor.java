@@ -1,5 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
+import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -18,7 +19,7 @@ public class DiceThrowExecutor extends AbstractExecutor {
         var game = getGame(gameId);
         checkGameStepStatus(StepStatus.WAITING_DICE);
 
-        var counter = getCounter();
+        var counter = getCounter(game);
         var player = game.getStep().getCurrentPlayer();
         var newDay = eventDayService.getNextDay(player, counter);
         if (newDay == null) {
@@ -45,8 +46,8 @@ public class DiceThrowExecutor extends AbstractExecutor {
         }
     }
 
-    private Integer getCounter() {
-        return new Random().nextInt(6) + 1;
+    private Integer getCounter(Game game) {
+        return new Random().nextInt(game.getPlayers().size() > 4 ? 12 : 6) + 1;
     }
 
     @Override

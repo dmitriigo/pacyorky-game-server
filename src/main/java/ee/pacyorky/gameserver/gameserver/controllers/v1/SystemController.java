@@ -1,4 +1,4 @@
-package ee.pacyorky.gameserver.gameserver.controllers;
+package ee.pacyorky.gameserver.gameserver.controllers.v1;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;

@@ -2,6 +2,7 @@ package ee.pacyorky.gameserver.gameserver.dtos;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class GameDTO {
 
     private Long id;

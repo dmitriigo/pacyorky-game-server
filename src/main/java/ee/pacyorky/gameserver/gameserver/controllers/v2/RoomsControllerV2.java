@@ -1,7 +1,9 @@
-package ee.pacyorky.gameserver.gameserver.controllers;
+package ee.pacyorky.gameserver.gameserver.controllers.v2;
 
+import ee.pacyorky.gameserver.gameserver.controllers.facade.RoomsControllerFacade;
 import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
+import ee.pacyorky.gameserver.gameserver.entities.optimized.SimpleGameInfo;
 import ee.pacyorky.gameserver.gameserver.mappers.GameMapper;
 import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
 import ee.pacyorky.gameserver.gameserver.services.game.GameManager;
@@ -15,45 +17,43 @@ import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/v1/rooms")
-public class GamesController {
+@RequestMapping("/v2/rooms")
+public class RoomsControllerV2 {
 
-    private final GameManager gameManager;
-    private final GameDao gameDao;
+    private final RoomsControllerFacade facade;
 
     @GetMapping("/all")
     public ResponseEntity<List<GameDTO>> getGamesAll() {
-        return ResponseEntity.ok(gameDao.getGames().stream().map(GameMapper.INSTANCE::toGameDto).collect(Collectors.toList()));
+        return facade.getGamesAll();
     }
 
     @GetMapping("/get")
-    public ResponseEntity<List<GameDTO>> getGames() {
-        return ResponseEntity.ok(gameDao.getActiveGames().stream().map(GameMapper.INSTANCE::toGameDto).collect(Collectors.toList()));
+    public ResponseEntity<List<SimpleGameInfo>> getGames() {
+        return facade.getGamesV2();
     }
 
     @PostMapping("/add")
     public ResponseEntity<GameDTO> addGame(@RequestBody GameCreationDto gameCreationDto, HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.createGame(httpSession.getId(), gameCreationDto)));
+        return facade.addGame(gameCreationDto, httpSession);
     }
 
     @PostMapping("/join/{gameId}")
     public ResponseEntity<GameDTO> joinIntoTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.joinIntoTheGame(httpSession.getId(), gameId)));
+        return facade.joinIntoTheGame(gameId, httpSession);
     }
 
     @DeleteMapping("/left")
     public ResponseEntity<GameDTO> leftFromTheGame(HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.leftFromTheGame(httpSession.getId())));
+        return facade.leftFromTheGame(httpSession);
     }
 
     @GetMapping("/get/{gameId}")
     public ResponseEntity<GameDTO> getGame(@PathVariable("gameId") Long gameId) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameDao.getGame(gameId)));
+        return facade.getGame(gameId);
     }
 
     @DeleteMapping("/clear/{id}")
     public ResponseEntity<List<GameDTO>> clearGames(@PathVariable("id") Long id) {
-        gameManager.clearGames(id);
-        return getGames();
+        return facade.clearGames(id);
     }
 }

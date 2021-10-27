@@ -2,6 +2,7 @@ package ee.pacyorky.gameserver.gameserver.repositories.dao;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.entities.game.Status;
+import ee.pacyorky.gameserver.gameserver.entities.optimized.SimpleGameInfo;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.repositories.GameRepository;
@@ -18,7 +19,6 @@ import java.util.Set;
 public class GameDao {
 
     private final GameRepository gameRepository;
-    private final PlayerService playerService;
 
 
     public List<Game> getGames() {
@@ -46,4 +46,7 @@ public class GameDao {
         return gameRepository.getGameByPlayerId(playerId);
     }
 
+    public List<SimpleGameInfo> getActiveGamesSimple() {
+        return gameRepository.getSimpleGameInfos(Set.of(Status.WAITING.getId(), Status.STARTED.getId()));
+    }
 }

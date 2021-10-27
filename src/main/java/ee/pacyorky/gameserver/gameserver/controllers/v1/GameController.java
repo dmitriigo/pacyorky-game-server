@@ -1,4 +1,4 @@
-package ee.pacyorky.gameserver.gameserver.controllers;
+package ee.pacyorky.gameserver.gameserver.controllers.v1;
 
 import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
 import ee.pacyorky.gameserver.gameserver.mappers.GameMapper;

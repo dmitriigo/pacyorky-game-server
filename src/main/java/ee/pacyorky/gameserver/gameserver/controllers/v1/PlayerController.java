@@ -1,4 +1,4 @@
-package ee.pacyorky.gameserver.gameserver.controllers;
+package ee.pacyorky.gameserver.gameserver.controllers.v1;
 
 import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import lombok.AllArgsConstructor;

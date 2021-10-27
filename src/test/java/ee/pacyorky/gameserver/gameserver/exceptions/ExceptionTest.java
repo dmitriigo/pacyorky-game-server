@@ -36,7 +36,7 @@ public class ExceptionTest {
         Mockito.when(gamesController.getGame(1l))
                 .thenThrow(new RuntimeException("Unexpected Exception"));
 
-        mockMvc.perform(get("/rooms/get/1"))
+        mockMvc.perform(get("/v1/rooms/get/1"))
                 .andExpect(status().is(500))
                 .andExpect(jsonPath("$.code").value("INTERNAL_SERVER_ERROR"))
                 .andExpect(jsonPath("$.message").value("Unexpected Exception"));
@@ -48,7 +48,7 @@ public class ExceptionTest {
         Mockito.when(gamesController.getGame(1l))
                 .thenThrow(new GlobalException("Global Exception", GlobalExceptionCode.CAPACITY_LIMIT_REACHED));
 
-        mockMvc.perform(get("/rooms/get/1"))
+        mockMvc.perform(get("/v1/rooms/get/1"))
                 .andExpect(status().is(400))
                 .andExpect(jsonPath("$.code").value("CAPACITY_LIMIT_REACHED"))
                 .andExpect(jsonPath("$.message").value("Global Exception"));

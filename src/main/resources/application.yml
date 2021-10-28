@@ -22,7 +22,7 @@ spring:
 game:
   secondsBeforeStart: 120
   secondsBeforeStep: 60
-  maxAttemptsForStep: 2
+  maxAttemptsForStep: 5
   maxAttemptsForStart: 10
   maxGames: 10
   secretKey: ${GAME_SECRET:secret}

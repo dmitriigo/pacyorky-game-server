@@ -69,7 +69,7 @@ public class GameStartExecutor extends AbstractExecutor {
             throw new RuntimeException("Game status not waiting");
         }
         if (game.getPlayers().size() < game.getCapacity()) {
-            game.setStartAt(game.getStartAt().plusSeconds(game.getSecondsBeforeStart()));
+            game.setStartAt(LocalDateTime.now().plusSeconds(game.getSecondsBeforeStart()));
             saveGame(game);
             return false;
         }

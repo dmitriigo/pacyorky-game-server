@@ -1,6 +1,8 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.StepCard;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.util.CardUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -20,11 +22,11 @@ public class AICardThrowExecutor extends AbstractExecutor {
     protected void doStepPart() throws InterruptedException {
         var game = getGame(gameId);
         if (!game.isWithComputer()) {
-            throw new RuntimeException("Game is not with computer");
+            throw new GlobalException("Game is not with computer", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
         var player = game.getStep().getCurrentPlayer();
         if (!player.isComputer()) {
-            throw new RuntimeException("Player is not computer");
+            throw new GlobalException("Player is not computer", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
 
         var cardsIndex = CardUtils.getRandomCardIndexes(player.getDeck().size());
@@ -33,7 +35,7 @@ public class AICardThrowExecutor extends AbstractExecutor {
             cards.add(StepCard.builder().card(player.getDeck().get(card)).build());
         }
         game.getStep().setStepCards(cards);
-        game.setNextStepAt(LocalDateTime.now().plusSeconds(computerTimeout));
+        game.setNextStepAt(LocalDateTime.now().plusSeconds(COMPUTER_TIMEOUT));
         gameDao.saveGame(game);
         sleep();
         callback.success(gameId);

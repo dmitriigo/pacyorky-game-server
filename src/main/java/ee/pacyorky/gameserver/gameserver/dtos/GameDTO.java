@@ -38,5 +38,7 @@ public class GameDTO {
     private long stepCounter;
 
     private Status status;
+    
+    private String token;
 
 }

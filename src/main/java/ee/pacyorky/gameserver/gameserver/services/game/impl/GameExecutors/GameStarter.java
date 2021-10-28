@@ -1,8 +1,11 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
+import ee.pacyorky.gameserver.gameserver.agario.RtcTokenGenerator;
 import ee.pacyorky.gameserver.gameserver.entities.game.Character;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.Status;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 
@@ -23,7 +26,7 @@ public class GameStarter extends AbstractExecutor{
         var game = getGame(gameId);
         if (game.isNotWaiting()) {
             callback.fail(gameId);
-            throw new RuntimeException("Game status not waiting");
+            throw new GlobalException("Game status not waiting", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
         var playersCount = game.getPlayers().size();
         if (playersCount < 1 || (playersCount < 2 && !game.isWithComputer())) {
@@ -39,9 +42,11 @@ public class GameStarter extends AbstractExecutor{
                 playerService.savePlayer(player);
                 game.addPlayer(player);
             }
-            saveGame(game);
+        } else {
+            game.setToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraId, agoraCert, String.valueOf(gameId)));
         }
-
+        
+        saveGame(game);
         game = getGame(gameId);
         Set<Player> players = game.getPlayers();
         for (Player player1 : players) {

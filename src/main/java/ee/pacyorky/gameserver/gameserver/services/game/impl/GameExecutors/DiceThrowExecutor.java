@@ -36,7 +36,7 @@ public class DiceThrowExecutor extends AbstractExecutor {
         step.setCurrentPlayer(player);
         step.setStatus(StepStatus.WAITING_CARD);
         game.setStep(step);
-        game.setNextStepAt(LocalDateTime.now().plusSeconds(player.isComputer() ? computerTimeout : game.getSecondsForStep()));
+        game.setNextStepAt(LocalDateTime.now().plusSeconds(player.isComputer() ? COMPUTER_TIMEOUT : game.getSecondsForStep()));
         saveGame(game);
         if (player.isComputer()) {
             sleep();

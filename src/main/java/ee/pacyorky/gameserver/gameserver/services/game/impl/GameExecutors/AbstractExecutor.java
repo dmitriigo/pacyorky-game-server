@@ -18,7 +18,7 @@ public abstract class AbstractExecutor implements Runnable {
 
     protected final int maxAttemptStart;
     protected final int maxAttemptStep;
-    protected static final long computerTimeout = 5L;
+    protected static final long COMPUTER_TIMEOUT = 5L;
     protected final GameDao gameDao;
     protected final PlayerService playerService;
     protected final EventDayService eventDayService;
@@ -26,8 +26,10 @@ public abstract class AbstractExecutor implements Runnable {
     protected final ExecutorCallback callback;
     private final boolean silently;
     private final boolean skipGameContinueCheck;
+    protected final String agoraId;
+    protected final String agoraCert;
 
-    public AbstractExecutor(ExecutorSettings executorSettings, boolean silently, boolean skipGameContinueCheck) {
+    protected AbstractExecutor(ExecutorSettings executorSettings, boolean silently, boolean skipGameContinueCheck) {
         this.gameDao = executorSettings.getGameDao();
         this.playerService = executorSettings.getPlayerService();
         this.eventDayService = executorSettings.getEventDayService();
@@ -37,10 +39,12 @@ public abstract class AbstractExecutor implements Runnable {
         this.skipGameContinueCheck = skipGameContinueCheck;
         this.maxAttemptStart = executorSettings.getAppProperties().getMaxAttemptsForStart();
         this.maxAttemptStep = executorSettings.getAppProperties().getMaxAttemptsForStep();
+        this.agoraId = executorSettings.getAppProperties().getAgoraId();
+        this.agoraCert = executorSettings.getAppProperties().getAgoraCertificate();
 
     }
 
-    public AbstractExecutor(ExecutorSettings executorSettings, boolean silently) {
+    protected AbstractExecutor(ExecutorSettings executorSettings, boolean silently) {
         this(executorSettings, silently, false);
     }
 

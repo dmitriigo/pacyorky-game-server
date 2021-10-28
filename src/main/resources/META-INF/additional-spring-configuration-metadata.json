@@ -39,6 +39,16 @@
       "name": "game.secretKey",
       "type": "java.lang.String",
       "description": "Description for game.secretKey."
+    },
+    {
+      "name": "game.agoraCertificate",
+      "type": "java.lang.String",
+      "description": "Description for game.agoraCertificate."
+    },
+    {
+      "name": "game.agoraId",
+      "type": "java.lang.String",
+      "description": "Description for game.agoraId."
     }
   ]
 }

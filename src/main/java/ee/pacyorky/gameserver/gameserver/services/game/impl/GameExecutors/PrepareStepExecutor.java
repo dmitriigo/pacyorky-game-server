@@ -3,8 +3,6 @@ package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.Step;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 
@@ -42,7 +40,7 @@ public class PrepareStepExecutor extends AbstractExecutor {
                 .currentPlayer(player)
                 .build();
         game.setStep(step);
-        game.setNextStepAt(LocalDateTime.now().plusSeconds(player.isComputer() ? computerTimeout : game.getSecondsForStep()));
+        game.setNextStepAt(LocalDateTime.now().plusSeconds(player.isComputer() ? COMPUTER_TIMEOUT : game.getSecondsForStep()));
         game.plusStep();
         saveGame(game);
         if (player.isComputer()) {

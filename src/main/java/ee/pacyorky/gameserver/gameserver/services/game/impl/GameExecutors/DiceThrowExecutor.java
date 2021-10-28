@@ -47,7 +47,7 @@ public class DiceThrowExecutor extends AbstractExecutor {
     }
 
     private Integer getCounter(Game game) {
-        return new Random().nextInt(game.getPlayers().size() > 4 ? 12 : 6) + 1;
+        return new Random().nextInt(game.getCapacity() > 4 ? 11 : 6) + (game.getCapacity() > 4 ? 2 : 1);
     }
 
     @Override

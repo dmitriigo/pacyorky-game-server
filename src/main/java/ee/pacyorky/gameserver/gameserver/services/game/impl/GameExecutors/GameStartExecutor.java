@@ -18,7 +18,7 @@ public class GameStartExecutor extends AbstractExecutor {
 
 
     public GameStartExecutor(ExecutorSettings executorSettings) {
-        super(executorSettings, false, true);
+        super(executorSettings, true, true);
     }
 
     @Override
@@ -32,18 +32,24 @@ public class GameStartExecutor extends AbstractExecutor {
     }
 
     private void checkAndStartGame() throws InterruptedException {
-        for (int i = 0; i < maxAttempt; i++) {
-            if (isNeedStartGame() && startGame()) {
+        boolean started = false;
+        for (int i = 0; i < maxAttemptStart; i++) {
+            started = startGame();
+            if (isNeedStartGame() && started) {
                 break;
             } else {
                 sleepStart();
             }
         }
         var game = getGame(gameId);
-        if (game.isNotStarted()) {
-            game.finish(Status.CANCELLED);
-            saveGame(game);
-            callback.fail(gameId);
+        if (!started) {
+            if (game.isWithComputer() && game.getPlayers().size() > 0) {
+                callback.success(gameId);
+            } else {
+                game.finish(Status.CANCELLED);
+                saveGame(game);
+                callback.fail(gameId);
+            }
         }
     }
 
@@ -57,37 +63,16 @@ public class GameStartExecutor extends AbstractExecutor {
         return LocalDateTime.now().isAfter(getGame(gameId).getStartAt());
     }
 
-    private boolean startGame() throws InterruptedException {
+    private boolean startGame() {
         var game = getGame(gameId);
         if (game.isNotWaiting()) {
             throw new RuntimeException("Game status not waiting");
         }
-        if (!game.isWithComputer() && game.getPlayers().size() < 2) {
+        if (game.getPlayers().size() < game.getCapacity()) {
             game.setStartAt(game.getStartAt().plusSeconds(game.getSecondsBeforeStart()));
             saveGame(game);
             return false;
-        } else if (game.isWithComputer()) {
-            sleepStart();
-            game = getGame(gameId);
-            for (int i = game.getPlayers().size(); i < game.getCapacity(); i++) {
-                var player = Player.builder().id(UUID.randomUUID().toString()).isComputer(true).build();
-                playerService.savePlayer(player);
-                game.addPlayer(player);
-            }
-            saveGame(game);
         }
-        game = getGame(gameId);
-        Set<Player> players = game.getPlayers();
-        for (Player player1 : players) {
-            initPlayersCards(player1, game);
-            Character character = game.getCharacters().stream().findAny().orElseThrow();
-            player1.setCharacter(character);
-            game.getCharacters().remove(character);
-            player1.setCurrentDay(eventDayService.getStartPosition());
-            playerService.savePlayer(player1);
-        }
-        game.start();
-        saveGame(game);
         callback.success(gameId);
         return true;
     }

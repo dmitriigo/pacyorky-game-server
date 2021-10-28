@@ -40,5 +40,10 @@ public class GameController {
         return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.voteCards(httpSession.getId(), cards)));
     }
 
+    @PostMapping("/start")
+    public ResponseEntity<GameDTO> startGame(HttpSession httpSession) {
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.forceStart(httpSession.getId())));
+    }
+
 
 }

@@ -21,8 +21,8 @@ spring:
       path: /api
 game:
   secondsBeforeStart: 120
-  secondsBeforeStep: 120
-  maxAttemptsForStep: 10
+  secondsBeforeStep: 60
+  maxAttemptsForStep: 2
   maxAttemptsForStart: 10
   maxGames: 10
   secretKey: ${GAME_SECRET:secret}

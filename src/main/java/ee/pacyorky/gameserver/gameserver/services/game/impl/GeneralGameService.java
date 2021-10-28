@@ -30,18 +30,29 @@ public class GeneralGameService {
     private final ExecutorService executorService;
     private final Map<Long, Future<?>> games = new ConcurrentHashMap<>();
     private final GameDao gameDao;
+    private final AppProperties appProperties;
 
     @Autowired
-    public GeneralGameService(PlayerService playerService, EventDayService eventDayService, AppProperties properties, GameDao gameDao) {
+    public GeneralGameService(PlayerService playerService, EventDayService eventDayService, AppProperties properties, GameDao gameDao, AppProperties appProperties) {
         this.playerService = playerService;
         this.eventDayService = eventDayService;
         this.executorService = Executors.newFixedThreadPool(properties.getMaxGames());
         this.gameDao = gameDao;
+        this.appProperties = appProperties;
     }
 
     public void startGame(Long gameId) {
-        var future = executorService.submit(new GameStartExecutor(buildSettings(gameId, startStepConsumer(), l -> games.remove(gameId))));
+        var future = executorService.submit(new GameStartExecutor(buildSettings(gameId, gameStarter(), l -> games.remove(gameId))));
         games.put(gameId, future);
+    }
+
+    public void forceStart(Long gameId) {
+        var future = games.get(gameId);
+        if (future == null || future.isDone() || future.isCancelled()) {
+            throw new GlobalException("Game not ready for start", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        future.cancel(true);
+        gameStarter().accept(gameId);
     }
 
     public void doStepPart(Long gameId, StepStatus status) {
@@ -59,6 +70,13 @@ public class GeneralGameService {
             return;
         }
         throw new GlobalException("Step Status not supported " + status, GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+    }
+
+    private Consumer<Long> gameStarter() {
+        return (gameId) -> {
+            var future = executorService.submit(new GameStarter(buildSettings(gameId, startStepConsumer(), l -> games.remove(gameId))));
+            games.put(gameId, future);
+        };
     }
 
     private Consumer<Long> startStepConsumer() {
@@ -121,6 +139,7 @@ public class GeneralGameService {
                 .playerService(playerService)
                 .gameDao(gameDao)
                 .executorCallback(callback)
+                .appProperties(appProperties)
                 .build();
     }
 

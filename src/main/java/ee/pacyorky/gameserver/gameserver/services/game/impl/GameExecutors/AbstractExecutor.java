@@ -16,7 +16,8 @@ import java.util.function.Predicate;
 
 public abstract class AbstractExecutor implements Runnable {
 
-    protected static final int maxAttempt = 10;
+    protected final int maxAttemptStart;
+    protected final int maxAttemptStep;
     protected static final long computerTimeout = 5L;
     protected final GameDao gameDao;
     protected final PlayerService playerService;
@@ -34,6 +35,9 @@ public abstract class AbstractExecutor implements Runnable {
         this.callback = executorSettings.getExecutorCallback();
         this.silently = silently;
         this.skipGameContinueCheck = skipGameContinueCheck;
+        this.maxAttemptStart = executorSettings.getAppProperties().getMaxAttemptsForStart();
+        this.maxAttemptStep = executorSettings.getAppProperties().getMaxAttemptsForStep();
+
     }
 
     public AbstractExecutor(ExecutorSettings executorSettings, boolean silently) {
@@ -61,7 +65,7 @@ public abstract class AbstractExecutor implements Runnable {
 
     protected void sleepGame() throws InterruptedException {
         var game = getGame(gameId);
-        for (int i = 0; i < maxAttempt; i++) {
+        for (int i = 0; i < maxAttemptStep; i++) {
             if (LocalDateTime.now().isAfter(getGame(gameId).getNextStepAt())) {
                 game.setNextStepAt(LocalDateTime.now().plusSeconds(game.getSecondsForStep()));
                 saveGame(game);

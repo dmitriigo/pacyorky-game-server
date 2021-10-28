@@ -22,4 +22,6 @@ public interface GameManager {
     Game voteCards(String playerId, Set<Long> cards);
 
     Game throwDice(String id);
+
+    Game forceStart(String playerId);
 }

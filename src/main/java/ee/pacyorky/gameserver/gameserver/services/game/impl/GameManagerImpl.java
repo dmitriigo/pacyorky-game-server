@@ -211,6 +211,19 @@ public class GameManagerImpl implements GameManager {
         return getGame(playerId);
     }
 
+    @Override
+    public Game forceStart(String playerId) {
+        var game = getGame(playerId);
+        if (game.isNotWaiting()) {
+            throw new GlobalException("Game is not waiting", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (!game.isWithComputer() && game.getPlayers().size() < 2) {
+            throw new GlobalException("Players less then 2", GlobalExceptionCode.PLAYERS_COUNT_LESS);
+        }
+        generalGameService.forceStart(game.getId());
+        return getGame(playerId);
+    }
+
     private Game getGame(String playerId) {
         return gameDao.getGame(playerId).orElseThrow(() -> new GlobalException("Player not in game", GlobalExceptionCode.INTERNAL_SERVER_ERROR));
     }

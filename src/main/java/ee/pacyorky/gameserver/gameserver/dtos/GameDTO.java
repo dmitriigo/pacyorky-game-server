@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -21,9 +20,9 @@ public class GameDTO {
 
     private Long capacity;
 
-    private LocalDateTime startAt;
+    private String startAt;
 
-    private LocalDateTime nextStepAt;
+    private String nextStepAt;
 
     private boolean withComputer;
 

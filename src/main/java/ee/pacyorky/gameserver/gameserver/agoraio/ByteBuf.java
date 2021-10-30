@@ -1,4 +1,4 @@
-package ee.pacyorky.gameserver.gameserver.agario;
+package ee.pacyorky.gameserver.gameserver.agoraio;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

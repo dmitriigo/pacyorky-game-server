@@ -1,5 +1,7 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl;
 
+import ee.pacyorky.gameserver.gameserver.agoraio.RtcTokenGenerator;
+import ee.pacyorky.gameserver.gameserver.config.AgoraProperties;
 import ee.pacyorky.gameserver.gameserver.config.AppProperties;
 import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.entities.game.*;
@@ -36,6 +38,8 @@ public class GameManagerImpl implements GameManager {
 
     private final AppProperties properties;
 
+    private final AgoraProperties agoraProperties;
+
     @Override
     public Game createGame(String playerId, GameCreationDto gameCreationDto) {
 
@@ -63,6 +67,12 @@ public class GameManagerImpl implements GameManager {
         playerService.savePlayer(player);
         game.addPlayer(player);
         var savedGame = gameDao.saveGame(game);
+        if (agoraProperties.isCreateTokenOnCreateGame()) {
+            if (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame()) {
+                savedGame.setToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, game.getId()));
+                gameDao.saveGame(savedGame);
+            }
+        }
         generalGameService.startGame(savedGame.getId());
         return savedGame;
     }

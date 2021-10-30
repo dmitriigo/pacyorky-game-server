@@ -26,8 +26,10 @@ game:
   maxAttemptsForStart: 10
   maxGames: 10
   secretKey: ${GAME_SECRET:secret}
+agora:
   agoraId: ${AGORA_ID:id}
   agoraCertificate: ${AGORA_CERT:cert}
+  createTokenOnCreateGame: false
 telegram:
   token: ${TELEGRAM_TOKEN}
   chat: ${TELEGRAM_CHAT}

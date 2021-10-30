@@ -1,5 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
+import ee.pacyorky.gameserver.gameserver.config.AgoraProperties;
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
@@ -26,8 +27,7 @@ public abstract class AbstractExecutor implements Runnable {
     protected final ExecutorCallback callback;
     private final boolean silently;
     private final boolean skipGameContinueCheck;
-    protected final String agoraId;
-    protected final String agoraCert;
+    protected final AgoraProperties agoraProperties;
 
     protected AbstractExecutor(ExecutorSettings executorSettings, boolean silently, boolean skipGameContinueCheck) {
         this.gameDao = executorSettings.getGameDao();
@@ -39,8 +39,7 @@ public abstract class AbstractExecutor implements Runnable {
         this.skipGameContinueCheck = skipGameContinueCheck;
         this.maxAttemptStart = executorSettings.getAppProperties().getMaxAttemptsForStart();
         this.maxAttemptStep = executorSettings.getAppProperties().getMaxAttemptsForStep();
-        this.agoraId = executorSettings.getAppProperties().getAgoraId();
-        this.agoraCert = executorSettings.getAppProperties().getAgoraCertificate();
+        this.agoraProperties = executorSettings.getAgoraProperties();
 
     }
 

@@ -14,6 +14,4 @@ public class AppProperties {
     private Integer maxAttemptsForStart;
     private Integer maxGames;
     private String secretKey;
-    private String agoraId;
-    private String agoraCertificate;
 }

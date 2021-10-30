@@ -41,14 +41,19 @@
       "description": "Description for game.secretKey."
     },
     {
-      "name": "game.agoraCertificate",
+      "name": "agora.agoraId",
       "type": "java.lang.String",
-      "description": "Description for game.agoraCertificate."
+      "description": "Description for agora.agoraId."
     },
     {
-      "name": "game.agoraId",
+      "name": "agora.agoraCertificate",
       "type": "java.lang.String",
-      "description": "Description for game.agoraId."
+      "description": "Description for agora.agoraCertificate."
+    },
+    {
+      "name": "agora.createTokenOnCreateGame",
+      "type": "java.lang.String",
+      "description": "Description for agora.createTokenOnCreateGame."
     }
   ]
 }

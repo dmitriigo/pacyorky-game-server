@@ -1,5 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl;
 
+import ee.pacyorky.gameserver.gameserver.config.AgoraProperties;
 import ee.pacyorky.gameserver.gameserver.config.AppProperties;
 import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
@@ -31,14 +32,16 @@ public class GeneralGameService {
     private final Map<Long, Future<?>> games = new ConcurrentHashMap<>();
     private final GameDao gameDao;
     private final AppProperties appProperties;
+    private final AgoraProperties agoraProperties;
 
     @Autowired
-    public GeneralGameService(PlayerService playerService, EventDayService eventDayService, AppProperties properties, GameDao gameDao, AppProperties appProperties) {
+    public GeneralGameService(PlayerService playerService, EventDayService eventDayService, AppProperties properties, GameDao gameDao, AppProperties appProperties, AgoraProperties agoraProperties) {
         this.playerService = playerService;
         this.eventDayService = eventDayService;
         this.executorService = Executors.newFixedThreadPool(properties.getMaxGames());
         this.gameDao = gameDao;
         this.appProperties = appProperties;
+        this.agoraProperties = agoraProperties;
     }
 
     public void startGame(Long gameId) {
@@ -140,6 +143,7 @@ public class GeneralGameService {
                 .gameDao(gameDao)
                 .executorCallback(callback)
                 .appProperties(appProperties)
+                .agoraProperties(agoraProperties)
                 .build();
     }
 

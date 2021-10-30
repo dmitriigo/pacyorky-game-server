@@ -1,6 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
-import ee.pacyorky.gameserver.gameserver.agario.RtcTokenGenerator;
+import ee.pacyorky.gameserver.gameserver.agoraio.RtcTokenGenerator;
 import ee.pacyorky.gameserver.gameserver.entities.game.Character;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.Status;
@@ -42,8 +42,11 @@ public class GameStarter extends AbstractExecutor{
                 playerService.savePlayer(player);
                 game.addPlayer(player);
             }
-        } else {
-            game.setToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraId, agoraCert, String.valueOf(gameId)));
+        }
+        if (!agoraProperties.isCreateTokenOnCreateGame()){
+            if (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame()) {
+                game.setToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, gameId));
+            }
         }
         
         saveGame(game);

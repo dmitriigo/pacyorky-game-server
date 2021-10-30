@@ -1,4 +1,4 @@
-package ee.pacyorky.gameserver.gameserver.agario;
+package ee.pacyorky.gameserver.gameserver.agoraio;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

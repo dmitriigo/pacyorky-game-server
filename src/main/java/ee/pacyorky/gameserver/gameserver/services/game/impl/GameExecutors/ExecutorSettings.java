@@ -1,5 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
 
+import ee.pacyorky.gameserver.gameserver.config.AgoraProperties;
 import ee.pacyorky.gameserver.gameserver.config.AppProperties;
 import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
 import ee.pacyorky.gameserver.gameserver.services.game.EventDayService;
@@ -18,4 +19,5 @@ public class ExecutorSettings {
     private final Long gameId;
     private final ExecutorCallback executorCallback;
     private final AppProperties appProperties;
+    private final AgoraProperties agoraProperties;
 }

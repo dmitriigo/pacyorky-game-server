@@ -78,6 +78,9 @@ public class GameManagerImpl implements GameManager {
     }
 
     private void checkGameCreation(GameCreationDto gameCreationDto) {
+        if (gameDao.getActiveGamesCount() >= properties.getMaxGames()) {
+            throw new GlobalException("Games more than " + properties.getMaxGames(), GlobalExceptionCode.GAMES_LIMIT_REACHED);
+        }
         if (gameCreationDto == null) {
             throw new GlobalException("Creation dto is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }

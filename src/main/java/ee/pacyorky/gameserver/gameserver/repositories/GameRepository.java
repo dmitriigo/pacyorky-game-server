@@ -15,6 +15,8 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     List<Game> getGamesByStatusIn(Collection<Long> status);
 
+    Long countGamesByStatusIn(Collection<Long> status);
+
     @Query(value = "SELECT * FROM game g WHERE :playerId in (SELECT p.players_id FROM game_players p WHERE p.game_id = g.id)", nativeQuery = true)
     Optional<Game> getGameByPlayerId(String playerId);
 

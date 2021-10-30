@@ -29,6 +29,10 @@ public class GameDao {
         return gameRepository.getGamesByStatusIn(Set.of(Status.WAITING.getId(), Status.STARTED.getId()));
     }
 
+    public Long getActiveGamesCount() {
+        return gameRepository.countGamesByStatusIn(Set.of(Status.WAITING.getId(), Status.STARTED.getId()));
+    }
+
 
     public Game getGame(Long gameId) {
         return gameRepository.findById(gameId).orElseThrow(() -> new GlobalException("Game not found " + gameId, GlobalExceptionCode.INTERNAL_SERVER_ERROR));

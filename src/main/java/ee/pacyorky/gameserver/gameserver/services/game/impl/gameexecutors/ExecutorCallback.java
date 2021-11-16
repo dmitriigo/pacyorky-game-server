@@ -1,4 +1,4 @@
-package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
+package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

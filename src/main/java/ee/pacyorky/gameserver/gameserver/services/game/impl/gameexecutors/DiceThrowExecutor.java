@@ -1,4 +1,4 @@
-package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
+package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
@@ -27,7 +27,9 @@ public class DiceThrowExecutor extends AbstractExecutor {
             newDay = eventDayService.getLastStepDay(player, counter);
         }
         if (newDay.isHoliday()) {
-            newDay.setHolidayCard(game.getHolidayCard());
+            player.setHolidayCard(game.getHolidayCard());
+        } else {
+            player.setHolidayCard(null);
         }
         player.setCurrentDay(newDay);
         playerService.savePlayer(player);

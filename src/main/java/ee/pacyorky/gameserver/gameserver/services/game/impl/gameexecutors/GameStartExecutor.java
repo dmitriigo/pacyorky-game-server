@@ -1,17 +1,11 @@
-package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
+package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
-import ee.pacyorky.gameserver.gameserver.entities.game.Character;
-import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Set;
-import java.util.UUID;
-
-import static ee.pacyorky.gameserver.gameserver.util.CardUtils.initPlayersCards;
 
 @Slf4j
 public class GameStartExecutor extends AbstractExecutor {

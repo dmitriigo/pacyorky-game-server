@@ -37,6 +37,10 @@ public class Player {
     @LazyCollection(LazyCollectionOption.FALSE)
     private EventDay currentDay;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private HolidayCard holidayCard;
+
     private boolean stepFinished;
 
     private boolean isLastStep;
@@ -59,6 +63,7 @@ public class Player {
         setVoted(false);
         setCharacter(null);
         setCurrentDay(null);
+        setHolidayCard(null);
         setDeck(new ArrayList<>());
         setLastStep(false);
     }

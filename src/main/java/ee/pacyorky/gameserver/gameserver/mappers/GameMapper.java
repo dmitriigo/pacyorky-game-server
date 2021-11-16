@@ -4,14 +4,17 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
-import ee.pacyorky.gameserver.gameserver.entities.game.CardType;
-import ee.pacyorky.gameserver.gameserver.entities.game.Game;
-import ee.pacyorky.gameserver.gameserver.entities.game.Season;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
+
+import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
+import ee.pacyorky.gameserver.gameserver.dtos.PlayerDTO;
+import ee.pacyorky.gameserver.gameserver.entities.game.CardType;
+import ee.pacyorky.gameserver.gameserver.entities.game.Game;
+import ee.pacyorky.gameserver.gameserver.entities.game.Player;
+import ee.pacyorky.gameserver.gameserver.entities.game.Season;
 
 @Mapper
 public interface GameMapper {
@@ -29,7 +32,11 @@ public interface GameMapper {
     default Long map(Season season) {
         return season.getId();
     }
-    
+
+    default PlayerDTO map(Player player) {
+        return PlayerMapper.INSTANCE.toDto(player);
+    }
+
     @Named(value = "startMapper")
     default String mapStartAt(LocalDateTime date) {
         if (date == null) {

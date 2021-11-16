@@ -1,4 +1,4 @@
-package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
+package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.Step;

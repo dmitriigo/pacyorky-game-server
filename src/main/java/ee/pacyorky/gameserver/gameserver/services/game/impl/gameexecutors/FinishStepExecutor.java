@@ -1,4 +1,4 @@
-package ee.pacyorky.gameserver.gameserver.services.game.impl.GameExecutors;
+package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.*;
 import lombok.extern.slf4j.Slf4j;
@@ -42,9 +42,8 @@ public class FinishStepExecutor extends AbstractExecutor {
         var favoriteAdditional = player.getCharacter().getFavoriteCards().stream().filter(card -> cards.contains(card.getId())).count();
         var favoriteDayAdditional = player.getCharacter().getFavoriteEventDays().stream().filter(day -> day.getId().equals(player.getCurrentDay().getId())).count();
         var holiday = 0L;
-        if (player.getCurrentDay().isHoliday() && player.getCurrentDay().getHolidayCard() != null) {
-            holiday = player.getCharacter().getFavoriteHolidaysCards().stream().filter(card -> card.getId().equals(player.getCurrentDay().getHolidayCard().getId())).count();
-            player.getCurrentDay().setHolidayCard(null);
+        if (player.getCurrentDay().isHoliday() && player.getHolidayCard() != null) {
+            holiday = player.getCharacter().getFavoriteHolidaysCards().stream().filter(card -> card.getId().equals(player.getHolidayCard().getId())).count();
         }
         return player.getHappiness() + cards.size() + favoriteAdditional + favoriteDayAdditional + holiday;
     }

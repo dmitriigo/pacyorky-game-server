@@ -1,16 +1,12 @@
 package ee.pacyorky.gameserver.gameserver.entities.game;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 @Data
@@ -30,16 +26,12 @@ public class EventDay {
 
     private Long deskOrder;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private HolidayCard holidayCard;
+    public Season getSeason() {
+        return Season.getById(this.season);
+    }
 
     public void setSeason(Season season) {
         this.season = season.getId();
-    }
-
-    public Season getSeason() {
-        return Season.getById(this.season);
     }
 
 }

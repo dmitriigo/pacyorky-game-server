@@ -43,11 +43,6 @@ public class GameStarter extends AbstractExecutor{
                 game.addPlayer(player);
             }
         }
-        if (!agoraProperties.isCreateTokenOnCreateGame()){
-            if (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame()) {
-                game.setToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, gameId));
-            }
-        }
         
         saveGame(game);
         game = getGame(gameId);
@@ -58,6 +53,11 @@ public class GameStarter extends AbstractExecutor{
             player1.setCharacter(character);
             game.getCharacters().remove(character);
             player1.setCurrentDay(eventDayService.getStartPosition());
+            if (!agoraProperties.isCreateTokenOnCreateGame()){
+                if (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame()) {
+                    player1.setVoiceToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, gameId, player1.getId()));
+                }
+            }
             playerService.savePlayer(player1);
         }
         game.start();

@@ -24,7 +24,7 @@ public class CardThrowExecutor extends AbstractExecutor {
         return log;
     }
 
-    private void gameStep() throws InterruptedException {
+    private void gameStep() {
         var game = getGame(gameId);
 
         checkGameStepStatus(StepStatus.WAITING_CARD);

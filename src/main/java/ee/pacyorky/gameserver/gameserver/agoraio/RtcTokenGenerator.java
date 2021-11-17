@@ -10,11 +10,11 @@ public final class RtcTokenGenerator {
     }
 
     public static String buildTokenWithUserAccount(AgoraProperties agoraProperties,
-                                                   Long gameId) {
+                                                   Long gameId, String playerId) {
 
         // Assign appropriate access privileges to each role.
         int privilegeTs = (int)(System.currentTimeMillis() / 1000 + 1080);
-        AccessToken builder = new AccessToken(agoraProperties.getAgoraId(), agoraProperties.getAgoraCertificate(), String.valueOf(gameId), "");
+        AccessToken builder = new AccessToken(agoraProperties.getAgoraId(), agoraProperties.getAgoraCertificate(), String.valueOf(gameId), playerId);
         builder.addPrivilege(AccessToken.Privileges.K_JOIN_CHANNEL, privilegeTs);
         builder.addPrivilege(AccessToken.Privileges.K_PUBLISH_AUDIO_STREAM, privilegeTs);
         try {

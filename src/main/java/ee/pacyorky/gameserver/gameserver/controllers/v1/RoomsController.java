@@ -1,18 +1,22 @@
 package ee.pacyorky.gameserver.gameserver.controllers.v1;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import ee.pacyorky.gameserver.gameserver.controllers.facade.RoomsControllerFacade;
 import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
 import ee.pacyorky.gameserver.gameserver.dtos.GameDTO;
-import ee.pacyorky.gameserver.gameserver.mappers.GameMapper;
-import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
-import ee.pacyorky.gameserver.gameserver.services.game.GameManager;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor

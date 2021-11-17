@@ -30,5 +30,7 @@ public class PlayerDTO {
     private boolean voted;
 
     private boolean isComputer;
+    
+    private String voiceToken;
 
 }

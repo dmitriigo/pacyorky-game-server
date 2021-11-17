@@ -89,10 +89,6 @@ public class Game {
     @Setter(AccessLevel.NONE)
     @Builder.Default
     private Set<Step> history = new HashSet<>();
-    
-    
-    @Column(length = 4096)
-    private String token;
 
     public void addPlayer(Player player) {
         if (players == null) {

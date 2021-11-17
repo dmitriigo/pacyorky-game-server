@@ -49,6 +49,11 @@ public class Player {
 
     private boolean isComputer;
 
+    @Column(length = 4096)
+    private String voiceToken;
+    
+    private Long agoraId;
+
     public List<Card> getCardsByType(CardType cardType) {
         return deck.stream().filter(card -> card.getCardType() == cardType).collect(Collectors.toList());
     }
@@ -66,6 +71,8 @@ public class Player {
         setHolidayCard(null);
         setDeck(new ArrayList<>());
         setLastStep(false);
+        setVoiceToken(null);
+        setAgoraId(null);
     }
 
 }

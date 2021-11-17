@@ -69,8 +69,8 @@ public class GameManagerImpl implements GameManager {
         var savedGame = gameDao.saveGame(game);
         if (agoraProperties.isCreateTokenOnCreateGame()) {
             if (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame()) {
-                savedGame.setToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, game.getId()));
-                gameDao.saveGame(savedGame);
+                player.setVoiceToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, game.getId(), playerId));
+                playerService.savePlayer(player);
             }
         }
         generalGameService.startGame(savedGame.getId());
@@ -174,6 +174,11 @@ public class GameManagerImpl implements GameManager {
         Player player = playerService.getOrCreatePlayer(playerId);
         checkPlayerInGame(player);
         player.resetPlayer();
+        if (agoraProperties.isCreateTokenOnCreateGame()) {
+            if (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame()) {
+                player.setVoiceToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, game.getId(), playerId));
+            }
+        }
         playerService.savePlayer(player);
         game.addPlayer(player);
         return gameDao.saveGame(game);
@@ -186,6 +191,9 @@ public class GameManagerImpl implements GameManager {
             throw new GlobalException("Game not found", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
         game.removePlayer(playerId);
+        var player = playerService.getOrCreatePlayer(playerId);
+        player.resetPlayer();
+        playerService.savePlayer(player);
         return gameDao.saveGame(game);
     }
 

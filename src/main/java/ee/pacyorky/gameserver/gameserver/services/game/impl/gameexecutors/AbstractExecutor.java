@@ -69,6 +69,13 @@ public abstract class AbstractExecutor implements Runnable {
     protected void sleepGame() throws InterruptedException {
         var game = getGame(gameId);
         for (int i = 0; i < maxAttemptStep; i++) {
+            if (game.getStep() == null) {
+                break;
+            }
+            var playerId = game.getStep().getCurrentPlayer().getId();
+            if (game.getPlayers().stream().map(Player::getId).noneMatch(id -> id.equals(playerId))) {
+                break;
+            }
             if (LocalDateTime.now().isAfter(getGame(gameId).getNextStepAt())) {
                 game.setNextStepAt(LocalDateTime.now().plusSeconds(game.getSecondsForStep()));
                 saveGame(game);

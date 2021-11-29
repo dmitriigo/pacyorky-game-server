@@ -140,6 +140,12 @@ public class Game {
         result.put(CardType.STUFF, stuffDeck);
         return result;
     }
+    
+    public Card getRandomCard(CardType cardType) {
+        var list = new ArrayList<>(getAllDecks().get(cardType));
+        Collections.shuffle(list);
+        return list.stream().findAny().orElseThrow();
+    }
 
     public HolidayCard getHolidayCard() {
         Collections.shuffle(holidaysDeck);

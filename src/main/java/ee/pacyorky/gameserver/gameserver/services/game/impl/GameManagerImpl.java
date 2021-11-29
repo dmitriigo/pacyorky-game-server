@@ -237,6 +237,18 @@ public class GameManagerImpl implements GameManager {
         return getGame(playerId);
     }
 
+    @Override
+    public Game choosePrize(String playerId, CardType cardType) {
+        var game = getGame(playerId);
+        var player = playerService.getOrCreatePlayer(playerId);
+        checkGameAndPlayer(game, player);
+        //TODO checks
+        player.getDeck().add(game.getRandomCard(cardType));
+        game.getStep().setPrizeReceived(true);
+        playerService.savePlayer(player);
+        return gameDao.saveGame(game);
+    }
+
     private Game getGame(String playerId) {
         return gameDao.getGame(playerId).orElseThrow(() -> new GlobalException("Player not in game", GlobalExceptionCode.INTERNAL_SERVER_ERROR));
     }

@@ -10,6 +10,8 @@ import java.util.*;
 
 public final class CardUtils {
     
+    public static List<String> PRIZE_DAYS = List.of("yangel", "urodini");
+    
     private CardUtils() {}
     
     public static void initPlayersCards(Player player, Game game) {

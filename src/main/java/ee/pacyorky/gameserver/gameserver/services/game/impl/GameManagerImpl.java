@@ -12,6 +12,7 @@ import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
 import ee.pacyorky.gameserver.gameserver.services.game.DeckService;
 import ee.pacyorky.gameserver.gameserver.services.game.GameManager;
 import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
+import ee.pacyorky.gameserver.gameserver.util.CardUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -242,7 +243,15 @@ public class GameManagerImpl implements GameManager {
         var game = getGame(playerId);
         var player = playerService.getOrCreatePlayer(playerId);
         checkGameAndPlayer(game, player);
-        //TODO checks
+        if (player.getHolidayCard() == null) {
+            throw new GlobalException("Holiday card is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (!CardUtils.PRIZE_DAYS.contains(player.getHolidayCard().getName())) {
+            throw new GlobalException("Player holiday card is wrong!", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
+        if (CardType.DISHES != cardType && CardType.STUFF != cardType) {
+            throw new GlobalException("Unsupported card type " + cardType, GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+        }
         player.getDeck().add(game.getRandomCard(cardType));
         game.getStep().setPrizeReceived(true);
         playerService.savePlayer(player);

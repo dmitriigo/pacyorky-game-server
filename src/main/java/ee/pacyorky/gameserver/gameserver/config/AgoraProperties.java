@@ -12,4 +12,6 @@ public class AgoraProperties {
     private String agoraCertificate;
     private boolean createTokenOnCreateGame;
     private boolean voiceChatInComputerGame;
+    private String agoraUser;
+    private String agoraPassword;
 }

@@ -54,6 +54,16 @@
       "name": "agora.createTokenOnCreateGame",
       "type": "java.lang.String",
       "description": "Description for agora.createTokenOnCreateGame."
+    },
+    {
+      "name": "agora.agoraUser",
+      "type": "java.lang.String",
+      "description": "Description for agora.agoraUser."
+    },
+    {
+      "name": "agora.agoraPassword",
+      "type": "java.lang.String",
+      "description": "Description for agora.agoraPassword."
     }
   ]
 }

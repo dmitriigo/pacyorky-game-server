@@ -1,6 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
-import ee.pacyorky.gameserver.gameserver.agoraio.RtcTokenGenerator;
+import ee.pacyorky.gameserver.gameserver.agoraio.generator.RtcTokenGenerator;
 import ee.pacyorky.gameserver.gameserver.entities.game.Character;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.Status;

@@ -38,13 +38,13 @@ public class RoomsControllerFacade {
     }
 
 
-    public ResponseEntity<GameDTO> addGame(@RequestBody GameCreationDto gameCreationDto, HttpSession httpSession) {
+    public ResponseEntity<GameDTO> addGame(GameCreationDto gameCreationDto, HttpSession httpSession) {
         return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.createGame(httpSession.getId(), gameCreationDto)));
     }
 
 
-    public ResponseEntity<GameDTO> joinIntoTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession) {
-        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.joinIntoTheGame(httpSession.getId(), gameId)));
+    public ResponseEntity<GameDTO> joinIntoTheGame(Long gameId, HttpSession httpSession, String password) {
+        return ResponseEntity.ok(GameMapper.INSTANCE.toGameDto(gameManager.joinIntoTheGame(httpSession.getId(), gameId, password)));
     }
 
 
@@ -58,7 +58,7 @@ public class RoomsControllerFacade {
     }
 
 
-    public ResponseEntity<List<GameDTO>> clearGames(@PathVariable("id") Long id) {
+    public ResponseEntity<List<GameDTO>> clearGames(Long id) {
         gameManager.clearGames(id);
         return getGames();
     }

@@ -45,11 +45,11 @@ class GameManagerImplTest {
         String playerId3 = UUID.randomUUID().toString();
         Game game = gameManager.createGame(playerId, getCreationDto());
         game.setCapacity(2L);
-        Assertions.assertNotNull(gameManager.joinIntoTheGame(playerId2, game.getId()));
-        Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId3, game.getId()));
+        Assertions.assertNotNull(gameManager.joinIntoTheGame(playerId2, game.getId(), null));
+        Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId3, game.getId(), null));
         Game anotherGame = gameManager.createGame(UUID.randomUUID().toString(), getCreationDto());
         anotherGame.setCapacity(2L);
-        Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId2, anotherGame.getId()));
+        Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId2, anotherGame.getId(), null));
     }
 
     @Test

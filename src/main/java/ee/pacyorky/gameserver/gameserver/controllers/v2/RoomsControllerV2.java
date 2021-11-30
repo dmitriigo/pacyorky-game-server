@@ -38,8 +38,8 @@ public class RoomsControllerV2 {
     }
 
     @PostMapping("/join/{gameId}")
-    public ResponseEntity<GameDTO> joinIntoTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession) {
-        return facade.joinIntoTheGame(gameId, httpSession);
+    public ResponseEntity<GameDTO> joinIntoTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession, @RequestBody(required = false) String password) {
+        return facade.joinIntoTheGame(gameId, httpSession, password);
     }
 
     @DeleteMapping("/left")

@@ -1,5 +1,6 @@
 package ee.pacyorky.gameserver.gameserver.entities.game;
 
+import ee.pacyorky.gameserver.gameserver.entities.security.BanInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -53,6 +54,10 @@ public class Player {
     private String voiceToken;
     
     private Long agoraId;
+    
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Builder.Default
+    private BanInfo banInfo = new BanInfo();
 
     public List<Card> getCardsByType(CardType cardType) {
         return deck.stream().filter(card -> card.getCardType() == cardType).collect(Collectors.toList());

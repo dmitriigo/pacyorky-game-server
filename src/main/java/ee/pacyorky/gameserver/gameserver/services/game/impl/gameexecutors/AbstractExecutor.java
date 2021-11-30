@@ -86,6 +86,7 @@ public abstract class AbstractExecutor implements Runnable {
         getLogger().warn("Player {} war removed because inactive", game.getStep().getCurrentPlayer().getId());
         var player = game.getStep().getCurrentPlayer();
         game.removePlayer(player.getId());
+        game.setOwner(game.getPlayers().stream().filter(Predicate.not(Player::isComputer)).findFirst().orElse(null));
         game.getStep().setStatus(StepStatus.FINISHED);
         saveGame(game);
         callback.fail(gameId);

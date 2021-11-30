@@ -89,6 +89,9 @@ public class Game {
     @Setter(AccessLevel.NONE)
     @Builder.Default
     private Set<Step> history = new HashSet<>();
+    
+    @OneToOne(fetch = FetchType.EAGER)
+    private Player owner;
 
     public void addPlayer(Player player) {
         if (players == null) {
@@ -155,5 +158,6 @@ public class Game {
     public void finish(Status reason) {
         this.status = reason.getId();
         this.step = null;
+        this.owner = null;
     }
 }

@@ -29,6 +29,8 @@ public class Step {
     private Long status;
 
     private LocalDateTime cardThrownAt;
+    
+    private boolean prizeReceived;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @LazyCollection(LazyCollectionOption.FALSE)

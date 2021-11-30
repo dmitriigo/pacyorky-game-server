@@ -9,6 +9,11 @@ import org.apache.commons.lang3.RandomUtils;
 import java.util.*;
 
 public final class CardUtils {
+    
+    public static List<String> PRIZE_DAYS = List.of("yangel", "urodini");
+    
+    private CardUtils() {}
+    
     public static void initPlayersCards(Player player, Game game) {
         Map<CardType, List<Card>> cardTypeListMap = game.getAllDecks();
         for (Map.Entry<CardType, List<Card>> cardTypeListEntry : cardTypeListMap.entrySet()) {

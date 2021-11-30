@@ -1,6 +1,7 @@
 package ee.pacyorky.gameserver.gameserver.services.game;
 
 import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
+import ee.pacyorky.gameserver.gameserver.entities.game.CardType;
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface GameManager {
     Game throwDice(String id);
 
     Game forceStart(String playerId);
+
+    Game choosePrize(String playerId, CardType cardType);
 }

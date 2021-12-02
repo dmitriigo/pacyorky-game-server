@@ -13,7 +13,12 @@ public class DiceThrowExecutor extends AbstractExecutor {
     public DiceThrowExecutor(ExecutorSettings executorSettings) {
         super(executorSettings, true);
     }
-
+    
+    @Override
+    protected StepStatus getNextStatusOnPlayerNotInGame() {
+        return StepStatus.WAITING_CARD;
+    }
+    
     @Override
     protected void doStepPart() throws InterruptedException {
         var game = getGame(gameId);

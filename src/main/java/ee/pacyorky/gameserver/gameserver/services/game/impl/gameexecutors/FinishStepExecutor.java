@@ -12,7 +12,12 @@ public class FinishStepExecutor extends AbstractExecutor {
     public FinishStepExecutor(ExecutorSettings executorSettings) {
         super(executorSettings, false);
     }
-
+    
+    @Override
+    protected StepStatus getNextStatusOnPlayerNotInGame() {
+        return StepStatus.FINISHED;
+    }
+    
     @Override
     protected void doStepPart() throws InterruptedException {
         var game = getGame(gameId);

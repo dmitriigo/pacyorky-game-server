@@ -1,6 +1,7 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.Status;
+import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 
@@ -14,7 +15,12 @@ public class GameStartExecutor extends AbstractExecutor {
     public GameStartExecutor(ExecutorSettings executorSettings) {
         super(executorSettings, true, true);
     }
-
+    
+    @Override
+    protected StepStatus getNextStatusOnPlayerNotInGame() {
+        return null;
+    }
+    
     @Override
     protected void doStepPart() throws InterruptedException {
         checkAndStartGame();

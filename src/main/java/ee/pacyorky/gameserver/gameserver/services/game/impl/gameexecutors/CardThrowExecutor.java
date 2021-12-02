@@ -13,7 +13,12 @@ public class CardThrowExecutor extends AbstractExecutor {
     public CardThrowExecutor(ExecutorSettings executorSettings) {
         super(executorSettings, true);
     }
-
+    
+    @Override
+    protected StepStatus getNextStatusOnPlayerNotInGame() {
+        return StepStatus.WAITING_VOTE;
+    }
+    
     @Override
     protected void doStepPart() throws InterruptedException {
         gameStep();

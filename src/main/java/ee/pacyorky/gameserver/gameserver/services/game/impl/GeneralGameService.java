@@ -72,6 +72,11 @@ public class GeneralGameService {
             throwCardConsumer().accept(gameId);
             return;
         }
+        if (status == StepStatus.FINISHED) {
+            games.get(gameId).cancel(true);
+            finishStepConsumer().accept(gameId);
+            return;
+        }
         throw new GlobalException("Step Status not supported " + status, GlobalExceptionCode.INTERNAL_SERVER_ERROR);
     }
 

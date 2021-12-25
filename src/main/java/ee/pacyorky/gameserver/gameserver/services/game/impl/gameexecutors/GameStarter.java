@@ -4,6 +4,7 @@ import ee.pacyorky.gameserver.gameserver.agoraio.generator.RtcTokenGenerator;
 import ee.pacyorky.gameserver.gameserver.entities.game.Character;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
 import ee.pacyorky.gameserver.gameserver.entities.game.Status;
+import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,12 @@ public class GameStarter extends AbstractExecutor{
     public GameStarter(ExecutorSettings executorSettings) {
         super(executorSettings, false, true);
     }
-
+    
+    @Override
+    protected StepStatus getNextStatusOnPlayerNotInGame() {
+        return null;
+    }
+    
     @Override
     protected void doStepPart() throws InterruptedException {
         var game = getGame(gameId);

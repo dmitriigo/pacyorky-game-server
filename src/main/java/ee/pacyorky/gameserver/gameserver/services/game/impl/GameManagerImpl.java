@@ -116,7 +116,13 @@ public class GameManagerImpl implements GameManager {
                 .map(card -> StepCard.builder().card(card).build()).collect(Collectors.toList());
         game.getStep().setStepCards(stepCards);
         gameDao.saveGame(game);
-        generalGameService.doStepPart(game.getId(), StepStatus.WAITING_CARD);
+        if (game.getStep().getStepCards().isEmpty()) {
+            game.getStep().setStatus(StepStatus.FINISHED);
+            gameDao.saveGame(game);
+            generalGameService.doStepPart(game.getId(), StepStatus.FINISHED);
+        } else {
+            generalGameService.doStepPart(game.getId(), StepStatus.WAITING_CARD);
+        }
         return getGame(playerId);
     }
 
@@ -131,7 +137,7 @@ public class GameManagerImpl implements GameManager {
             throw new GlobalException("Step is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
         if (game.getStep().getStatus() != StepStatus.WAITING_VOTE) {
-            throw new GlobalException("Step is not waiting vote", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+            throw new GlobalException("Step is not waiting vote", GlobalExceptionCode.STEP_NOT_WAITING_VOTE);
         }
         if (player.isVoted()) {
             throw new GlobalException("Player already voted", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
@@ -159,7 +165,7 @@ public class GameManagerImpl implements GameManager {
     public Game joinIntoTheGame(String playerId, Long gameId, String password) {
         Game game = gameDao.getGame(gameId);
         if (game.isNotWaiting()) {
-            throw new GlobalException("Game not waiting.", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
+            throw new GlobalException("Game not waiting.", GlobalExceptionCode.GAME_NOT_WAITING);
         }
         if (game.getPlayers().size() >= game.getCapacity()) {
             throw new GlobalException("Players count more than capacity", GlobalExceptionCode.CAPACITY_LIMIT_REACHED);

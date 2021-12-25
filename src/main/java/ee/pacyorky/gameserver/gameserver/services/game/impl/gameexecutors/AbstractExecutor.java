@@ -3,6 +3,7 @@ package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 import ee.pacyorky.gameserver.gameserver.config.AgoraProperties;
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
+import ee.pacyorky.gameserver.gameserver.entities.game.Status;
 import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
@@ -53,6 +54,14 @@ public abstract class AbstractExecutor implements Runnable {
             if (!skipGameContinueCheck && gameCanNotContinue()) {
                 return;
             }
+            var game = getGame(gameId);
+            if (game.getStatus() == Status.STARTED && game.getStep() != null && getNextStatusOnPlayerNotInGame() != null &&
+                    game.getPlayers().stream().map(Player::getId).noneMatch(id -> id.equals(game.getStep().getCurrentPlayer().getId()))) {
+                game.getStep().setStatus(getNextStatusOnPlayerNotInGame());
+                saveGame(game);
+                callback.success(gameId);
+                return;
+            }
             doStepPart();
         } catch (InterruptedException ie) {
             if (!silently) {
@@ -65,6 +74,8 @@ public abstract class AbstractExecutor implements Runnable {
             Thread.currentThread().interrupt();
         }
     }
+    
+    protected abstract StepStatus getNextStatusOnPlayerNotInGame();
 
     protected void sleepGame() throws InterruptedException {
         var game = getGame(gameId);
@@ -115,7 +126,7 @@ public abstract class AbstractExecutor implements Runnable {
             callback.forceFinish(gameId);
             return true;
         }
-        if (game.isWithComputer() && game.getPlayers().stream().filter(Predicate.not(Player::isComputer)).count() < 1L) {
+        if (game.isWithComputer() && game.getPlayers().stream().allMatch(Player::isComputer)) {
             getLogger().warn("players under then 1 and computers");
             callback.forceFinish(gameId);
             return true;

@@ -63,7 +63,12 @@ public class PrepareStepExecutor extends AbstractExecutor {
         return game.getPlayers().stream().filter(player -> !player.isStepFinished() && !player.isLastStep())
                 .min(Comparator.comparing(Player::getId));
     }
-
+    
+    @Override
+    protected StepStatus getNextStatusOnPlayerNotInGame() {
+        return StepStatus.WAITING_DICE;
+    }
+    
     @Override
     protected void doStepPart() throws InterruptedException {
         initNewStep();

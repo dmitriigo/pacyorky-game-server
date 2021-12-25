@@ -20,7 +20,12 @@ public class VoteExecutor extends AbstractExecutor {
     public VoteExecutor(ExecutorSettings executorSettings) {
         super(executorSettings, true);
     }
-
+    
+    @Override
+    protected StepStatus getNextStatusOnPlayerNotInGame() {
+        return StepStatus.FINISHED;
+    }
+    
     @Override
     protected void doStepPart() throws InterruptedException {
         var game = getGame(gameId);

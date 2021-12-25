@@ -1,6 +1,7 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
 import ee.pacyorky.gameserver.gameserver.entities.game.StepCard;
+import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.util.CardUtils;
@@ -17,7 +18,12 @@ public class AICardThrowExecutor extends AbstractExecutor {
     public AICardThrowExecutor(ExecutorSettings executorSettings) {
         super(executorSettings, false);
     }
-
+    
+    @Override
+    protected StepStatus getNextStatusOnPlayerNotInGame() {
+        return null;
+    }
+    
     @Override
     protected void doStepPart() throws InterruptedException {
         var game = getGame(gameId);

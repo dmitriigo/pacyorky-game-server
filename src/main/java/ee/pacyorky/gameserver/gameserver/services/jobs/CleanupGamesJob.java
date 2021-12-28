@@ -6,7 +6,7 @@ import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 //@AllArgsConstructor
 public class CleanupGamesJob {
     private PlayerService playerService;
-
+    
     //@Scheduled(cron = "0 0 0 * * ?")
     public void clean() {
         playerService.clearPlayers();

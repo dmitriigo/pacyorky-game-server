@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class HolidayCardDTO {
-
+    
     private Long id;
-
+    
     private String name;
 }

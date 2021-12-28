@@ -1,5 +1,4 @@
-create table room
-(
+create table room (
     id            bigint  not null,
     capacity      bigint,
     password      varchar(255),

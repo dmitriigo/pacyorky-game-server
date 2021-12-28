@@ -1,7 +1,9 @@
 package ee.pacyorky.gameserver.gameserver.repositories;
 
-import ee.pacyorky.gameserver.gameserver.entities.game.EventDay;
-import ee.pacyorky.gameserver.gameserver.entities.game.Season;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,19 +11,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.Assert;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
+import ee.pacyorky.gameserver.gameserver.entities.game.EventDay;
+import ee.pacyorky.gameserver.gameserver.entities.game.Season;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class EventDayRepositoryTest {
-
+class EventDayRepositoryTest {
+    
     @Autowired
     private EventDayRepository eventDayRepository;
-
+    
     @Test
-    public void eventDayRepositoryTest() {
+    void eventDayRepositoryTest() {
         List<EventDay> eventDays = eventDayRepository.findAll();
         Assert.notEmpty(eventDays, "event days is empty");
         List<EventDay> simpleDaysByHoliday = eventDays.stream().filter(day -> !day.isHoliday()).collect(Collectors.toList());

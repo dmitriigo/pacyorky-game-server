@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class EventDayDTO {
-
+    
     private Long id;
-
+    
     private boolean holiday;
-
+    
     private Long season;
-
+    
     private String name;
-
+    
     private Long deskOrder;
 }

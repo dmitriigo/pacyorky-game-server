@@ -13,12 +13,12 @@ import ee.pacyorky.gameserver.gameserver.entities.game.Season;
 
 @Mapper
 public interface PlayerMapper {
-
+    
     PlayerMapper INSTANCE = Mappers.getMapper(PlayerMapper.class);
-
+    
     @Mapping(target = "currentDay", source = "player", qualifiedByName = "currentDayMapper")
     PlayerDTO toDto(Player player);
-
+    
     @Named(value = "currentDayMapper")
     default EventDayDTO map(Player player) {
         if (player == null) {
@@ -33,13 +33,13 @@ public interface PlayerMapper {
         }
         return dto;
     }
-
+    
     default Long map(CardType cardType) {
         return cardType.getId();
     }
-
+    
     default Long map(Season season) {
         return season.getId();
     }
-
+    
 }

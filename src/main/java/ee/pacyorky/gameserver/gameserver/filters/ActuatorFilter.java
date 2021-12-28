@@ -1,21 +1,27 @@
 package ee.pacyorky.gameserver.gameserver.filters;
 
-import ee.pacyorky.gameserver.gameserver.config.AppProperties;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import ee.pacyorky.gameserver.gameserver.config.AppProperties;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 
 @Component
 public class ActuatorFilter implements Filter {
-
+    
     @Autowired
     private AppProperties appProperties;
-
+    
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;

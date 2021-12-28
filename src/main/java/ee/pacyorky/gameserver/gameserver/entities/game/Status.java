@@ -7,12 +7,12 @@ public enum Status {
     CANCELLED("Cancelled", 4L);
     private final String name;
     private final Long id;
-
+    
     Status(String name, Long id) {
         this.name = name;
         this.id = id;
     }
-
+    
     public static Status getById(Long id) {
         for (Status status : Status.values()) {
             if (status.id.equals(id)) {
@@ -21,8 +21,12 @@ public enum Status {
         }
         return null;
     }
-
+    
     public Long getId() {
         return this.id;
+    }
+    
+    public String getName() {
+        return name;
     }
 }

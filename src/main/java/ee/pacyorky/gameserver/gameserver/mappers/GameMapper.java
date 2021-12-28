@@ -18,25 +18,25 @@ import ee.pacyorky.gameserver.gameserver.entities.game.Season;
 
 @Mapper
 public interface GameMapper {
-
+    
     GameMapper INSTANCE = Mappers.getMapper(GameMapper.class);
-
+    
     @Mapping(target = "startAt", source = "startAt", qualifiedByName = "startMapper")
     @Mapping(target = "nextStepAt", source = "nextStepAt", qualifiedByName = "startMapper")
     GameDTO toGameDto(Game game);
-
+    
     default Long map(CardType cardType) {
         return cardType.getId();
     }
-
+    
     default Long map(Season season) {
         return season.getId();
     }
-
+    
     default PlayerDTO map(Player player) {
         return PlayerMapper.INSTANCE.toDto(player);
     }
-
+    
     @Named(value = "startMapper")
     default String mapStartAt(LocalDateTime date) {
         if (date == null) {

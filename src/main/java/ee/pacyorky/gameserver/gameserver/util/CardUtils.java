@@ -1,18 +1,26 @@
 package ee.pacyorky.gameserver.gameserver.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import org.apache.commons.lang3.RandomUtils;
+
 import ee.pacyorky.gameserver.gameserver.entities.game.Card;
 import ee.pacyorky.gameserver.gameserver.entities.game.CardType;
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
-import org.apache.commons.lang3.RandomUtils;
-
-import java.util.*;
 
 public final class CardUtils {
     
-    public static List<String> PRIZE_DAYS = List.of("yangel", "urodini");
+    public static final List<String> PRIZE_DAYS = List.of("yangel", "urodini");
     
-    private CardUtils() {}
+    private static final Random RANDOM = new Random();
+    
+    private CardUtils() {
+    }
     
     public static void initPlayersCards(Player player, Game game) {
         Map<CardType, List<Card>> cardTypeListMap = game.getAllDecks();
@@ -26,8 +34,8 @@ public final class CardUtils {
             }
         }
     }
-
+    
     public static int[] getRandomCardIndexes(int deckSize) {
-        return new Random().ints(RandomUtils.nextInt(1, deckSize + 1), 0, deckSize).distinct().toArray();
+        return RANDOM.ints(RandomUtils.nextInt(1, deckSize + 1), 0, deckSize).distinct().toArray();
     }
 }

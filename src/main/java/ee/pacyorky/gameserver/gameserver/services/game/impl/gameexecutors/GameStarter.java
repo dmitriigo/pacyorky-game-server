@@ -1,30 +1,25 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
-import ee.pacyorky.gameserver.gameserver.agoraio.generator.RtcTokenGenerator;
-import ee.pacyorky.gameserver.gameserver.entities.game.Character;
-import ee.pacyorky.gameserver.gameserver.entities.game.Player;
-import ee.pacyorky.gameserver.gameserver.entities.game.Status;
-import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
-import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
+import static ee.pacyorky.gameserver.gameserver.util.CardUtils.initPlayersCards;
 
 import java.util.Set;
 import java.util.UUID;
 
-import static ee.pacyorky.gameserver.gameserver.util.CardUtils.initPlayersCards;
+import org.slf4j.Logger;
+
+import ee.pacyorky.gameserver.gameserver.agoraio.generator.RtcTokenGenerator;
+import ee.pacyorky.gameserver.gameserver.entities.game.Character;
+import ee.pacyorky.gameserver.gameserver.entities.game.Player;
+import ee.pacyorky.gameserver.gameserver.entities.game.Status;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
+import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class GameStarter extends AbstractExecutor{
-
+public class GameStarter extends AbstractExecutor {
+    
     public GameStarter(ExecutorSettings executorSettings) {
         super(executorSettings, false, true);
-    }
-    
-    @Override
-    protected StepStatus getNextStatusOnPlayerNotInGame() {
-        return null;
     }
     
     @Override
@@ -69,9 +64,9 @@ public class GameStarter extends AbstractExecutor{
         game.start();
         saveGame(game);
         callback.success(gameId);
-
+        
     }
-
+    
     @Override
     protected Logger getLogger() {
         return log;

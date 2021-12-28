@@ -22,39 +22,39 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/v1/rooms")
 public class RoomsController {
-
+    
     private final RoomsControllerFacade facade;
-
+    
     @GetMapping("/all")
     public ResponseEntity<List<GameDTO>> getGamesAll() {
         return facade.getGamesAll();
     }
-
+    
     @GetMapping("/get")
     public ResponseEntity<List<GameDTO>> getGames() {
         return facade.getGames();
     }
-
+    
     @PostMapping("/add")
     public ResponseEntity<GameDTO> addGame(@RequestBody GameCreationDto gameCreationDto, HttpSession httpSession) {
         return facade.addGame(gameCreationDto, httpSession);
     }
-
+    
     @PostMapping("/join/{gameId}")
     public ResponseEntity<GameDTO> joinIntoTheGame(@PathVariable("gameId") Long gameId, HttpSession httpSession) {
         return facade.joinIntoTheGame(gameId, httpSession, null);
     }
-
+    
     @DeleteMapping("/left")
     public ResponseEntity<GameDTO> leftFromTheGame(HttpSession httpSession) {
         return facade.leftFromTheGame(httpSession);
     }
-
+    
     @GetMapping("/get/{gameId}")
     public ResponseEntity<GameDTO> getGame(@PathVariable("gameId") Long gameId) {
         return facade.getGame(gameId);
     }
-
+    
     @DeleteMapping("/clear/{id}")
     public ResponseEntity<List<GameDTO>> clearGames(@PathVariable("id") Long id) {
         return facade.clearGames(id);

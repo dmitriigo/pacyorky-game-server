@@ -1,14 +1,15 @@
 package ee.pacyorky.gameserver.gameserver.repositories;
 
-import ee.pacyorky.gameserver.gameserver.entities.game.Card;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import ee.pacyorky.gameserver.gameserver.entities.game.Card;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
-
+    
     List<Card> getAllByCardType(Long cardType);
-
+    
 }

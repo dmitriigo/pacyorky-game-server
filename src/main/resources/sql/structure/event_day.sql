@@ -1,5 +1,4 @@
-create table event_day
-(
+create table event_day (
     id      bigint  not null,
     holiday boolean not null,
     name    varchar(255),

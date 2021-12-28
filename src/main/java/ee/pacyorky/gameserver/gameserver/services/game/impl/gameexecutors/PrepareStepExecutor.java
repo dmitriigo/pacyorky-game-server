@@ -1,25 +1,26 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
-import ee.pacyorky.gameserver.gameserver.entities.game.Player;
-import ee.pacyorky.gameserver.gameserver.entities.game.Step;
-import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
+import static ee.pacyorky.gameserver.gameserver.util.CardUtils.initPlayersCards;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Optional;
 
-import static ee.pacyorky.gameserver.gameserver.util.CardUtils.initPlayersCards;
+import org.slf4j.Logger;
+
+import ee.pacyorky.gameserver.gameserver.entities.game.Player;
+import ee.pacyorky.gameserver.gameserver.entities.game.Step;
+import ee.pacyorky.gameserver.gameserver.entities.game.StepStatus;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class PrepareStepExecutor extends AbstractExecutor {
-
-
+    
+    
     public PrepareStepExecutor(ExecutorSettings executorSettings) {
         super(executorSettings, true);
     }
-
+    
     private void initNewStep() throws InterruptedException {
         var game = getGame(gameId);
         for (Player player : game.getPlayers()) {
@@ -49,9 +50,9 @@ public class PrepareStepExecutor extends AbstractExecutor {
         } else {
             sleepGame();
         }
-
+        
     }
-
+    
     private Optional<Player> calculatePlayer() {
         var game = getGame(gameId);
         if (game.getPlayers().stream().allMatch(player -> player.isStepFinished() || player.isLastStep())) {
@@ -65,15 +66,10 @@ public class PrepareStepExecutor extends AbstractExecutor {
     }
     
     @Override
-    protected StepStatus getNextStatusOnPlayerNotInGame() {
-        return StepStatus.WAITING_DICE;
-    }
-    
-    @Override
     protected void doStepPart() throws InterruptedException {
         initNewStep();
     }
-
+    
     @Override
     protected Logger getLogger() {
         return log;

@@ -10,19 +10,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class GameCreationDto {
-
+    
     private Long capacity;
-
+    
     private boolean withComputer;
-
+    
     private boolean privateRoom;
-
+    
     private String password;
-
+    
     private String name;
-
+    
     private Long secondsBeforeStart;
-
+    
     private Long secondsForStep;
-
+    
 }

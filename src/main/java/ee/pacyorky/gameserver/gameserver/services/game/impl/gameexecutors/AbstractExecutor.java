@@ -1,5 +1,10 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
+import org.slf4j.Logger;
+
 import ee.pacyorky.gameserver.gameserver.config.AgoraProperties;
 import ee.pacyorky.gameserver.gameserver.entities.game.Game;
 import ee.pacyorky.gameserver.gameserver.entities.game.Player;
@@ -10,14 +15,9 @@ import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
 import ee.pacyorky.gameserver.gameserver.repositories.dao.GameDao;
 import ee.pacyorky.gameserver.gameserver.services.game.EventDayService;
 import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
-import org.slf4j.Logger;
-
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.function.Predicate;
 
 public abstract class AbstractExecutor implements Runnable {
-
+    
     protected final int maxAttemptStart;
     protected final int maxAttemptStep;
     protected static final long COMPUTER_TIMEOUT = 5L;
@@ -29,7 +29,7 @@ public abstract class AbstractExecutor implements Runnable {
     private final boolean silently;
     private final boolean skipGameContinueCheck;
     protected final AgoraProperties agoraProperties;
-
+    
     protected AbstractExecutor(ExecutorSettings executorSettings, boolean silently, boolean skipGameContinueCheck) {
         this.gameDao = executorSettings.getGameDao();
         this.playerService = executorSettings.getPlayerService();
@@ -41,13 +41,13 @@ public abstract class AbstractExecutor implements Runnable {
         this.maxAttemptStart = executorSettings.getAppProperties().getMaxAttemptsForStart();
         this.maxAttemptStep = executorSettings.getAppProperties().getMaxAttemptsForStep();
         this.agoraProperties = executorSettings.getAgoraProperties();
-
+        
     }
-
+    
     protected AbstractExecutor(ExecutorSettings executorSettings, boolean silently) {
         this(executorSettings, silently, false);
     }
-
+    
     @Override
     public void run() {
         try {
@@ -55,11 +55,11 @@ public abstract class AbstractExecutor implements Runnable {
                 return;
             }
             var game = getGame(gameId);
-            if (game.getStatus() == Status.STARTED && game.getStep() != null && getNextStatusOnPlayerNotInGame() != null &&
+            if (game.getStatus() == Status.STARTED && game.getStep() != null && game.getStep().getStatus() != StepStatus.FINISHED &&
                     game.getPlayers().stream().map(Player::getId).noneMatch(id -> id.equals(game.getStep().getCurrentPlayer().getId()))) {
-                game.getStep().setStatus(getNextStatusOnPlayerNotInGame());
+                game.getStep().setStatus(StepStatus.FINISHED);
                 saveGame(game);
-                callback.success(gameId);
+                callback.fail(gameId);
                 return;
             }
             doStepPart();
@@ -75,8 +75,6 @@ public abstract class AbstractExecutor implements Runnable {
         }
     }
     
-    protected abstract StepStatus getNextStatusOnPlayerNotInGame();
-
     protected void sleepGame() throws InterruptedException {
         var game = getGame(gameId);
         for (int i = 0; i < maxAttemptStep; i++) {
@@ -102,17 +100,17 @@ public abstract class AbstractExecutor implements Runnable {
         saveGame(game);
         callback.fail(gameId);
     }
-
+    
     protected void sleep() throws InterruptedException {
         var game = getGame(gameId);
         var time = LocalDateTime.now().until(game.getNextStepAt(), ChronoUnit.MILLIS);
         Thread.sleep(Math.abs(time));
     }
-
+    
     protected abstract void doStepPart() throws InterruptedException;
-
+    
     protected abstract Logger getLogger();
-
+    
     protected boolean gameCanNotContinue() {
         var game = getGame(gameId);
         if (game.isNotStarted()) {
@@ -120,7 +118,7 @@ public abstract class AbstractExecutor implements Runnable {
             callback.forceFinish(gameId);
             return true;
         }
-
+        
         if (!game.isWithComputer() && game.getPlayers().size() < 2) {
             getLogger().warn("players under then 2 and computer not");
             callback.forceFinish(gameId);
@@ -133,7 +131,7 @@ public abstract class AbstractExecutor implements Runnable {
         }
         return false;
     }
-
+    
     protected void checkGameStepStatus(StepStatus status) {
         var game = getGame(gameId);
         if (game == null) {
@@ -146,14 +144,14 @@ public abstract class AbstractExecutor implements Runnable {
             throw new GlobalException("status is not " + status, GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
     }
-
-
+    
+    
     protected Game saveGame(Game game) {
         return gameDao.saveGame(game);
     }
-
+    
     protected Game getGame(Long gameId) {
         return gameDao.getGame(gameId);
     }
-
+    
 }

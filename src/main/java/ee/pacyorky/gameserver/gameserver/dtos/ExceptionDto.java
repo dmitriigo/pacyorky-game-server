@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ExceptionDto {
-
+    
     private String code;
-
+    
     private String message;
 }

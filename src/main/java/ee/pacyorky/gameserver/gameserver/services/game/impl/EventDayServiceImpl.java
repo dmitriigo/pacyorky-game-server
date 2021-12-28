@@ -29,7 +29,8 @@ public class EventDayServiceImpl implements EventDayService {
 
     @Override
     public EventDay getLastStepDay(Player player, int count) {
-        var newId = lastId - player.getCurrentDay().getId() + count;
+        // 48 - 43 + 6 = 11 wrong
+        var newId = count - (lastId - player.getCurrentDay().getId());
         if (newId == 0) {
             newId = 1;
         }

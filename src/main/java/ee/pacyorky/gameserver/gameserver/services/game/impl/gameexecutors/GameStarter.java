@@ -54,10 +54,8 @@ public class GameStarter extends AbstractExecutor {
             player1.setCharacter(character);
             game.getCharacters().remove(character);
             player1.setCurrentDay(eventDayService.getStartPosition());
-            if (!agoraProperties.isCreateTokenOnCreateGame()){
-                if (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame()) {
-                    player1.setVoiceToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, gameId, player1.getId()));
-                }
+            if (!agoraProperties.isCreateTokenOnCreateGame() && (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame())) {
+                player1.setVoiceToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, gameId, player1.getId()));
             }
             playerService.savePlayer(player1);
         }

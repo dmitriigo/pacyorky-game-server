@@ -8,15 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 
-import ee.pacyorky.gameserver.gameserver.agoraio.client.AgoraClient;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalException;
 import ee.pacyorky.gameserver.gameserver.exceptions.GlobalExceptionCode;
-import ee.pacyorky.gameserver.gameserver.repositories.BanInfoRepository;
-import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import ee.pacyorky.gameserver.gameserver.services.security.GameSecurityService;
 import lombok.AllArgsConstructor;
 

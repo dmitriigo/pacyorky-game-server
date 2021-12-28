@@ -1,6 +1,5 @@
 package ee.pacyorky.gameserver.gameserver.agoraio.client;
 
-import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
@@ -29,10 +28,10 @@ public class AgoraClient {
             return;
         }
         var restTemplate = restTemplateFactory.getObject();
-        var rules = restTemplate.getForObject(BASE_URL+"?appid="+agoraProperties.getAgoraId(), RulesObject.class);
+        var rules = restTemplate.getForObject(BASE_URL + "?appid=" + agoraProperties.getAgoraId(), RulesObject.class);
         if (rules != null && "success".equals(rules.getStatus())) {
-        var banInfo = player.getBanInfo();
-        var banTime = banInfo.isPermanentlyBanned() ? 1440 : 120;
+            var banInfo = player.getBanInfo();
+            var banTime = banInfo.isPermanentlyBanned() ? 1440 : 120;
             var builder = BanParams.builder().time(banTime).appid(agoraProperties.getAgoraId());
             if (rules.getRules().stream().map(RulesObject.BanRule::getUid)
                     .filter(Objects::nonNull)

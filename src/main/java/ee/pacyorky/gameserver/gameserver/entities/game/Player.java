@@ -1,29 +1,24 @@
 package ee.pacyorky.gameserver.gameserver.entities.game;
 
-import ee.pacyorky.gameserver.gameserver.entities.security.BanInfo;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import ee.pacyorky.gameserver.gameserver.entities.security.BanInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -70,7 +65,7 @@ public class Player {
     private boolean voted;
     
     private boolean isComputer;
-
+    
     @Column(length = 4096)
     private String voiceToken;
     
@@ -79,6 +74,7 @@ public class Player {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Builder.Default
     private BanInfo banInfo = new BanInfo();
+    
     public List<Card> getCardsByType(CardType cardType) {
         return deck.stream().filter(card -> card.getCardType() == cardType).collect(Collectors.toList());
     }

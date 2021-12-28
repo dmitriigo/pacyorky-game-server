@@ -1,17 +1,19 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl;
 
+import static ee.pacyorky.gameserver.gameserver.util.GameUtils.checkGameAndPlayer;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-
-import ee.pacyorky.gameserver.gameserver.agoraio.RtcTokenGenerator;
-import static ee.pacyorky.gameserver.gameserver.util.GameUtils.checkGameAndPlayer;
 
 import ee.pacyorky.gameserver.gameserver.agoraio.generator.RtcTokenGenerator;
 import ee.pacyorky.gameserver.gameserver.config.AgoraProperties;
@@ -33,18 +35,6 @@ import ee.pacyorky.gameserver.gameserver.services.game.GameManager;
 import ee.pacyorky.gameserver.gameserver.services.game.PlayerService;
 import ee.pacyorky.gameserver.gameserver.util.CardUtils;
 import lombok.AllArgsConstructor;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -175,6 +165,7 @@ public class GameManagerImpl implements GameManager {
         gameDao.saveGame(game);
         return getGame(playerId);
     }
+    
     @Override
     public Game joinIntoTheGame(String playerId, Long gameId, String password) {
         Game game = gameDao.getGame(gameId);
@@ -195,10 +186,10 @@ public class GameManagerImpl implements GameManager {
         Player player = playerService.getOrCreatePlayer(playerId);
         checkPlayerInGame(player);
         player.resetPlayer();
-        if (agoraProperties.isCreateTokenOnCreateGame()) {
-            if (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame()) {
-                player.setVoiceToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, game.getId(), playerId));
-            }
+        if (agoraProperties.isCreateTokenOnCreateGame() && (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame())) {
+            
+            player.setVoiceToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, game.getId(), playerId));
+            
         }
         playerService.savePlayer(player);
         if (game.getPlayers().isEmpty()) {

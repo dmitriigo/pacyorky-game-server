@@ -2,6 +2,7 @@ package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.function.Predicate;
 
 import org.slf4j.Logger;
 

@@ -67,7 +67,7 @@ public class GameManagerImpl implements GameManager {
                 .startAt(LocalDateTime.now().plusSeconds(Optional.ofNullable(gameCreationDto.getSecondsBeforeStart()).orElse(properties.getSecondsBeforeStart())))
                 .capacity(gameCreationDto.getCapacity())
                 .password(StringUtils.trimToEmpty(gameCreationDto.getPassword()))
-                .privateRoom(gameCreationDto.isPrivateRoom())
+                .privateRoom(false)
                 .withComputer(gameCreationDto.isWithComputer())
                 .name(gameCreationDto.getName())
                 .characters(deckService.getCharacterDeck())

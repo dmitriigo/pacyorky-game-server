@@ -47,12 +47,12 @@ class GameManagerImplTest {
         Game game = gameManager.createGame(playerId, getCreationDto());
         var gameId = game.getId();
         game.setCapacity(2L);
-        Assertions.assertNotNull(gameManager.joinIntoTheGame(playerId2, game.getId()));
-        Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId3, gameId));
+        Assertions.assertNotNull(gameManager.joinIntoTheGame(playerId2, gameId, null));
+        Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId3, gameId, null));
         Game anotherGame = gameManager.createGame(UUID.randomUUID().toString(), getCreationDto());
         var gameId2 = anotherGame.getId();
         anotherGame.setCapacity(2L);
-        Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId2, gameId2));
+        Assertions.assertThrows(GlobalException.class, () -> gameManager.joinIntoTheGame(playerId2, gameId2, null));
     }
     
     @Test

@@ -14,7 +14,7 @@ public interface GameManager {
     
     Game makeStep(String playerId, List<Long> cards);
     
-    Game joinIntoTheGame(String playerId, Long gameId);
+    Game joinIntoTheGame(String playerId, Long gameId, String password);
     
     Game leftFromTheGame(String playerId);
     

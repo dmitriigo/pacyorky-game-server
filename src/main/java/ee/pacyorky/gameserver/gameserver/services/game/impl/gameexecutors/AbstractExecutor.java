@@ -2,6 +2,7 @@ package ee.pacyorky.gameserver.gameserver.services.game.impl.gameexecutors;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.function.Predicate;
 
 import org.slf4j.Logger;
 
@@ -78,6 +79,13 @@ public abstract class AbstractExecutor implements Runnable {
     protected void sleepGame() throws InterruptedException {
         var game = getGame(gameId);
         for (int i = 0; i < maxAttemptStep; i++) {
+            if (game.getStep() == null) {
+                break;
+            }
+            var playerId = game.getStep().getCurrentPlayer().getId();
+            if (game.getPlayers().stream().map(Player::getId).noneMatch(id -> id.equals(playerId))) {
+                break;
+            }
             if (LocalDateTime.now().isAfter(getGame(gameId).getNextStepAt())) {
                 game.setNextStepAt(LocalDateTime.now().plusSeconds(game.getSecondsForStep()));
                 saveGame(game);
@@ -88,6 +96,7 @@ public abstract class AbstractExecutor implements Runnable {
         getLogger().warn("Player {} war removed because inactive", game.getStep().getCurrentPlayer().getId());
         var player = game.getStep().getCurrentPlayer();
         game.removePlayer(player.getId());
+        game.setOwner(game.getPlayers().stream().filter(Predicate.not(Player::isComputer)).findFirst().orElse(null));
         game.getStep().setStatus(StepStatus.FINISHED);
         saveGame(game);
         callback.fail(gameId);

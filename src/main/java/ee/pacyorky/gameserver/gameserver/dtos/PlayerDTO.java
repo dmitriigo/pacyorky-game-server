@@ -28,4 +28,5 @@ public class PlayerDTO {
     
     private boolean isComputer;
     
+    private String voiceToken;
 }

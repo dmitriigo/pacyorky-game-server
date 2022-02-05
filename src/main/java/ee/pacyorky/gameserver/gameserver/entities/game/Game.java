@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -123,9 +122,8 @@ public class Game {
     @Builder.Default
     private Set<Step> history = new HashSet<>();
     
-    
-    @Column(length = 4096)
-    private String token;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Player owner;
     
     public void addPlayer(Player player) {
         if (players == null) {
@@ -192,6 +190,7 @@ public class Game {
     public void finish(Status reason) {
         this.status = reason.getId();
         this.step = null;
+        this.owner = null;
     }
     
     @Override

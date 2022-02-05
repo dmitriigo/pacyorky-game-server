@@ -1,16 +1,21 @@
 package ee.pacyorky.gameserver.gameserver.services.game.impl;
 
+import static ee.pacyorky.gameserver.gameserver.util.GameUtils.checkGameAndPlayer;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import ee.pacyorky.gameserver.gameserver.agoraio.RtcTokenGenerator;
+import ee.pacyorky.gameserver.gameserver.agoraio.generator.RtcTokenGenerator;
 import ee.pacyorky.gameserver.gameserver.config.AgoraProperties;
 import ee.pacyorky.gameserver.gameserver.config.AppProperties;
 import ee.pacyorky.gameserver.gameserver.dtos.GameCreationDto;
@@ -61,8 +66,8 @@ public class GameManagerImpl implements GameManager {
                 .stuffDeck(deckService.getStuffDeck())
                 .startAt(LocalDateTime.now().plusSeconds(Optional.ofNullable(gameCreationDto.getSecondsBeforeStart()).orElse(properties.getSecondsBeforeStart())))
                 .capacity(gameCreationDto.getCapacity())
-                .password(gameCreationDto.getPassword())
-                .privateRoom(gameCreationDto.isPrivateRoom())
+                .password(StringUtils.trimToEmpty(gameCreationDto.getPassword()))
+                .privateRoom(false)
                 .withComputer(gameCreationDto.isWithComputer())
                 .name(gameCreationDto.getName())
                 .characters(deckService.getCharacterDeck())
@@ -75,10 +80,11 @@ public class GameManagerImpl implements GameManager {
         player.resetPlayer();
         playerService.savePlayer(player);
         game.addPlayer(player);
+        game.setOwner(player);
         var savedGame = gameDao.saveGame(game);
         if (agoraProperties.isCreateTokenOnCreateGame() && (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame())) {
-            savedGame.setToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, game.getId()));
-            gameDao.saveGame(savedGame);
+            player.setVoiceToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, game.getId(), playerId));
+            playerService.savePlayer(player);
         }
         generalGameService.startGame(savedGame.getId());
         return savedGame;
@@ -160,23 +166,8 @@ public class GameManagerImpl implements GameManager {
         return getGame(playerId);
     }
     
-    private void checkGameAndPlayer(Game game, Player player) {
-        if (game == null) {
-            throw new GlobalException("Game is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
-        }
-        if (player == null) {
-            throw new GlobalException("Player is null", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
-        }
-        if (game.getStep() == null) {
-            throw new GlobalException("Step is not created. Null.", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
-        }
-        if (!player.getId().equals(game.getStep().getCurrentPlayer().getId())) {
-            throw new GlobalException("Current player != player", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
     @Override
-    public Game joinIntoTheGame(String playerId, Long gameId) {
+    public Game joinIntoTheGame(String playerId, Long gameId, String password) {
         Game game = gameDao.getGame(gameId);
         if (game.isNotWaiting()) {
             throw new GlobalException("Game not waiting.", GlobalExceptionCode.GAME_NOT_WAITING);
@@ -184,10 +175,26 @@ public class GameManagerImpl implements GameManager {
         if (game.getPlayers().size() >= game.getCapacity()) {
             throw new GlobalException("Players count more than capacity", GlobalExceptionCode.CAPACITY_LIMIT_REACHED);
         }
+        if (game.isPrivateRoom()) {
+            if (password == null) {
+                throw new GlobalException("Password is not specified", GlobalExceptionCode.PASSWORD_NOT_SPECIFIED);
+            }
+            if (!Objects.equals(game.getPassword(), password)) {
+                throw new GlobalException("Password is wrong", GlobalExceptionCode.PASSWORD_WRONG);
+            }
+        }
         Player player = playerService.getOrCreatePlayer(playerId);
         checkPlayerInGame(player);
         player.resetPlayer();
+        if (agoraProperties.isCreateTokenOnCreateGame() && (!game.isWithComputer() || agoraProperties.isVoiceChatInComputerGame())) {
+            
+            player.setVoiceToken(RtcTokenGenerator.buildTokenWithUserAccount(agoraProperties, game.getId(), playerId));
+            
+        }
         playerService.savePlayer(player);
+        if (game.getPlayers().isEmpty()) {
+            game.setOwner(player);
+        }
         game.addPlayer(player);
         return gameDao.saveGame(game);
     }
@@ -199,6 +206,10 @@ public class GameManagerImpl implements GameManager {
             throw new GlobalException("Game not found", GlobalExceptionCode.INTERNAL_SERVER_ERROR);
         }
         game.removePlayer(playerId);
+        game.setOwner(game.getPlayers().stream().filter(Predicate.not(Player::isComputer)).findFirst().orElse(null));
+        var player = playerService.getOrCreatePlayer(playerId);
+        player.resetPlayer();
+        playerService.savePlayer(player);
         return gameDao.saveGame(game);
     }
     

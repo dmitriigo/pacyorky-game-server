@@ -4,8 +4,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${GAME_USER:root}
-    password: ${GAME_PASS:toor}
-    url: ${DB_GAME_HOST:jdbc:mysql://localhost:3306/pacyorky-game?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC}
+    password: ${GAME_PASS:root}
+    url: ${DB_GAME_HOST:jdbc:mysql://localhost:3307/pacyorky-game?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC}
     hikari:
       maximum-pool-size: 100
   jpa:
@@ -29,7 +29,10 @@ game:
 agora:
   agoraId: ${AGORA_ID:id}
   agoraCertificate: ${AGORA_CERT:cert}
-  createTokenOnCreateGame: false
+  createTokenOnCreateGame: true
+  voiceChatInComputerGame: true
+  agoraUser: ${AGORA_USER:user}
+  agoraPassword: ${AGORA_PASS:pass}
 telegram:
   token: ${TELEGRAM_TOKEN}
   chat: ${TELEGRAM_CHAT}
